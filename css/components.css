@@ -258,6 +258,7 @@
 .code-editor.is-correct { animation: editor-success 600ms var(--ease-out); }
 .code-note { margin: var(--space-3) 0; color: var(--color-ink-soft); font-size: var(--text-sm); }
 .celebration-note {
+  display: block;
   margin: var(--space-3) 0 0;
   color: var(--color-success);
   font-weight: 700;

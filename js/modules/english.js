@@ -122,7 +122,7 @@ export async function renderEnglish(app) {
       '<div class="flashcard-front"><p class="eyebrow">Переведите на английский</p><h2 class="prompt-word">' + escapeHTML(card.ru) + '</h2>' +
       '<form id="answer-form"><label class="field-label" for="english-answer">Ваш перевод</label><input class="form-field" id="english-answer" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required aria-label="Введите перевод на английском">' +
       '<div class="button-row" style="justify-content:center;margin-top:16px"><button class="button answer-check" type="submit">Проверить</button></div></form></div>' +
-      '<div class="flashcard-back"><p class="eyebrow">Ответ</p><h2 class="prompt-word">' + escapeHTML(card.en) + '</h2>' +
+      '<div class="flashcard-back" inert><p class="eyebrow">Ответ</p><h2 class="prompt-word">' + escapeHTML(card.en) + '</h2>' +
       '<div id="answer-feedback" class="feedback" aria-live="polite"></div><p class="example-text">' + escapeHTML(card.example) + '</p>' +
       '<p class="field-label" style="text-align:center;margin-top:20px">Насколько легко вспомнили?</p>' +
       '<div class="rating-row">' +
@@ -142,6 +142,8 @@ export async function renderEnglish(app) {
       checked = true;
       const correct = normalizeAnswer(answerInput.value) === normalizeAnswer(card.en);
       stage.classList.add("is-revealed");
+      stage.querySelector(".flashcard-front").setAttribute("inert", "");
+      stage.querySelector(".flashcard-back").removeAttribute("inert");
       answerInput.disabled = true;
       const checkButton = content.querySelector(".answer-check");
       checkButton.disabled = true;

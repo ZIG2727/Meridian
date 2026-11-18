@@ -6,7 +6,7 @@ export function celebrate(target, message, duration = 800) {
   if (!target) return null;
   const reduced = prefersReducedMotion();
   const boundedDuration = Math.min(1200, Math.max(600, Number(duration) || 800));
-  const note = document.createElement("p");
+  const note = document.createElement("span");
   note.className = "celebration-note" + (reduced ? " is-static" : "");
   note.setAttribute("role", "status");
   note.textContent = message || "Урок завершён";
