@@ -170,7 +170,7 @@
 .rating-button:hover { border-color: var(--color-english); background: #f0f5f1; }
 .rating-button strong { display: block; }
 .rating-button small { color: var(--color-ink-soft); font-size: 0.72rem; }
-.answer-check.is-correct { animation: answer-pulse 200ms var(--ease-overshoot); }
+.answer-check.is-correct { --pulse-scale: 1.06; animation: feedback-pulse 200ms var(--ease-overshoot); }
 
 .lesson-link {
   width: 100%;
@@ -238,7 +238,7 @@
 .chess-square.dark { background: #82948a; }
 .chess-square .black-piece { color: #202522; text-shadow: 0 1px 0 rgba(255,255,255,.25); }
 .chess-square .white-piece { color: #fffefa; text-shadow: 0 1px 2px rgba(0,0,0,.65); }
-.chess-square.piece-arrived { animation: piece-arrive var(--dur-base) var(--ease-out); }
+.chess-square.piece-arrived { --pulse-scale: 1.04; animation: feedback-pulse var(--dur-base) var(--ease-out); }
 .board-caption { max-width: 420px; margin: var(--space-2) 0 0; color: var(--color-ink-soft); font-size: var(--text-xs); }
 
 .code-editor {
@@ -255,7 +255,7 @@
   line-height: 1.65;
   tab-size: 4;
 }
-.code-editor.is-correct { animation: editor-success 600ms var(--ease-out); }
+.code-editor.is-correct { --pulse-scale: 1.01; animation: feedback-pulse 600ms var(--ease-out); }
 .code-note { margin: var(--space-3) 0; color: var(--color-ink-soft); font-size: var(--text-sm); }
 .celebration-note {
   display: block;
@@ -278,18 +278,10 @@
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
-@keyframes piece-arrive {
-  from { opacity: 0.4; transform: scale(0.86); }
-  to { opacity: 1; transform: scale(1); }
-}
-@keyframes answer-pulse {
-  0% { transform: scale(1); }
-  55% { transform: scale(1.06); }
-  100% { transform: scale(1); }
-}
-@keyframes editor-success {
-  0%, 100% { transform: translateY(0); }
-  45% { transform: translateY(-2px); }
+@keyframes feedback-pulse {
+  0% { opacity: 0.88; transform: scale(1); }
+  55% { opacity: 1; transform: scale(var(--pulse-scale, 1.04)); }
+  100% { opacity: 1; transform: scale(1); }
 }
 @keyframes celebration-in {
   0% { opacity: 0; transform: translateY(5px) scale(0.98); }
