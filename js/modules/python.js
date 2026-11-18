@@ -115,9 +115,10 @@ export async function renderPython(app) {
       editor.classList.remove("is-correct");
       void editor.offsetWidth;
       editor.classList.add("is-correct");
+      window.setTimeout(() => editor.classList.remove("is-correct"), 600);
       status.className = "status-line feedback success";
       status.textContent = "Код совпадает с эталонным решением.";
-      animateProgress(progressTrack, 100);
+      window.setTimeout(() => animateProgress(progressTrack, 100), 600);
       if (!wasCompleted) {
         const moduleComplete = lessons.every(lesson => completed.includes(lesson.id));
         celebrate(status, moduleComplete ? "Раздел Python завершён." : "Урок завершён.", 800);

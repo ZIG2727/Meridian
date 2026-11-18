@@ -255,7 +255,7 @@
   line-height: 1.65;
   tab-size: 4;
 }
-.code-editor.is-correct { --pulse-scale: 1.01; animation: feedback-pulse 600ms var(--ease-out); }
+.code-editor.is-correct { --pulse-scale: 1.01; border-color: var(--color-success); animation: feedback-pulse 600ms var(--ease-out); }
 .code-note { margin: var(--space-3) 0; color: var(--color-ink-soft); font-size: var(--text-sm); }
 .celebration-note {
   display: block;
