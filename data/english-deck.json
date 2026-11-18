@@ -1,0 +1,77 @@
+[
+  {
+    "ru": "доброе утро",
+    "en": "good morning",
+    "example": "Good morning, everyone. Let's begin."
+  },
+  {
+    "ru": "пожалуйста",
+    "en": "please",
+    "example": "Could you open the window, please?"
+  },
+  {
+    "ru": "спасибо",
+    "en": "thank you",
+    "example": "Thank you for your help."
+  },
+  {
+    "ru": "извините",
+    "en": "excuse me",
+    "example": "Excuse me, where is the library?"
+  },
+  {
+    "ru": "я не понимаю",
+    "en": "I don't understand",
+    "example": "I don't understand this question."
+  },
+  {
+    "ru": "сколько это стоит?",
+    "en": "how much is it?",
+    "example": "How much is it? I can't see the price."
+  },
+  {
+    "ru": "мне нужна помощь",
+    "en": "I need help",
+    "example": "I need help with this exercise."
+  },
+  {
+    "ru": "до встречи",
+    "en": "see you later",
+    "example": "See you later after class."
+  },
+  {
+    "ru": "возможно",
+    "en": "perhaps",
+    "example": "Perhaps we can meet on Saturday."
+  },
+  {
+    "ru": "обычно",
+    "en": "usually",
+    "example": "I usually walk to school."
+  },
+  {
+    "ru": "на прошлой неделе",
+    "en": "last week",
+    "example": "We visited our grandparents last week."
+  },
+  {
+    "ru": "зависеть от",
+    "en": "depend on",
+    "example": "The answer may depend on the context."
+  },
+  {
+    "ru": "принимать решение",
+    "en": "make a decision",
+    "example": "We need to make a decision today."
+  },
+  {
+    "ru": "быть уверенным",
+    "en": "be sure",
+    "example": "Are you sure about the time?"
+  },
+  {
+    "ru": "с нетерпением ждать",
+    "en": "look forward to",
+    "example": "I look forward to seeing you again."
+  }
+]

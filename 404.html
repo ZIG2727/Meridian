@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Meridian</title>
+</head>
+<body>
+  <p>Возвращаемся в Meridian…</p>
+  <script>
+    (function () {
+      var segments = window.location.pathname.split("/").filter(Boolean);
+      var base = segments.length ? "/" + segments[0] + "/" : "/";
+      window.location.replace(base + window.location.search + window.location.hash);
+    }());
+  </script>
+  <noscript><a href="./">Открыть Meridian</a></noscript>
+</body>
+</html>
