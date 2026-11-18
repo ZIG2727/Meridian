@@ -66,7 +66,6 @@ export async function renderPython(app) {
   function renderLesson() {
     if (!currentLesson) return renderList();
     const lessonIndex = lessons.findIndex(lesson => lesson.id === currentLesson.id);
-    const doneCount = lessons.filter(lesson => completed.includes(lesson.id)).length;
     content.innerHTML = '<div class="button-row" style="margin-bottom:16px"><button class="button button-secondary" id="python-back" type="button">К списку уроков</button><span class="eyebrow">Урок ' + (lessonIndex + 1) + ' из ' + lessons.length + '</span></div>' +
       '<div class="python-layout"><section class="panel"><p class="eyebrow">Теория</p><h2>' + escapeHTML(currentLesson.title) + '</h2><p>' + escapeHTML(currentLesson.theory).replace(/\n/g, "<br>") + '</p>' +
       '<p class="code-note">Проверка сравнивает ваш текст с эталонным решением. Код Python здесь не запускается.</p></section>' +
