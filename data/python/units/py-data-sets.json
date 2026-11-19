@@ -1,0 +1,65 @@
+{
+  "unitId": "py-data-sets",
+  "lessons": [
+    {
+      "lessonId": "py-data-sets-01",
+      "unitId": "py-data-sets",
+      "order": 1,
+      "title": "Создание множества",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "sets"
+      ],
+      "theory": "Множество хранит уникальные значения. Повторяющиеся элементы при создании остаются в одном экземпляре.",
+      "starterCode": "colours = {\"red\", \"blue\"}\nprint(colours)",
+      "expectedOutput": "{'red', 'blue'}",
+      "hint": "Создай множество из двух строк."
+    },
+    {
+      "lessonId": "py-data-sets-02",
+      "unitId": "py-data-sets",
+      "order": 2,
+      "title": "Уникальные значения",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "sets"
+      ],
+      "theory": "Если добавить уже существующий элемент, множество не увеличится. Порядок элементов множества не фиксирован.",
+      "starterCode": "numbers = {1, 2, 2}\nprint(len(numbers))",
+      "expectedOutput": "2",
+      "hint": "Повтор числа 2 не создаёт новый элемент."
+    },
+    {
+      "lessonId": "py-data-sets-03",
+      "unitId": "py-data-sets",
+      "order": 3,
+      "title": "Добавление элемента",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "sets"
+      ],
+      "theory": "Метод add() добавляет элемент в множество, если его там ещё нет.",
+      "starterCode": "numbers = {1, 2}\nnumbers.add(3)\nprint(len(numbers))",
+      "expectedOutput": "3",
+      "hint": "Добавь число 3 с помощью add()."
+    },
+    {
+      "lessonId": "py-data-sets-04",
+      "unitId": "py-data-sets",
+      "order": 4,
+      "title": "Объединение",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "sets"
+      ],
+      "theory": "Операция | создаёт множество из элементов обоих множеств без повторов.",
+      "starterCode": "first = {1, 2}\nsecond = {2, 3}\nprint(first | second)",
+      "expectedOutput": "{1, 2, 3}",
+      "hint": "Объедини множества оператором |."
+    }
+  ]
+}

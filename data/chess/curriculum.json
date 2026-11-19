@@ -152,6 +152,23 @@
         "ch-tactics-double-check-03",
         "ch-tactics-double-check-04"
       ]
+    },
+    {
+      "unitId": "ch-tactics-discovered",
+      "level": "Tactics",
+      "title": "Вскрытое нападение",
+      "description": "Использовать ход одной фигуры для открытия атаки другой.",
+      "order": 11,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-tactics-double-check"
+      ],
+      "lessonIds": [
+        "ch-tactics-discovered-01",
+        "ch-tactics-discovered-02",
+        "ch-tactics-discovered-03",
+        "ch-tactics-discovered-04"
+      ]
     }
   ]
 }

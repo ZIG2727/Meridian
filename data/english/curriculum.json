@@ -101,6 +101,23 @@
         "en-a2-daily-routine-03",
         "en-a2-daily-routine-04"
       ]
+    },
+    {
+      "unitId": "en-a2-shopping",
+      "level": "A2",
+      "title": "Покупки",
+      "description": "Спросить цену, размер и оплатить покупку.",
+      "order": 8,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-daily-routine"
+      ],
+      "lessonIds": [
+        "en-a2-shopping-01",
+        "en-a2-shopping-02",
+        "en-a2-shopping-03",
+        "en-a2-shopping-04"
+      ]
     }
   ]
 }

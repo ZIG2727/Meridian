@@ -152,6 +152,23 @@
         "py-data-tuples-03",
         "py-data-tuples-04"
       ]
+    },
+    {
+      "unitId": "py-data-sets",
+      "level": "Data Structures",
+      "title": "Множества",
+      "description": "Хранить уникальные элементы и выполнять простые операции над множествами.",
+      "order": 11,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-data-tuples"
+      ],
+      "lessonIds": [
+        "py-data-sets-01",
+        "py-data-sets-02",
+        "py-data-sets-03",
+        "py-data-sets-04"
+      ]
     }
   ]
 }
