@@ -118,6 +118,23 @@
         "en-a2-shopping-03",
         "en-a2-shopping-04"
       ]
+    },
+    {
+      "unitId": "en-a2-travel",
+      "level": "A2",
+      "title": "Путешествия",
+      "description": "Планировать поездку, транспорт и проживание.",
+      "order": 9,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-shopping"
+      ],
+      "lessonIds": [
+        "en-a2-travel-01",
+        "en-a2-travel-02",
+        "en-a2-travel-03",
+        "en-a2-travel-04"
+      ]
     }
   ]
 }

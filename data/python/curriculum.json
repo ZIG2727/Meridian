@@ -169,6 +169,23 @@
         "py-data-sets-03",
         "py-data-sets-04"
       ]
+    },
+    {
+      "unitId": "py-functions-basics",
+      "level": "Functions",
+      "title": "Функции",
+      "description": "Создавать функции и вызывать их по имени.",
+      "order": 12,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-data-sets"
+      ],
+      "lessonIds": [
+        "py-functions-basics-01",
+        "py-functions-basics-02",
+        "py-functions-basics-03",
+        "py-functions-basics-04"
+      ]
     }
   ]
 }

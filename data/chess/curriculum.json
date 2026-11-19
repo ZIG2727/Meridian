@@ -169,6 +169,23 @@
         "ch-tactics-discovered-03",
         "ch-tactics-discovered-04"
       ]
+    },
+    {
+      "unitId": "ch-endgames-king-pawn",
+      "level": "Endgames",
+      "title": "Король и пешка",
+      "description": "Понимать роль короля, проходную пешку и оппозицию.",
+      "order": 12,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-pawn"
+      ],
+      "lessonIds": [
+        "ch-endgames-king-pawn-01",
+        "ch-endgames-king-pawn-02",
+        "ch-endgames-king-pawn-03",
+        "ch-endgames-king-pawn-04"
+      ]
     }
   ]
 }

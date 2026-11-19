@@ -1,0 +1,465 @@
+{
+  "unitId": "en-a2-travel",
+  "lessons": [
+    {
+      "lessonId": "en-a2-travel-01",
+      "unitId": "en-a2-travel",
+      "order": 1,
+      "title": "Транспорт",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "travel"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-travel-1-1",
+            "en": "train",
+            "ru": "поезд",
+            "example": "We travelled by train last summer.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-1-2",
+            "en": "plane",
+            "ru": "самолёт",
+            "example": "The plane leaves at noon.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-1-3",
+            "en": "flight",
+            "ru": "рейс",
+            "example": "Our flight was delayed.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-1-4",
+            "en": "airport",
+            "ru": "аэропорт",
+            "example": "We arrived at the airport early.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-1-5",
+            "en": "station",
+            "ru": "вокзал, станция",
+            "example": "Meet me outside the station.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-1-6",
+            "en": "platform",
+            "ru": "платформа",
+            "example": "The train leaves from platform four.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-1-7",
+            "en": "ticket",
+            "ru": "билет",
+            "example": "I booked the ticket online.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-1-8",
+            "en": "return ticket",
+            "ru": "билет туда и обратно",
+            "example": "A return ticket is cheaper.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-1-9",
+            "en": "departure",
+            "ru": "отправление",
+            "example": "Check the departure time.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-1-10",
+            "en": "arrival",
+            "ru": "прибытие",
+            "example": "The arrival board has changed.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-travel-02",
+      "unitId": "en-a2-travel",
+      "order": 2,
+      "title": "В пути",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "travel"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-travel-2-1",
+            "en": "journey",
+            "ru": "путешествие, поездка",
+            "example": "The journey takes three hours.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-2-2",
+            "en": "trip",
+            "ru": "поездка",
+            "example": "We planned a short trip to Prague.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-2-3",
+            "en": "travel",
+            "ru": "путешествовать",
+            "example": "I love to travel by train.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-2-4",
+            "en": "luggage",
+            "ru": "багаж",
+            "example": "Keep your luggage with you.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-2-5",
+            "en": "suitcase",
+            "ru": "чемодан",
+            "example": "My suitcase is quite heavy.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-2-6",
+            "en": "passport",
+            "ru": "паспорт",
+            "example": "Don't forget your passport.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-2-7",
+            "en": "boarding pass",
+            "ru": "посадочный талон",
+            "example": "Show your boarding pass at the gate.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-2-8",
+            "en": "gate",
+            "ru": "выход на посадку",
+            "example": "Our gate is number twelve.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-2-9",
+            "en": "delay",
+            "ru": "задержка",
+            "example": "There is a thirty-minute delay.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-2-10",
+            "en": "cancel",
+            "ru": "отменять",
+            "example": "The airline had to cancel the flight.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-travel-03",
+      "unitId": "en-a2-travel",
+      "order": 3,
+      "title": "Проживание",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "travel"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-travel-3-1",
+            "en": "hotel",
+            "ru": "отель",
+            "example": "We stayed at a small hotel.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-3-2",
+            "en": "guest",
+            "ru": "гость",
+            "example": "The hotel welcomes guests all year.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-3-3",
+            "en": "reservation",
+            "ru": "бронирование",
+            "example": "I have a reservation for two nights.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-3-4",
+            "en": "single room",
+            "ru": "одноместный номер",
+            "example": "I'd like a single room.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-3-5",
+            "en": "double room",
+            "ru": "двухместный номер",
+            "example": "The double room has a balcony.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-3-6",
+            "en": "check in",
+            "ru": "зарегистрироваться",
+            "example": "You can check in after three.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-3-7",
+            "en": "check out",
+            "ru": "выписаться",
+            "example": "We check out tomorrow morning.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-3-8",
+            "en": "key card",
+            "ru": "ключ-карта",
+            "example": "Your key card is at reception.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-3-9",
+            "en": "reception",
+            "ru": "стойка регистрации",
+            "example": "Ask reception for a map.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-3-10",
+            "en": "available room",
+            "ru": "свободный номер",
+            "example": "Do you have an available room?",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-travel-04",
+      "unitId": "en-a2-travel",
+      "order": 4,
+      "title": "Полезные фразы",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "travel"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-travel-4-1",
+            "en": "Where is...?",
+            "ru": "где находится...?",
+            "example": "Excuse me, where is the bus stop?",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-4-2",
+            "en": "How do I get to...?",
+            "ru": "как добраться до...?",
+            "example": "How do I get to the museum?",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-4-3",
+            "en": "Is it far?",
+            "ru": "это далеко?",
+            "example": "Is it far from here?",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-4-4",
+            "en": "one-way",
+            "ru": "в одну сторону",
+            "example": "I need a one-way ticket.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-4-5",
+            "en": "platform change",
+            "ru": "смена платформы",
+            "example": "There has been a platform change.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-4-6",
+            "en": "miss the train",
+            "ru": "опоздать на поезд",
+            "example": "We don't want to miss the train.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-4-7",
+            "en": "on holiday",
+            "ru": "в отпуске",
+            "example": "They're on holiday in Spain.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-4-8",
+            "en": "tourist information",
+            "ru": "туристическая информация",
+            "example": "The tourist information office is nearby.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-4-9",
+            "en": "local map",
+            "ru": "карта города",
+            "example": "Could I have a local map?",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          },
+          {
+            "id": "en-card-travel-4-10",
+            "en": "travel insurance",
+            "ru": "страховка путешественника",
+            "example": "Travel insurance can be useful.",
+            "tags": [
+              "a2",
+              "travel"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
