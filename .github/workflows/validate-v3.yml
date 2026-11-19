@@ -4,6 +4,7 @@ on:
     branches: [v3-curriculum]
   pull_request:
     branches: [v3-curriculum]
+  workflow_dispatch:
 jobs:
   curriculum:
     runs-on: ubuntu-latest
@@ -12,4 +13,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: node scripts/validate-v3.mjs
+      - name: Check JavaScript module syntax
+        run: |
+          for file in $(find js -type f -name '*.js'); do
+            node --input-type=module --check < "$file"
+          done
+      - name: Validate curriculum data
+        run: node scripts/validate-v3.mjs

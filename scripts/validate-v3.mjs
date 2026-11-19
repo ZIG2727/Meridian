@@ -15,12 +15,21 @@ for (const module of modules) {
   if (manifest.module !== module || manifest.version !== 3) fail(module + ": invalid curriculum manifest");
   if (manifest.units.length !== 15) fail(module + ": expected 15 units, got " + manifest.units.length);
   unique(manifest.units.map(unit => unit.unitId), module + " unit IDs");
-  let moduleLessons = 0;
+  const unitMap = new Map(manifest.units.map(unit => [unit.unitId, unit]));
+  manifest.units.forEach((unit, index) => {
+    if (unit.order !== index + 1) fail(module + ": units must have sequential order values");
+    for (const prerequisite of unit.prerequisiteUnits || []) if (!unitMap.has(prerequisite)) fail(unit.unitId + ": missing prerequisite " + prerequisite);
+  });
+  let moduleLessons = 0;\n  const moduleLessonIds = new Set();\n  const moduleCardIds = new Set();
   for (const unit of manifest.units) {
     if (!Array.isArray(unit.lessonIds) || unit.lessonIds.length < 3 || unit.lessonIds.length > 4) fail(unit.unitId + ": expected 3–4 lesson IDs");
     const data = await readJSON("data/" + module + "/units/" + unit.unitId + ".json");
     if (data.unitId !== unit.unitId || data.lessons.length !== unit.lessonIds.length) fail(unit.unitId + ": unit data mismatch");
     unique(data.lessons.map(lesson => lesson.lessonId), unit.unitId + " lesson IDs");
+    for (const lesson of data.lessons) {
+      if (moduleLessonIds.has(lesson.lessonId)) fail(module + ": duplicate lesson ID " + lesson.lessonId);
+      moduleLessonIds.add(lesson.lessonId);
+    }
     for (let index = 0; index < data.lessons.length; index++) {
       const lesson = data.lessons[index];
       if (lesson.lessonId !== unit.lessonIds[index] || lesson.unitId !== unit.unitId || !lesson.title) fail(unit.unitId + ": lesson metadata mismatch");
@@ -29,6 +38,10 @@ for (const module of modules) {
         const cards = lesson.content?.cards;
         if (!Array.isArray(cards) || cards.length < 10) fail(lesson.lessonId + ": needs at least 10 flashcards");
         unique(cards.map(card => card.id), lesson.lessonId + " card IDs");
+        for (const card of cards) {
+          if (moduleCardIds.has(card.id)) fail("Duplicate English card ID " + card.id);
+          moduleCardIds.add(card.id);
+        }
         for (const card of cards) if (!card.id || !card.ru || !card.en || !card.example) fail(lesson.lessonId + ": incomplete flashcard");
         totals.cards += cards.length;
       } else if (module === "chess") {
