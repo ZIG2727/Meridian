@@ -50,16 +50,16 @@
       "lessonId": "py-files-text-04",
       "unitId": "py-files-text",
       "order": 4,
-      "title": "Безопасность файлов",
+      "title": "Запись в виртуальный файл",
       "estimatedMinutes": 9,
       "tags": [
         "files",
         "text"
       ],
-      "theory": "Пути и файлы могут содержать важные данные. Meridian не даёт урокам доступ к файловой системе: упражнения проверяют только текстовые значения.",
-      "starterCode": "print(\"No disk access\")",
-      "expectedOutput": "No disk access",
-      "hint": "Оставь работу в пределах учебной строки."
+      "theory": "Переменная virtual_file моделирует содержимое текстового файла. Новое присваивание заменяет старую строку. Учебный runner не обращается к диску: все действия остаются в памяти страницы.",
+      "starterCode": "virtual_file = \"Draft\"\nvirtual_file = \"Final note\"\nprint(virtual_file)",
+      "expectedOutput": "Final note",
+      "hint": "Измени значение virtual_file на Final note и выведи его."
     }
   ]
 }
