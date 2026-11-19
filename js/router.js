@@ -1,4 +1,4 @@
-import { loadJSON, readStored, isStringArray } from "./storage.js";
+import { loadJSON, readStored, writeStored, isStringArray } from "./storage.js";
 import { renderEnglish } from "./modules/english.js";
 import { renderChess } from "./modules/chess.js";
 import { renderPython } from "./modules/python.js";
@@ -28,6 +28,34 @@ function subjectCard(subject,title,description,count,total,percentage,continuati
   const continueButton=continuation?'<a class="button button-secondary button-full" href="'+continuation.href+'">'+escapeHTML(continuation.label)+'</a>':'<a class="button button-full" href="#/'+subject+'">Открыть раздел</a>';
   return '<article class="subject-card" data-subject="'+subject+'"><div class="subject-topline"><img class="subject-icon" src="'+iconUrl+'" alt="" aria-hidden="true"><span class="eyebrow">'+(subject==="english"?"01 / Язык":subject==="chess"?"02 / Стратегия":"03 / Код")+'</span></div><h2>'+title+'</h2><p>'+description+'</p>'+status+'<div class="button-row dashboard-actions">'+continueButton+'</div></article>';
 }
+function readCompleted(module) {
+ const key="mrd:v3:"+module+":completed",versioned=readStored(key,null,isStringArray);
+ if(versioned)return versioned;
+ const legacy=readStored("mrd:"+module+":completed",[],isStringArray);
+ const maps={chess:{notation:"ch-basics-board-01",pieces:"ch-basics-knight-01",pawn:"ch-basics-pawn-01",mate:"ch-endgames-basic-mates-01"},python:{print:"py-basics-print-01",variables:"py-basics-variables-01",conditions:"py-control-if-01",loops:"py-control-loops-01"}};
+ const migrated=legacy.slice();
+ for(const [oldId,newId] of Object.entries(maps[module]||{}))if(legacy.includes(oldId)&&!migrated.includes(newId))migrated.push(newId);
+ if(legacy.length)writeStored(key,migrated);
+ return migrated;
+}
+function readSession(module) {
+ const key="mrd:v3:"+module+":session",current=readStored(key,null);
+ if(current)return current;
+ const legacy=readStored("mrd:"+module+":session",null);
+ if(!legacy)return null;
+ let next=null;
+ if(module==="python"&&typeof legacy==="object"){
+  const map={print:["py-basics-print","py-basics-print-01"],variables:["py-basics-variables","py-basics-variables-01"],conditions:["py-control-if","py-control-if-01"],loops:["py-control-loops","py-control-loops-01"]};
+  const item=map[legacy.lessonId];
+  if(item)next={unitId:item[0],lessonId:item[1],draftCode:legacy.draftCode||legacy.code||""};
+  else if(legacy.unitId&&legacy.lessonId)next=legacy;
+ }else if(module==="chess"&&typeof legacy==="string"){
+  const map={notation:["ch-basics-board","ch-basics-board-01"],pieces:["ch-basics-knight","ch-basics-knight-01"],pawn:["ch-basics-pawn","ch-basics-pawn-01"],mate:["ch-endgames-basic-mates","ch-endgames-basic-mates-01"]};
+  const item=map[legacy];if(item)next={unitId:item[0],lessonId:item[1]};
+ }else if(module==="english"&&legacy?.unitId&&legacy?.lessonId)next=legacy;
+ if(next)writeStored(key,next);
+ return next;
+}
 function findResume(module,units,session) {
   if(!session||typeof session.unitId!=="string"||typeof session.lessonId!=="string")return null;
   const unit=units.find(item=>item.unitId===session.unitId);
@@ -40,12 +68,12 @@ async function renderDashboard(app) {
   app.innerHTML='<header class="site-header"><div class="header-inner"><a class="brand" href="#/" aria-label="Meridian — главная"><img src="'+new URL("../assets/icons/meridian.svg",import.meta.url).href+'" alt="Meridian"><span>Meridian</span></a><nav class="header-nav" aria-label="Разделы"><a class="button button-quiet" href="#/english">Английский</a><a class="button button-quiet" href="#/chess">Шахматы</a><a class="button button-quiet" href="#/python">Python</a></nav></div></header><main class="page"><section class="dashboard-intro"><p class="eyebrow">Учебное пространство</p><h1>Три предмета. Один маршрут.</h1><p>Выберите занятие или продолжите с того места, где остановились.</p></section><section class="subject-grid" aria-label="Учебные разделы"><div class="empty-state">Загружаем учебные маршруты…</div></section></main><footer class="footer-inner">Meridian · Прогресс хранится в этом браузере</footer>';
   const data=await loadDashboardData(),grid=app.querySelector(".subject-grid");if(!grid)return;
   const english=data.english||[],chess=data.chess||[],python=data.python||[];
-  const englishCompleted=readStored("mrd:v3:english:completed",[],isStringArray);
-  const chessCompleted=readStored("mrd:v3:chess:completed",[],isStringArray);
-  const pythonCompleted=readStored("mrd:v3:python:completed",[],isStringArray);
-  const englishSession=readStored("mrd:v3:english:session",null);
-  const chessSession=readStored("mrd:v3:chess:session",null);
-  const pythonSession=readStored("mrd:v3:python:session",null);
+  const englishCompleted=readCompleted("english");
+  const chessCompleted=readCompleted("chess");
+  const pythonCompleted=readCompleted("python");
+  const englishSession=readSession("english");
+  const chessSession=readSession("chess");
+  const pythonSession=readSession("python");
   const countLessons=units=>units.reduce((sum,unit)=>sum+unit.lessonIds.length,0);
   const countDone=(units,done)=>units.reduce((sum,unit)=>sum+unit.lessonIds.filter(id=>done.includes(id)).length,0);
   const eTotal=countLessons(english),cTotal=countLessons(chess),pTotal=countLessons(python);
