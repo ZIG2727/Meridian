@@ -189,7 +189,7 @@ export async function renderPython(app) {
       const expectedLines = expected.split("\n");
       if (normalizeLines(actual) !== expected) {
         failedAttempts += 1; attempts[currentLesson.id] = failedAttempts; writeStored(ATTEMPTS_KEY, attempts); hintButton.hidden = false;
-        const mismatch = expectedLines.findIndex((line, index) => line !== actualLines[index]);
+        const mismatch = Array.from({ length: Math.max(expectedLines.length, actualLines.length) }, (_, index) => index).find(index => expectedLines[index] !== actualLines[index]) ?? 0;
         status.className = "status-line feedback error";
         status.textContent = "Первое расхождение в строке " + (mismatch + 1) + ". Ожидалось: «" + (expectedLines[mismatch] ?? "конец вывода") + "», получено: «" + (actualLines[mismatch] ?? "нет строки") + "».";
         return;
