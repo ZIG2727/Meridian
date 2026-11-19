@@ -59,7 +59,8 @@ for (const module of modules) {
         if (!quiz || quiz.options.length < 3 || quiz.options.length > 6 || !Number.isInteger(quiz.answer) || quiz.answer < 0 || quiz.answer >= quiz.options.length) fail(lesson.lessonId + ": invalid quiz");
       } else {
         if (typeof lesson.theory !== "string" || typeof lesson.starterCode !== "string" || typeof lesson.expectedOutput !== "string" || typeof lesson.hint !== "string") fail(lesson.lessonId + ": incomplete Python exercise");
-        const run = runSafePython(lesson.starterCode, lesson);\n        if (!run.ok) fail(lesson.lessonId + ": starter code rejected by safe runner: " + run.error);
+        const run = runSafePython(lesson.starterCode, lesson);
+        if (!run.ok) fail(lesson.lessonId + ": starter code rejected by safe runner: " + run.error);
       }
     }
   }
