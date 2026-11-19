@@ -14,7 +14,8 @@
       "theory": "if выполняет вложенный блок, если условие истинно. После условия ставится двоеточие.",
       "starterCode": "temperature = 25\nif temperature < 20:\n    print(\"Take a jacket\")\nelse:\n    print(\"No jacket\")",
       "expectedOutput": "Take a jacket",
-      "hint": "При temperature 12 условие < 20 истинно."
+      "hint": "При temperature 12 условие < 20 истинно.",
+      "solutionCode": "temperature = 15\nif temperature < 20:\n    print(\"Take a jacket\")\nelse:\n    print(\"No jacket\")"
     },
     {
       "lessonId": "py-control-if-02",
@@ -29,7 +30,8 @@
       "theory": "Оператор == сравнивает значения. Один знак = используется для присваивания.",
       "starterCode": "answer = 4\nif answer == 5:\n    print(\"Correct\")\nelse:\n    print(\"Try again\")",
       "expectedOutput": "Correct",
-      "hint": "Для сравнения используй два знака равенства."
+      "hint": "Для сравнения используй два знака равенства.",
+      "solutionCode": "answer = 5\nif answer == 5:\n    print(\"Correct\")\nelse:\n    print(\"Try again\")"
     },
     {
       "lessonId": "py-control-if-03",
@@ -44,7 +46,8 @@
       "theory": "else выполняется, если условие if ложно. Выполняется только одна из двух ветвей.",
       "starterCode": "battery = 30\nif battery > 20:\n    print(\"Enough\")\nelse:\n    print(\"Charge\")",
       "expectedOutput": "Charge",
-      "hint": "При 10 условие > 20 ложно."
+      "hint": "При 10 условие > 20 ложно.",
+      "solutionCode": "battery = 10\nif battery > 20:\n    print(\"Enough\")\nelse:\n    print(\"Charge\")"
     },
     {
       "lessonId": "py-control-if-04",
