@@ -62,7 +62,8 @@ function writeLast(module, unitId, lessonId) {
   writeStored(keys(module).last, { module, unitId, lessonId });
   const previous = readStored(keys(module).session, null);
   const session = { unitId, lessonId };
-  if (module === "python" && previous?.lessonId === lessonId && typeof previous.draftCode === "string") session.draftCode = previous.draftCode;\n  if (module === "english" && previous?.lessonId === lessonId && Number.isInteger(previous.cardIndex)) session.cardIndex = previous.cardIndex;
+  if (module === "python" && previous?.lessonId === lessonId && typeof previous.draftCode === "string") session.draftCode = previous.draftCode;
+  if (module === "english" && previous?.lessonId === lessonId && Number.isInteger(previous.cardIndex)) session.cardIndex = previous.cardIndex;
   writeStored(keys(module).session, session);
 }
 function validLesson(unit, lesson) {
