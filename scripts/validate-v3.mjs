@@ -87,7 +87,7 @@ const runnerCases = [
   { source: 'items = {1, 2}\nitems.add(3)\nprint(len(items))', expected: "3" },
   { source: 'value = 2\nif value < 3:\n    print("yes")\nelse:\n    print("no")', expected: "yes" },
   { source: 'for n in range(1, 4):\n    print(n)', expected: "1\n2\n3" },
-  { source: 'count = 1\nwhile count < 4:\n    print(count)\n    count = count + 1', expected: "1\\n2\\n3" },
+  { source: 'count = 1\nwhile count < 4:\n    print(count)\n    count = count + 1', expected: "1\n2\n3" },
   { source: 'def double(number):\n    return number + number\nprint(double(4))', expected: "8" },
   { source: 'def greet(name="Mira"):\n    print(name)\ngreet()', expected: "Mira" },
   { source: 'double = lambda x: x * 2\nprint(double(4))', expected: "8" }
