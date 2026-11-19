@@ -12,9 +12,9 @@
         "scope"
       ],
       "theory": "Имя, созданное внутри функции, обычно доступно только в её теле. Это помогает отделять внутренние данные от внешних.",
-      "starterCode": "message = \"Ready\"\nprint(message)",
+      "starterCode": "def show():\n    message = \"Ready\"\n    print(message)\nshow()",
       "expectedOutput": "Ready",
-      "hint": "Покажи значение переменной в области текущего кода."
+      "hint": "Создай message внутри функции show() и выведи её внутри той же функции."
     },
     {
       "lessonId": "py-functions-scope-02",
