@@ -135,7 +135,7 @@ function runSafePython(source,lesson) {
   if(s==="True")return true;if(s==="False")return false;
   if(/^-?\d+(?:\.\d+)?$/.test(s))return Number(s);
   let m=s.match(/^len\(([A-Za-z_]\w*)\)$/);
-  if(m&&vars[m[1]]&&typeof vars[m[1]]==="object")return Object.keys(vars[m[1]]).length;
+  if(m&&vars[m[1]]&&typeof vars[m[1]]==="object")return Array.isArray(vars[m[1]])?vars[m[1]].length:vars[m[1]] instanceof Set?vars[m[1]].size:Object.keys(vars[m[1]]).length;
   m=s.match(/^([A-Za-z_]\w*)\[(\d+)\]$/);
   if(m&&Array.isArray(vars[m[1]]))return vars[m[1]][Number(m[2])];
   m=s.match(/^([A-Za-z_]\w*)\[(["'])(.*?)\2\]$/);
@@ -143,7 +143,7 @@ function runSafePython(source,lesson) {
   if(Object.prototype.hasOwnProperty.call(vars,s))return vars[s];
   if(s.startsWith("[")&&s.endsWith("]")){const body=s.slice(1,-1).trim();return body?body.split(",").map(part=>value(part)):[];}
   if(s.startsWith("(")&&s.endsWith(")")){const body=s.slice(1,-1).trim(),tuple=body?body.split(",").map(part=>value(part)):[];tuple.__tuple=true;return tuple;}
-  if(s.startsWith("{")&&s.endsWith("}")){const body=s.slice(1,-1).trim(),obj={};if(!body)return obj;for(const pair of body.split(",")){const p=pair.split(":");if(p.length!==2)throw new Error("Проверь пары ключ: значение.");obj[String(value(p[0]))]=value(p[1]);}return obj;}
+  if(s.startsWith("{")&&s.endsWith("}")){const body=s.slice(1,-1).trim();if(!body)return {};if(!body.includes(":"))return new Set(body.split(",").map(part=>value(part)));const obj={};for(const pair of body.split(",")){const p=pair.split(":");if(p.length!==2)throw new Error("Проверь пары ключ: значение.");obj[String(value(p[0]))]=value(p[1]);}return obj;}
   throw new Error("Не удалось разобрать выражение: "+s);
  };
  const repr=x=>Array.isArray(x)?(x.__tuple?"("+x.map(v=>String(v)).join(", ")+")":"["+x.map(v=>typeof v==="string"?"'"+v+"'":String(v)).join(", ")+"]"):(x&&typeof x==="object"?"{"+Object.entries(x).map(([k,v])=>"'"+k+"': "+(typeof v==="string"?"'"+v+"'":String(v))).join(", ")+"}":String(x));
@@ -155,6 +155,7 @@ function runSafePython(source,lesson) {
    if(m){const tuple=value(m[3]);if(!Array.isArray(tuple)||tuple.length!==2)throw new Error("Для распаковки нужны ровно два значения.");vars[m[1]]=tuple[0];vars[m[2]]=tuple[1];continue;}
    m=line.match(/^([A-Za-z_]\w*)\[(["'])(.*?)\2\]\s*=\s*(.+)$/);
    if(m&&vars[m[1]]&&typeof vars[m[1]]==="object"){vars[m[1]][m[3]]=value(m[4]);continue;}
+   m=line.match(/^([A-Za-z_]\w*)\.add\((.*)\)$/);if(m&&vars[m[1]] instanceof Set){vars[m[1]].add(value(m[2]));continue;}
    m=line.match(/^([A-Za-z_]\w*)\.append\((.*)\)$/);
    if(m&&Array.isArray(vars[m[1]])){vars[m[1]].push(value(m[2]));continue;}
    m=line.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);

@@ -12,8 +12,8 @@
         "sets"
       ],
       "theory": "Множество хранит уникальные значения. Повторяющиеся элементы при создании остаются в одном экземпляре.",
-      "starterCode": "colours = {\"red\", \"blue\"}\nprint(colours)",
-      "expectedOutput": "{'red', 'blue'}",
+      "starterCode": "colours = {\"red\", \"blue\"}\nprint(len(colours))",
+      "expectedOutput": "2",
       "hint": "Создай множество из двух строк."
     },
     {
@@ -57,8 +57,8 @@
         "sets"
       ],
       "theory": "Операция | создаёт множество из элементов обоих множеств без повторов.",
-      "starterCode": "first = {1, 2}\nsecond = {2, 3}\nprint(first | second)",
-      "expectedOutput": "{1, 2, 3}",
+      "starterCode": "first = {1, 2}\nsecond = {2, 3}\ncombined = first | second\nprint(len(combined))",
+      "expectedOutput": "3",
       "hint": "Объедини множества оператором |."
     }
   ]
