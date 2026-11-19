@@ -204,7 +204,11 @@ export function runSafePython(source,lesson) {
   if(s==="float(input())")return Number(lesson.exampleInput??0);
   if(s==="True")return true;if(s==="False")return false;
   if(/^-?\d+(?:\.\d+)?$/.test(s))return Number(s);
-  let m=s.match(/^([A-Za-z_]\w*)\s*([+*\-/])\s*([A-Za-z_]\w*|\d+(?:\.\d+)?)$/);
+  let m=s.match(/^([A-Za-z_]\w*)\s*\|\s*([A-Za-z_]\w*)$/);
+  if(m&&vars[m[1]] instanceof Set&&vars[m[2]] instanceof Set)return new Set([...vars[m[1]],...vars[m[2]]]);
+  m=s.match(/^([A-Za-z_]\w*)\[(\d*):(\d*)\]$/);
+  if(m&&Array.isArray(vars[m[1]]))return vars[m[1]].slice(m[2]===""?0:Number(m[2]),m[3]===""?undefined:Number(m[3]));
+  m=s.match(/^([A-Za-z_]\w*)\s*([+*\-/])\s*([A-Za-z_]\w*|\d+(?:\.\d+)?)$/);
   if(m){const a=Number(value(m[1])),b=Number(value(m[3]));if(!Number.isFinite(a)||!Number.isFinite(b))throw new Error("Для арифметики нужны числа.");return m[2]==="+"?a+b:m[2]==="-"?a-b:m[2]==="*"?a*b:a/b;}
   m=s.match(/^len\(([A-Za-z_]\w*)\)$/);
   if(m&&vars[m[1]]&&typeof vars[m[1]]==="object")return Array.isArray(vars[m[1]])?vars[m[1]].length:vars[m[1]] instanceof Set?vars[m[1]].size:Object.keys(vars[m[1]]).length;
@@ -244,9 +248,57 @@ export function runSafePython(source,lesson) {
    if(/^print\(/.test(line)){printLine(line);continue;}
    m=line.match(/^([A-Za-z_]\w*)\((.*)\)$/);if(m&&functions[m[1]]){callFunction(m[1],m[2]?m[2].split(",").map(x=>value(x)):[]);continue;}
    m=line.match(/^for\s+([A-Za-z_]\w*)\s+in\s+range\((\d+),\s*(\d+)\):$/);
-   if(m){const body=lines[i+1];if(!body||!/^\s{4}print\(\w+\)$/.test(body))throw new Error("В учебном цикле добавь print(имя) с отступом в четыре пробела.");for(let n=Number(m[2]);n<Number(m[3]);n++){vars[m[1]]=n;out.push(String(n));}i++;continue;}
+   if(m){
+    const body=[];let j=i+1;
+    while(j<lines.length&&/^\s{4}/.test(lines[j])){body.push(lines[j].slice(4));j++;}
+    if(!body.length)throw new Error("Добавь тело цикла с отступом в четыре пробела.");
+    let stop=false;
+    for(let n=Number(m[2]);n<Number(m[3]);n++){
+     vars[m[1]]=n;
+     for(let k=0;k<body.length;k++){
+      const statement=body[k];
+      if(statement.trim()==="break"){stop=true;break;}
+      if(statement.trim()==="continue")break;
+      const branch=statement.match(/^if\s+([A-Za-z_]\w*)\s*(==|!=|<=|>=|<|>)\s*(-?\d+(?:\.\d+)?):$/);
+      if(branch){
+       const nested=body[k+1];
+       if(!nested||! /^\s{4}/.test(nested))throw new Error("Добавь действие с отступом внутри if.");
+       const a=Number(vars[branch[1]]),b=Number(branch[3]),test={"==":a===b,"!=":a!==b,"<":a<b,">":a>b,"<=":a<=b,">=":a>=b}[branch[2]];
+       if(test){const action=nested.trim();if(action==="break"){stop=true;}else if(action==="continue"){k++;break;}else if(action.startsWith("print(")){printLine(action);}else throw new Error("Внутри цикла поддерживаются print(), break и continue.");}
+       k++;if(stop)break;continue;
+      }
+      if(statement.startsWith("print(")){printLine(statement);continue;}
+      const assignment=statement.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);
+      if(assignment){vars[assignment[1]]=value(assignment[2]);continue;}
+      throw new Error("В цикле поддерживаются print(), простые присваивания, if, break и continue.");
+     }
+     if(stop)break;
+    }
+    i=j-1;continue;
+   }
    m=line.match(/^if\s+([A-Za-z_]\w*)\s*(==|!=|<=|>=|<|>)\s*(-?\d+(?:\.\d+)?):$/);
-   if(m){const yes=lines[i+1],no=lines[i+2],els=lines[i+3];if(!yes||!no||!els||!/^else:$/.test(no.trim()))throw new Error("Для if используй блоки if и else с отступами.");const a=Number(vars[m[1]]),b=Number(m[3]);const result={"==":a===b,"!=":a!==b,"<":a<b,">":a>b,"<=":a<=b,">=":a>=b}[m[2]];const selected=result?yes:els;if(!/^\s{4}print\(/.test(selected))throw new Error("Внутри if/else нужен print() с отступом.");printLine(selected.trim());i+=3;continue;}
+   if(m){
+    const branches=[];let cursor=i,elseLine=null;
+    while(cursor<lines.length){
+     const header=lines[cursor].trim();
+     const condition=header.match(/^(?:if|elif)\s+([A-Za-z_]\w*)\s*(==|!=|<=|>=|<|>)\s*(-?\d+(?:\.\d+)?):$/);
+     if(condition){
+      const body=lines[cursor+1];
+      if(!body||! /^\s{4}print\(/.test(body))throw new Error("Внутри if/elif нужен print() с отступом.");
+      branches.push({condition,body:body.trim()});cursor+=2;continue;
+     }
+     if(header==="else:"){
+      const body=lines[cursor+1];
+      if(!body||! /^\s{4}print\(/.test(body))throw new Error("Внутри else нужен print() с отступом.");
+      elseLine=body.trim();cursor+=2;
+     }
+     break;
+    }
+    const matches=condition=>{const a=Number(vars[condition[1]]),b=Number(condition[3]);return {"==":a===b,"!=":a!==b,"<":a<b,">":a>b,"<=":a<=b,">=":a>=b}[condition[2]];};
+    const selected=branches.find(branch=>matches(branch.condition));
+    if(selected)printLine(selected.body);else if(elseLine)printLine(elseLine);
+    i=cursor-1;continue;
+   }
    m=line.match(/^while\s+([A-Za-z_]\w*)\s*(<|<=|>|>=|==|!=)\s*(\d+):$/);
    if(m){const body=lines[i+1],increment=lines[i+2];if(!body||body.trim()!=="print("+m[1]+")"||!increment||increment.trim()!==m[1]+" = "+m[1]+" + 1")throw new Error("Для while нужны print(счётчик) и увеличение счётчика на 1.");let guard=0;const limit=Number(m[3]),test=n=>({"<":n<limit,"<=":n<=limit,">":n>limit,">=":n>=limit,"==":n===limit,"!=":n!==limit}[m[2]]);while(test(Number(vars[m[1]]))&&guard++<100){out.push(String(vars[m[1]]));vars[m[1]]=Number(vars[m[1]])+1;}if(guard>=100)throw new Error("Цикл остановлен: превышен безопасный лимит.");i+=2;continue;}
    throw new Error("Строка пока не входит в безопасный учебный Python: "+line.trim());
