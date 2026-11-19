@@ -1,0 +1,65 @@
+{
+  "unitId": "py-data-lists",
+  "lessons": [
+    {
+      "lessonId": "py-data-lists-01",
+      "unitId": "py-data-lists",
+      "order": 1,
+      "title": "Создание списка",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "lists"
+      ],
+      "theory": "Список хранит несколько значений в определённом порядке. Элементы записывают в квадратных скобках через запятую.",
+      "starterCode": "colors = [\"red\", \"blue\"]\nprint(colors)",
+      "expectedOutput": "['red', 'blue']",
+      "hint": "Создай список из двух строк в квадратных скобках."
+    },
+    {
+      "lessonId": "py-data-lists-02",
+      "unitId": "py-data-lists",
+      "order": 2,
+      "title": "Индекс элемента",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "lists"
+      ],
+      "theory": "Индексация начинается с нуля: colors[0] — первый элемент, colors[1] — второй.",
+      "starterCode": "colors = [\"red\", \"blue\"]\nprint(colors[0])",
+      "expectedOutput": "red",
+      "hint": "Для первого элемента используй индекс 0."
+    },
+    {
+      "lessonId": "py-data-lists-03",
+      "unitId": "py-data-lists",
+      "order": 3,
+      "title": "Добавление элемента",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "lists"
+      ],
+      "theory": "Метод append() добавляет один элемент в конец списка.",
+      "starterCode": "colors = [\"red\", \"blue\"]\ncolors.append(\"green\")\nprint(colors)",
+      "expectedOutput": "['red', 'blue', 'green']",
+      "hint": "Вызови append(\"green\") у списка colors."
+    },
+    {
+      "lessonId": "py-data-lists-04",
+      "unitId": "py-data-lists",
+      "order": 4,
+      "title": "Длина списка",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "lists"
+      ],
+      "theory": "len() возвращает количество элементов списка, а не последний индекс.",
+      "starterCode": "colors = [\"red\", \"blue\", \"green\"]\nprint(len(colors))",
+      "expectedOutput": "3",
+      "hint": "Передай список colors в len()."
+    }
+  ]
+}

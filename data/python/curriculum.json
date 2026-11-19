@@ -101,6 +101,23 @@
         "py-control-loops-03",
         "py-control-loops-04"
       ]
+    },
+    {
+      "unitId": "py-data-lists",
+      "level": "Data Structures",
+      "title": "Списки",
+      "description": "Создавать списки, обращаться к элементам и менять коллекции.",
+      "order": 7,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-control-loops"
+      ],
+      "lessonIds": [
+        "py-data-lists-01",
+        "py-data-lists-02",
+        "py-data-lists-03",
+        "py-data-lists-04"
+      ]
     }
   ]
 }

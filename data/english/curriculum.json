@@ -50,6 +50,23 @@
         "en-a1-numbers-time-03",
         "en-a1-numbers-time-04"
       ]
+    },
+    {
+      "unitId": "en-a1-food-drink",
+      "level": "A1",
+      "title": "Еда и напитки",
+      "description": "Заказывать еду, говорить о вкусах и количестве.",
+      "order": 4,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a1-numbers-time"
+      ],
+      "lessonIds": [
+        "en-a1-food-drink-01",
+        "en-a1-food-drink-02",
+        "en-a1-food-drink-03",
+        "en-a1-food-drink-04"
+      ]
     }
   ]
 }

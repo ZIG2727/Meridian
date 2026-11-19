@@ -101,6 +101,23 @@
         "ch-tactics-forks-03",
         "ch-tactics-forks-04"
       ]
+    },
+    {
+      "unitId": "ch-tactics-pins",
+      "level": "Tactics",
+      "title": "Связки",
+      "description": "Находить абсолютные и относительные связки.",
+      "order": 7,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-tactics-forks"
+      ],
+      "lessonIds": [
+        "ch-tactics-pins-01",
+        "ch-tactics-pins-02",
+        "ch-tactics-pins-03",
+        "ch-tactics-pins-04"
+      ]
     }
   ]
 }
