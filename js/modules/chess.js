@@ -136,6 +136,7 @@ function enablePieceHints(container, board, initialPosition, status) {
     const square = event.target.dataset.square || event.target.getAttribute("aria-label");
     if (square) { event.preventDefault(); selectSquare(square); }
   });
+  return { setPosition(nextPosition) { currentPosition = nextPosition; } };
 }
 
 function piecesToFen(pieces, sourceFen) {
@@ -244,7 +245,7 @@ export async function renderChess(app) {
       content.querySelector("#board-fallback").hidden = false;
     }
 
-    enablePieceHints(boardContainer, board, lesson.fen || lesson.position || "start", content.querySelector("#piece-hint-status"));
+    const pieceHints = enablePieceHints(boardContainer, board, lesson.fen || lesson.position || "start", content.querySelector("#piece-hint-status"));
     content.querySelector("#chess-back").addEventListener("click", renderList);
     content.querySelector("#show-chess-move").addEventListener("click", () => {
       if (board) {
@@ -258,16 +259,9 @@ export async function renderChess(app) {
             delete boardState[move.from];
           }
         });
-        renderStaticBoard(boardContainer, "8/8/8/8/8/8/8/8");
-        const squares = boardContainer.querySelectorAll(".chess-square");
-        const ordered = [];
-        for (let rank = 8; rank >= 1; rank -= 1) {
-          for (let file = 0; file < 8; file += 1) ordered.push("abcdefgh"[file] + rank);
-        }
-        squares.forEach((square, index) => {
-          const piece = boardState[ordered[index]];
-          square.innerHTML = piece ? '<span class="' + (piece === piece.toUpperCase() ? "white-piece" : "black-piece") + '">' + (pieceSymbols[piece] || "") + '</span>' : "";
-        });
+        const finalPosition = piecesToFen(boardState, lesson.fen || lesson.position || "start");
+        pieceHints.setPosition(finalPosition);
+        renderStaticBoard(boardContainer, finalPosition);
       }
     });
 
