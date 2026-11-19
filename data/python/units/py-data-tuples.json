@@ -12,8 +12,8 @@
         "tuples"
       ],
       "theory": "Кортеж похож на список, но после создания его элементы нельзя менять. Кортеж часто записывают в круглых скобках.",
-      "starterCode": "point = (3, 5)\nprint(point)",
-      "expectedOutput": "(3, 5)",
+      "starterCode": "point = (3, 5)\nprint(point[0])",
+      "expectedOutput": "3",
       "hint": "Запиши два числа в круглых скобках через запятую."
     },
     {

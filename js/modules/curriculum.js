@@ -143,6 +143,7 @@ function runSafePython(source,lesson) {
   if(Object.prototype.hasOwnProperty.call(vars,s))return vars[s];
   if(s.startsWith("[")&&s.endsWith("]")){const body=s.slice(1,-1).trim();return body?body.split(",").map(part=>value(part)):[];}
   if(s.startsWith("(")&&s.endsWith(")")){const body=s.slice(1,-1).trim(),tuple=body?body.split(",").map(part=>value(part)):[];tuple.__tuple=true;return tuple;}
+  if(s.startsWith("(")&&s.endsWith(")")){const body=s.slice(1,-1).trim(),tuple=body?body.split(",").map(part=>value(part)):[];tuple.__tuple=true;return tuple;}
   if(s.startsWith("{")&&s.endsWith("}")){const body=s.slice(1,-1).trim();if(!body)return {};if(!body.includes(":"))return new Set(body.split(",").map(part=>value(part)));const obj={};for(const pair of body.split(",")){const p=pair.split(":");if(p.length!==2)throw new Error("Проверь пары ключ: значение.");obj[String(value(p[0]))]=value(p[1]);}return obj;}
   throw new Error("Не удалось разобрать выражение: "+s);
  };

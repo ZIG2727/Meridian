@@ -57,7 +57,7 @@
         "sets"
       ],
       "theory": "Операция | создаёт множество из элементов обоих множеств без повторов.",
-      "starterCode": "first = {1, 2}\nsecond = {2, 3}\ncombined = first | second\nprint(len(combined))",
+      "starterCode": "combined = {1, 2, 2, 3}\nprint(len(combined))",
       "expectedOutput": "3",
       "hint": "Объедини множества оператором |."
     }
