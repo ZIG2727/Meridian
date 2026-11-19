@@ -50,16 +50,16 @@
       "lessonId": "py-control-loops-04",
       "unitId": "py-control-loops",
       "order": 4,
-      "title": "Диапазоны в цикле",
+      "title": "Операторы break и continue",
       "estimatedMinutes": 9,
       "tags": [
         "control-flow",
         "loops"
       ],
-      "theory": "range(start, stop) включает start, но не включает stop. Меняя границы, можно получить нужный диапазон чисел.",
-      "starterCode": "for number in range(3, 6):\n    print(number)",
-      "expectedOutput": "3\n4\n5",
-      "hint": "Укажи начало 3 и верхнюю границу 6: она не включается."
+      "theory": "continue пропускает оставшуюся часть текущей итерации и переходит к следующей. break немедленно завершает ближайший цикл. Условия внутри цикла помогают выбрать нужный момент.",
+      "starterCode": "for number in range(1, 6):\n    if number == 3:\n        continue\n    if number == 5:\n        break\n    print(number)",
+      "expectedOutput": "1\n2\n4",
+      "hint": "Проверь оба условия: число 3 пропускается, а при числе 5 цикл останавливается."
     }
   ]
 }
