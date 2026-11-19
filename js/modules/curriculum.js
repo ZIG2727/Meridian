@@ -239,6 +239,8 @@ export function runSafePython(source,lesson) {
   if(s==="input()")return String(lesson.exampleInput??"");
   if(s==="int(input())")return Number(lesson.exampleInput??0);
   if(s==="float(input())")return Number(lesson.exampleInput??0);
+  const integerCall=s.match(/^int\((.+)\)$/);
+  if(integerCall){const number=Number(value(integerCall[1]));if(!Number.isInteger(number)){const error=new Error("Значение нельзя преобразовать в целое число.");error.name="ValueError";throw error;}return number;}
   if(s==="True")return true;if(s==="False")return false;
   if(/^-?\d+(?:\.\d+)?$/.test(s))return Number(s);
   let m=s.match(/^([A-Za-z_]\w*)\s*\|\s*([A-Za-z_]\w*)$/);
@@ -283,6 +285,13 @@ export function runSafePython(source,lesson) {
    m=line.match(/^([A-Za-z_]\w*)\.append\((.*)\)$/);if(m&&Array.isArray(vars[m[1]])){vars[m[1]].push(value(m[2]));continue;}
    m=line.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);if(m){vars[m[1]]=value(m[2]);continue;}
    if(/^print\(/.test(line)){printLine(line);continue;}
+   if(line.trim()==="try:"){
+    const tryLine=lines[i+1],exceptLine=lines[i+2],exceptBody=lines[i+3];
+    const handler=exceptLine?.trim().match(/^except\s+([A-Za-z_]\w*):$/);
+    if(!tryLine||!/^\s{4}print\(/.test(tryLine)||!handler||!exceptBody||!/^\s{4}print\(/.test(exceptBody))throw new Error("В учебном try/except нужны print() и один блок except с отступами.");
+    try{printLine(tryLine.trim());}catch(error){if(error.name===handler[1])printLine(exceptBody.trim());else throw error;}
+    i+=3;continue;
+   }
    m=line.match(/^([A-Za-z_]\w*)\((.*)\)$/);if(m&&functions[m[1]]){callFunction(m[1],m[2]?m[2].split(",").map(x=>value(x)):[]);continue;}
    m=line.match(/^for\s+([A-Za-z_]\w*)\s+in\s+range\((\d+),\s*(\d+)\):$/);
    if(m){
