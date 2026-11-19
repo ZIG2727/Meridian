@@ -16,6 +16,91 @@
         "py-basics-print-03",
         "py-basics-print-04"
       ]
+    },
+    {
+      "unitId": "py-basics-variables",
+      "level": "Basics",
+      "title": "Переменные",
+      "description": "Имена, присваивание и изменение значений.",
+      "order": 2,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-basics-print"
+      ],
+      "lessonIds": [
+        "py-basics-variables-01",
+        "py-basics-variables-02",
+        "py-basics-variables-03",
+        "py-basics-variables-04"
+      ]
+    },
+    {
+      "unitId": "py-basics-types",
+      "level": "Basics",
+      "title": "Типы данных",
+      "description": "Строки, целые числа, дроби и логические значения.",
+      "order": 3,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-basics-variables"
+      ],
+      "lessonIds": [
+        "py-basics-types-01",
+        "py-basics-types-02",
+        "py-basics-types-03",
+        "py-basics-types-04"
+      ]
+    },
+    {
+      "unitId": "py-basics-input",
+      "level": "Basics",
+      "title": "Ввод данных",
+      "description": "Получение данных пользователя и преобразование типов.",
+      "order": 4,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-basics-types"
+      ],
+      "lessonIds": [
+        "py-basics-input-01",
+        "py-basics-input-02",
+        "py-basics-input-03",
+        "py-basics-input-04"
+      ]
+    },
+    {
+      "unitId": "py-control-if",
+      "level": "Control Flow",
+      "title": "Условия if",
+      "description": "Сравнение значений и выбор ветви выполнения.",
+      "order": 5,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-basics-input"
+      ],
+      "lessonIds": [
+        "py-control-if-01",
+        "py-control-if-02",
+        "py-control-if-03",
+        "py-control-if-04"
+      ]
+    },
+    {
+      "unitId": "py-control-loops",
+      "level": "Control Flow",
+      "title": "Циклы for и while",
+      "description": "Повторение команд с заданным количеством и условием.",
+      "order": 6,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-control-if"
+      ],
+      "lessonIds": [
+        "py-control-loops-01",
+        "py-control-loops-02",
+        "py-control-loops-03",
+        "py-control-loops-04"
+      ]
     }
   ]
 }

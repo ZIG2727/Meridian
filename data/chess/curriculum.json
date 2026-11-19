@@ -16,6 +16,91 @@
         "ch-basics-board-03",
         "ch-basics-board-04"
       ]
+    },
+    {
+      "unitId": "ch-basics-pawn",
+      "level": "Basics",
+      "title": "Пешка",
+      "description": "Ход, взятие, превращение и взятие на проходе.",
+      "order": 2,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-board"
+      ],
+      "lessonIds": [
+        "ch-basics-pawn-01",
+        "ch-basics-pawn-02",
+        "ch-basics-pawn-03",
+        "ch-basics-pawn-04"
+      ]
+    },
+    {
+      "unitId": "ch-basics-knight",
+      "level": "Basics",
+      "title": "Конь",
+      "description": "Г-образный ход, прыжок через фигуры и центр.",
+      "order": 3,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-board"
+      ],
+      "lessonIds": [
+        "ch-basics-knight-01",
+        "ch-basics-knight-02",
+        "ch-basics-knight-03",
+        "ch-basics-knight-04"
+      ]
+    },
+    {
+      "unitId": "ch-basics-bishop",
+      "level": "Basics",
+      "title": "Слон",
+      "description": "Диагональное движение и активность слонов.",
+      "order": 4,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-board"
+      ],
+      "lessonIds": [
+        "ch-basics-bishop-01",
+        "ch-basics-bishop-02",
+        "ch-basics-bishop-03",
+        "ch-basics-bishop-04"
+      ]
+    },
+    {
+      "unitId": "ch-basics-rook",
+      "level": "Basics",
+      "title": "Ладья",
+      "description": "Линейные ходы и открытые линии.",
+      "order": 5,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-board"
+      ],
+      "lessonIds": [
+        "ch-basics-rook-01",
+        "ch-basics-rook-02",
+        "ch-basics-rook-03",
+        "ch-basics-rook-04"
+      ]
+    },
+    {
+      "unitId": "ch-tactics-forks",
+      "level": "Tactics",
+      "title": "Вилки",
+      "description": "Двойное нападение одной фигурой.",
+      "order": 6,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-knight"
+      ],
+      "lessonIds": [
+        "ch-tactics-forks-01",
+        "ch-tactics-forks-02",
+        "ch-tactics-forks-03",
+        "ch-tactics-forks-04"
+      ]
     }
   ]
 }

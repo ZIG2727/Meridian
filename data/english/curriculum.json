@@ -16,6 +16,40 @@
         "en-a1-greetings-03",
         "en-a1-greetings-04"
       ]
+    },
+    {
+      "unitId": "en-a1-introductions",
+      "level": "A1",
+      "title": "Знакомство",
+      "description": "Представиться и задать вопросы о собеседнике.",
+      "order": 2,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a1-greetings"
+      ],
+      "lessonIds": [
+        "en-a1-introductions-01",
+        "en-a1-introductions-02",
+        "en-a1-introductions-03",
+        "en-a1-introductions-04"
+      ]
+    },
+    {
+      "unitId": "en-a1-numbers-time",
+      "level": "A1",
+      "title": "Числа и время",
+      "description": "Называть числа, дни недели и время.",
+      "order": 3,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a1-introductions"
+      ],
+      "lessonIds": [
+        "en-a1-numbers-time-01",
+        "en-a1-numbers-time-02",
+        "en-a1-numbers-time-03",
+        "en-a1-numbers-time-04"
+      ]
     }
   ]
 }
