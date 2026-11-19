@@ -1,5 +1,5 @@
 import { loadJSON, readStored, writeStored } from "../storage.js";
-import { animateProgress, celebrate, prefersReducedMotion } from "../motion.js";
+import { animateProgress, celebrate } from "../motion.js";
 
 const MODULES = {
   english: { title: "Английский", subtitle: "RU → EN · интервальное повторение", color: "english" },
