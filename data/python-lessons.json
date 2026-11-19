@@ -3,32 +3,32 @@
     "id": "print",
     "title": "Вывод текста: print()",
     "theory": "Функция print() выводит значение на экран. Текст передают в кавычках. Скобки обязательны: внутри них указывают то, что нужно вывести.",
-    "starterCode": "print(\"Hello\")",
-    "expectedOutput": "print(\"Hello, world!\")",
-    "hint": "Используй print() и строку Hello, world! в кавычках."
+    "starterCode": "print(\"Hello, world!\")",
+    "expectedOutput": "Hello, world!",
+    "hint": "Передай строку Hello, world! в print() и не забудь кавычки."
   },
   {
     "id": "variables",
     "title": "Переменные",
-    "theory": "Переменная хранит значение, к которому можно обратиться по имени. Для создания переменной используют знак равенства. В примере строка хранится в name, затем передаётся в print().",
-    "starterCode": "name = \"Mira\"\nprint(name)",
-    "expectedOutput": "name = \"Alex\"\nprint(name)",
-    "hint": "Измени значение name на Alex, затем выведи name."
+    "theory": "Переменная хранит значение, к которому можно обратиться по имени. Для создания переменной используют знак равенства. Затем значение можно вывести через print().",
+    "starterCode": "name = \"Alex\"\nprint(name)",
+    "expectedOutput": "Alex",
+    "hint": "Создай переменную name со строковым значением Alex, затем выведи её."
   },
   {
     "id": "conditions",
     "title": "Условия if и else",
     "theory": "Условие if выполняет блок кода, когда выражение истинно. Иначе можно выполнить блок else. В Python вложенные строки выделяются отступом — обычно четырьмя пробелами.",
-    "starterCode": "temperature = 15\nif temperature < 20:\n    print(\"Warm day\")\nelse:\n    print(\"Cold day\")",
-    "expectedOutput": "temperature = 15\nif temperature < 20:\n    print(\"Take a jacket\")\nelse:\n    print(\"No jacket needed\")",
-    "hint": "В ветке if выведи Take a jacket, иначе — No jacket needed."
+    "starterCode": "temperature = 15\nif temperature < 20:\n    print(\"Take a jacket\")\nelse:\n    print(\"No jacket needed\")",
+    "expectedOutput": "Take a jacket",
+    "hint": "Проверь temperature < 20. При истинном условии напечатай Take a jacket."
   },
   {
     "id": "loops",
     "title": "Цикл for",
     "theory": "Цикл for повторяет блок кода для каждого элемента последовательности. range(1, 4) создаёт числа 1, 2 и 3: верхняя граница не включается. Отступ показывает тело цикла.",
-    "starterCode": "for number in range(1, 4):\n    print(number + 1)",
-    "expectedOutput": "for number in range(1, 4):\n    print(number)",
-    "hint": "range(1, 4) перебирает 1, 2 и 3. Выводи number без прибавления единицы."
+    "starterCode": "for number in range(1, 4):\n    print(number)",
+    "expectedOutput": "1\n2\n3",
+    "hint": "Используй range(1, 4) и выводи number внутри цикла."
   }
 ]
