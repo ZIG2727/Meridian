@@ -131,6 +131,8 @@ if (totals.cards < 500) fail("English course needs at least 500 cards; got " + t
 const curriculumSource = await readFile(resolve(root, "js/modules/curriculum.js"), "utf8");
 if (!curriculumSource.includes("mrd:v3:")) fail("V3 storage namespace missing");
 if (/\beval\s*\(/.test(curriculumSource) || /new\s+Function\s*\(/.test(curriculumSource)) fail("Unsafe dynamic execution found");
+if (!curriculumSource.includes("pseudoLegalMoves") || !curriculumSource.includes("data-square")) fail("Interactive chess move hints missing");
+if (!curriculumSource.includes("firstOutputDifference")) fail("Python output difference feedback missing");
 const html = await readFile(resolve(root, "index.html"), "utf8");
 if (/\bonclick\s*=/i.test(html)) fail("Inline onclick found");
 console.log("V3 curriculum validation passed:", JSON.stringify(totals));
