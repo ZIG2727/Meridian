@@ -135,6 +135,23 @@
         "en-a2-travel-03",
         "en-a2-travel-04"
       ]
+    },
+    {
+      "unitId": "en-a2-directions-weather",
+      "level": "A2",
+      "title": "Направления и погода",
+      "description": "Ориентироваться в городе и описывать погоду.",
+      "order": 10,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-travel"
+      ],
+      "lessonIds": [
+        "en-a2-directions-weather-01",
+        "en-a2-directions-weather-02",
+        "en-a2-directions-weather-03",
+        "en-a2-directions-weather-04"
+      ]
     }
   ]
 }

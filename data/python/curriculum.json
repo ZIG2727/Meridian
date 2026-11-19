@@ -186,6 +186,23 @@
         "py-functions-basics-03",
         "py-functions-basics-04"
       ]
+    },
+    {
+      "unitId": "py-functions-arguments",
+      "level": "Functions",
+      "title": "Аргументы и return",
+      "description": "Передавать аргументы и возвращать результат функции.",
+      "order": 13,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-functions-basics"
+      ],
+      "lessonIds": [
+        "py-functions-arguments-01",
+        "py-functions-arguments-02",
+        "py-functions-arguments-03",
+        "py-functions-arguments-04"
+      ]
     }
   ]
 }

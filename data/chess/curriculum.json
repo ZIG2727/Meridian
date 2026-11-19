@@ -186,6 +186,23 @@
         "ch-endgames-king-pawn-03",
         "ch-endgames-king-pawn-04"
       ]
+    },
+    {
+      "unitId": "ch-endgames-rook",
+      "level": "Endgames",
+      "title": "Ладейные окончания",
+      "description": "Понимать активность ладьи, отсечение короля и базовые принципы.",
+      "order": 13,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-endgames-king-pawn"
+      ],
+      "lessonIds": [
+        "ch-endgames-rook-01",
+        "ch-endgames-rook-02",
+        "ch-endgames-rook-03",
+        "ch-endgames-rook-04"
+      ]
     }
   ]
 }
