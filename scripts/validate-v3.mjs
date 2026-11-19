@@ -59,7 +59,7 @@ const validFen = fen => {
   if (Math.max(Math.abs(whiteKing.x - blackKing.x), Math.abs(whiteKing.y - blackKing.y)) <= 1) return false;
   const sideWhite = fields[1] === "w", nonMovingKing = sideWhite ? blackKing : whiteKing;
   if (isAttacked(board, nonMovingKing.x, nonMovingKing.y, sideWhite)) return false;
-  const has = (square, piece) => board[7 - Number(square[1])][square.charCodeAt(0) - 97] === piece;
+  const has = (square, piece) => board[8 - Number(square[1])][square.charCodeAt(0) - 97] === piece;
   for (const right of fields[2] === "-" ? "" : fields[2]) {
     const pair = right === "K" ? ["e1", "K", "h1", "R"] : right === "Q" ? ["e1", "K", "a1", "R"] : right === "k" ? ["e8", "k", "h8", "r"] : ["e8", "k", "a8", "r"];
     if (!has(pair[0], pair[1]) || !has(pair[2], pair[3])) return false;
