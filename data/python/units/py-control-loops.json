@@ -1,0 +1,65 @@
+{
+  "unitId": "py-control-loops",
+  "lessons": [
+    {
+      "lessonId": "py-control-loops-01",
+      "unitId": "py-control-loops",
+      "order": 1,
+      "title": "Цикл for",
+      "estimatedMinutes": 9,
+      "tags": [
+        "control-flow",
+        "loops"
+      ],
+      "theory": "for перебирает элементы последовательности. range(1, 4) даёт 1, 2 и 3: правая граница не включается.",
+      "starterCode": "for number in range(1, 4):\n    print(number)",
+      "expectedOutput": "1\n2\n3",
+      "hint": "Для трёх чисел используй range(1, 4)."
+    },
+    {
+      "lessonId": "py-control-loops-02",
+      "unitId": "py-control-loops",
+      "order": 2,
+      "title": "Границы range",
+      "estimatedMinutes": 9,
+      "tags": [
+        "control-flow",
+        "loops"
+      ],
+      "theory": "range(start, stop) включает start, но не включает stop. Поэтому количество значений равно разнице границ.",
+      "starterCode": "for n in range(2, 5):\n    print(n)",
+      "expectedOutput": "2\n3\n4",
+      "hint": "Начни с 2 и укажи границу 5."
+    },
+    {
+      "lessonId": "py-control-loops-03",
+      "unitId": "py-control-loops",
+      "order": 3,
+      "title": "Цикл while",
+      "estimatedMinutes": 9,
+      "tags": [
+        "control-flow",
+        "loops"
+      ],
+      "theory": "while повторяет блок, пока условие истинно. Внутри цикла важно менять значение, влияющее на условие.",
+      "starterCode": "count = 1\nwhile count < 4:\n    print(count)\n    count = count + 1",
+      "expectedOutput": "1\n2\n3",
+      "hint": "После вывода увеличивай count на единицу."
+    },
+    {
+      "lessonId": "py-control-loops-04",
+      "unitId": "py-control-loops",
+      "order": 4,
+      "title": "Суммирование",
+      "estimatedMinutes": 9,
+      "tags": [
+        "control-flow",
+        "loops"
+      ],
+      "theory": "Переменная-накопитель хранит промежуточный результат. В цикле к ней добавляют очередное значение.",
+      "starterCode": "total = 0\nfor n in range(1, 4):\n    total = total + n\nprint(total)",
+      "expectedOutput": "6",
+      "hint": "Начни с total = 0 и прибавляй каждое n."
+    }
+  ]
+}
