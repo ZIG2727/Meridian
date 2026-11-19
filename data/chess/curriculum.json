@@ -203,6 +203,23 @@
         "ch-endgames-rook-03",
         "ch-endgames-rook-04"
       ]
+    },
+    {
+      "unitId": "ch-endgames-basic-mates",
+      "level": "Endgames",
+      "title": "Основные маты",
+      "description": "Узнавать мат ферзём, ладьёй и двумя ладьями.",
+      "order": 14,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-endgames-rook"
+      ],
+      "lessonIds": [
+        "ch-endgames-basic-mates-01",
+        "ch-endgames-basic-mates-02",
+        "ch-endgames-basic-mates-03",
+        "ch-endgames-basic-mates-04"
+      ]
     }
   ]
 }

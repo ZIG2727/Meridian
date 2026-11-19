@@ -152,6 +152,23 @@
         "en-a2-directions-weather-03",
         "en-a2-directions-weather-04"
       ]
+    },
+    {
+      "unitId": "en-b1-work-office",
+      "level": "B1",
+      "title": "Работа и офис",
+      "description": "Обсуждать рабочие задачи, встречи и обязанности.",
+      "order": 11,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-directions-weather"
+      ],
+      "lessonIds": [
+        "en-b1-work-office-01",
+        "en-b1-work-office-02",
+        "en-b1-work-office-03",
+        "en-b1-work-office-04"
+      ]
     }
   ]
 }
