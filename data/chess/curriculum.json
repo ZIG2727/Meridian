@@ -137,37 +137,37 @@
       ]
     },
     {
-      "unitId": "ch-tactics-double-check",
+      "unitId": "ch-tactics-discovered",
       "level": "Tactics",
-      "title": "Двойной шах",
-      "description": "Распознавать двойной шах и способы защиты.",
+      "title": "Вскрытое нападение",
+      "description": "Использовать ход одной фигуры для открытия атаки другой.",
       "order": 9,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "ch-tactics-skewers"
       ],
       "lessonIds": [
-        "ch-tactics-double-check-01",
-        "ch-tactics-double-check-02",
-        "ch-tactics-double-check-03",
-        "ch-tactics-double-check-04"
-      ]
-    },
-    {
-      "unitId": "ch-tactics-discovered",
-      "level": "Tactics",
-      "title": "Вскрытое нападение",
-      "description": "Использовать ход одной фигуры для открытия атаки другой.",
-      "order": 10,
-      "estimatedMinutes": 32,
-      "prerequisiteUnits": [
-        "ch-tactics-double-check"
-      ],
-      "lessonIds": [
         "ch-tactics-discovered-01",
         "ch-tactics-discovered-02",
         "ch-tactics-discovered-03",
         "ch-tactics-discovered-04"
+      ]
+    },
+    {
+      "unitId": "ch-tactics-double-check",
+      "level": "Tactics",
+      "title": "Двойной шах",
+      "description": "Распознавать двойной шах и способы защиты.",
+      "order": 10,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-tactics-discovered"
+      ],
+      "lessonIds": [
+        "ch-tactics-double-check-01",
+        "ch-tactics-double-check-02",
+        "ch-tactics-double-check-03",
+        "ch-tactics-double-check-04"
       ]
     },
     {
