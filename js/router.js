@@ -85,11 +85,30 @@ async function renderDashboard(app) {
   const pythonValid = python.some(item => item.id === pythonSession?.lessonId) && typeof pythonSession?.code === "string";
   const todayDue = english.filter((_, index) => !englishProgress[String(index)] || !Number.isFinite(englishProgress[String(index)].due) || englishProgress[String(index)].due <= Date.now()).length;
 
+  const resumeItems = [];
+  if (englishValid) {
+    const dueIndices = english.map((_, index) => index).filter(index => !englishProgress[String(index)] || !Number.isFinite(englishProgress[String(index)].due) || englishProgress[String(index)].due <= Date.now());
+    const position = Math.max(0, dueIndices.indexOf(englishSession.currentCardIndex));
+    resumeItems.push({ label: "Английский", detail: "Карточка " + (position + 1) + " из " + dueIndices.length, href: "#/english" });
+  }
+  if (chessValid) {
+    const index = chess.findIndex(item => item.id === chessSession);
+    resumeItems.push({ label: "Шахматы", detail: "Урок " + (index + 1) + " — " + chess[index].title, href: "#/chess" });
+  }
+  if (pythonValid) {
+    const index = python.findIndex(item => item.id === pythonSession.lessonId);
+    resumeItems.push({ label: "Python", detail: "Урок " + (index + 1) + " — " + python[index].title, href: "#/python" });
+  }
+  const resumeBlock = resumeItems.length
+    ? '<section class="resume-panel" aria-label="Продолжить занятие"><div><p class="eyebrow">Продолжить</p><h2>Вы остановились здесь</h2></div>' +
+      resumeItems.map(item => '<a class="resume-link" href="' + item.href + '"><span><strong>' + item.label + '</strong><small>' + escapeHTML(item.detail) + '</small></span><span aria-hidden="true">→</span></a>').join("") + '</section>'
+    : "";
   grid.innerHTML = [
     subjectCard("english", "Английский", "Переводите слова и фразы. Сегодня к изучению: "+ todayDue +".", reviewed, english.length, english.length ? reviewed / english.length * 100 : 0, englishValid ? "Продолжить английский" : null, !data.english),
     subjectCard("chess", "Шахматы", "Разбирайте правила и тактические задачи. Не завершено: "+ (chess.length - chessDone) +".", chessDone, chess.length, chess.length ? chessDone / chess.length * 100 : 0, chessValid ? "Продолжить шахматы" : null, !data.chess),
     subjectCard("python", "Python", "Читайте теорию и сверяйте код. Доступно уроков: "+ (python.length - pythonDone) +".", pythonDone, python.length, python.length ? pythonDone / python.length * 100 : 0, pythonValid ? "Продолжить Python" : null, !data.python)
   ].join("");
+  grid.innerHTML = resumeBlock + grid.innerHTML;
 
   grid.querySelectorAll("[data-progress]").forEach(track => {
     animateProgress(track, Number(track.dataset.progress));
