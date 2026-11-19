@@ -92,10 +92,10 @@ const runnerCases = [
   { source: 'def greet(name="Mira"):\n    print(name)\ngreet()', expected: "Mira" },
   { source: 'double = lambda x: x * 2\nprint(double(4))', expected: "8" }
   ,
-  { source: String.raw\`items = ["red", "blue", "green", "black"]\nprint(items[1:3])\`, expected: "['blue', 'green']" },
-  { source: String.raw\`first = {1, 2}\nsecond = {2, 3}\ncombined = first | second\nprint(len(combined))\`, expected: "3" },
-  { source: String.raw\`score = 72\nif score >= 90:\n    print("Excellent")\nelif score >= 60:\n    print("Pass")\nelse:\n    print("Try again")\`, expected: "Pass" },
-  { source: String.raw\`for number in range(1, 6):\n    if number == 3:\n        continue\n    if number == 5:\n        break\n    print(number)\`, expected: ["1", "2", "4"].join("\n") }
+  { source: String.raw`items = ["red", "blue", "green", "black"]\nprint(items[1:3])`, expected: "['blue', 'green']" },
+  { source: String.raw`first = {1, 2}\nsecond = {2, 3}\ncombined = first | second\nprint(len(combined))`, expected: "3" },
+  { source: String.raw`score = 72\nif score >= 90:\n    print("Excellent")\nelif score >= 60:\n    print("Pass")\nelse:\n    print("Try again")`, expected: "Pass" },
+  { source: String.raw`for number in range(1, 6):\n    if number == 3:\n        continue\n    if number == 5:\n        break\n    print(number)`, expected: ["1", "2", "4"].join("\n") }
 ];
 for (const [index, test] of runnerCases.entries()) {
   const result = runSafePython(test.source, { exampleInput: test.exampleInput });
