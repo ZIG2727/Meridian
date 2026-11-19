@@ -83,11 +83,12 @@ async function renderDashboard(app) {
   const englishValid = english.length > 0 && validEnglishSession(englishSession, english);
   const chessValid = chess.some(item => item.id === chessSession);
   const pythonValid = python.some(item => item.id === pythonSession?.lessonId) && typeof pythonSession?.code === "string";
+  const todayDue = english.filter((_, index) => !englishProgress[String(index)] || !Number.isFinite(englishProgress[String(index)].due) || englishProgress[String(index)].due <= Date.now()).length;
 
   grid.innerHTML = [
-    subjectCard("english", "Английский", "Переводите слова и фразы, возвращаясь к ним через интервалы.", reviewed, english.length, english.length ? reviewed / english.length * 100 : 0, englishValid ? "Продолжить английский" : null, !data.english),
-    subjectCard("chess", "Шахматы", "Разбирайте правила, нотацию и короткие тактические задачи.", chessDone, chess.length, chess.length ? chessDone / chess.length * 100 : 0, chessValid ? "Продолжить шахматы" : null, !data.chess),
-    subjectCard("python", "Python", "Читайте короткую теорию и сверяйте код с эталонным решением.", pythonDone, python.length, python.length ? pythonDone / python.length * 100 : 0, pythonValid ? "Продолжить Python" : null, !data.python)
+    subjectCard("english", "Английский", "Переводите слова и фразы. Сегодня к изучению: "+ todayDue +".", reviewed, english.length, english.length ? reviewed / english.length * 100 : 0, englishValid ? "Продолжить английский" : null, !data.english),
+    subjectCard("chess", "Шахматы", "Разбирайте правила и тактические задачи. Не завершено: "+ (chess.length - chessDone) +".", chessDone, chess.length, chess.length ? chessDone / chess.length * 100 : 0, chessValid ? "Продолжить шахматы" : null, !data.chess),
+    subjectCard("python", "Python", "Читайте теорию и сверяйте код. Доступно уроков: "+ (python.length - pythonDone) +".", pythonDone, python.length, python.length ? pythonDone / python.length * 100 : 0, pythonValid ? "Продолжить Python" : null, !data.python)
   ].join("");
 
   grid.querySelectorAll("[data-progress]").forEach(track => {

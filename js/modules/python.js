@@ -4,6 +4,7 @@ import { animateProgress, celebrate } from "../motion.js";
 const lessonsUrl = new URL("../../data/python-lessons.json", import.meta.url);
 const SESSION_KEY = "mrd:python:session";
 const COMPLETED_KEY = "mrd:python:completed";
+const ATTEMPTS_KEY = "mrd:python:attempts";
 
 function escapeHTML(value) {
   return String(value ?? "").replace(/[&<>"']/g, character => ({
@@ -26,11 +27,12 @@ function renderShell(app) {
 export async function renderPython(app) {
   const lessons = await loadJSON(lessonsUrl);
   if (!Array.isArray(lessons) || lessons.length < 4 || lessons.some(lesson =>
-    !lesson.id || !lesson.title || !lesson.theory || typeof lesson.starterCode !== "string" || typeof lesson.expectedOutput !== "string"
+    !lesson.id || !lesson.title || !lesson.theory || typeof lesson.starterCode !== "string" || typeof lesson.expectedOutput !== "string" || typeof lesson.hint !== "string"
   )) throw new Error("Набор Python-уроков имеет неверный формат.");
 
   const completed = readStored(COMPLETED_KEY, [], isStringArray);
   const session = readStored(SESSION_KEY, null);
+  const attempts = readStored(ATTEMPTS_KEY, {});
   let currentLesson = lessons.find(lesson => lesson.id === session?.lessonId) || null;
   let draftCode = currentLesson && typeof session?.code === "string" ? session.code : "";
   renderShell(app);
@@ -70,7 +72,7 @@ export async function renderPython(app) {
       '<div class="python-layout"><section class="panel"><p class="eyebrow">Теория</p><h2>' + escapeHTML(currentLesson.title) + '</h2><p>' + escapeHTML(currentLesson.theory).replace(/\n/g, "<br>") + '</p>' +
       '<p class="code-note">Проверка сравнивает ваш текст с эталонным решением. Код Python здесь не запускается.</p></section>' +
       '<section class="panel"><label class="field-label" for="python-editor">Редактор кода</label><textarea class="code-editor" id="python-editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Редактор кода Python"></textarea>' +
-      '<div class="button-row" style="margin-top:12px"><button class="button" id="python-check" type="button">Проверить</button><button class="button button-secondary" id="python-reset" type="button">Вернуть заготовку</button></div>' +
+      '<div class="button-row" style="margin-top:12px"><button class="button" id="python-check" type="button">Проверить</button><button class="button button-secondary" id="python-reset" type="button">Вернуть заготовку</button><button class="button button-quiet" id="python-hint" type="button" hidden>Подсказка</button></div><p class="code-note" id="python-hint-text" hidden></p>' +
       '<div class="status-line" id="python-status" role="status"></div><div class="progress-track" id="python-lesson-progress" style="--progress-color:var(--color-python);margin-top:16px"><div class="progress-fill"></div></div></section></div>' +
       '<div class="button-row" style="margin-top:20px;justify-content:flex-end"><button class="button button-secondary" id="python-next" type="button">Следующий урок</button></div>';
 
@@ -82,6 +84,12 @@ export async function renderPython(app) {
       status.textContent = "Урок уже отмечен как завершённый.";
       animateProgress(progressTrack, 100);
     }
+
+    const hintButton = content.querySelector("#python-hint");
+    const hintText = content.querySelector("#python-hint-text");
+    let failedAttempts = Number(attempts[currentLesson.id]) || 0;
+    hintButton.hidden = failedAttempts < 1;
+    hintButton.addEventListener("click", () => { hintText.textContent = currentLesson.hint; hintText.hidden = false; });
 
     editor.addEventListener("input", () => {
       draftCode = editor.value;
@@ -98,12 +106,18 @@ export async function renderPython(app) {
     });
 
     content.querySelector("#python-check").addEventListener("click", () => {
-      const matches = editor.value.trim() === currentLesson.expectedOutput.trim();
+      const normalize = value => value.replace(/\r\n/g, "\n").split("\n").map(line => line.trimEnd()).join("\n").trim();
+      const actual = normalize(editor.value);
+      const expected = normalize(currentLesson.expectedOutput);
+      const matches = actual === expected;
       draftCode = editor.value;
       savePythonSession(currentLesson.id, draftCode);
       if (!matches) {
         status.className = "status-line feedback error";
-        status.textContent = "Текст отличается от эталонного решения. Проверьте отступы, кавычки и названия переменных.";
+        failedAttempts += 1; attempts[currentLesson.id] = failedAttempts; writeStored(ATTEMPTS_KEY, attempts); hintButton.hidden = false;
+        const actualLines = actual.split("\n"); const expectedLines = expected.split("\n");
+        const mismatch = expectedLines.findIndex((line, index) => line !== actualLines[index]);
+        status.textContent = "Первое расхождение в строке " + (mismatch + 1) + ". Ожидалось: " + (expectedLines[mismatch] ?? "конец текста") + ". У вас: " + (actualLines[mismatch] ?? "строка отсутствует") + ".";
         return;
       }
 

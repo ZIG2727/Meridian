@@ -136,23 +136,23 @@ export async function renderChess(app) {
     let board = null;
     if (libraryReady && window.MeridianChessboard) {
       try {
-        board = window.MeridianChessboard.create(boardContainer, { position: lesson.position || "start" });
+        board = window.MeridianChessboard.create(boardContainer, { position: lesson.fen || lesson.position || "start" });
       } catch {
-        renderStaticBoard(boardContainer, lesson.position || "start");
+        renderStaticBoard(boardContainer, lesson.fen || lesson.position || "start");
         content.querySelector("#board-fallback").hidden = false;
       }
     } else {
-      renderStaticBoard(boardContainer, lesson.position || "start");
+      renderStaticBoard(boardContainer, lesson.fen || lesson.position || "start");
       content.querySelector("#board-fallback").hidden = false;
     }
 
     content.querySelector("#chess-back").addEventListener("click", renderList);
     content.querySelector("#show-chess-move").addEventListener("click", () => {
       if (board) {
-        board.position(lesson.position || "start");
+        board.position(lesson.fen || lesson.position || "start");
         (lesson.moves || []).forEach(move => board.movePiece(move, { animate: true }));
       } else {
-        const boardState = parsePosition(lesson.position || "start");
+        const boardState = parsePosition(lesson.fen || lesson.position || "start");
         (lesson.moves || []).forEach(move => {
           if (boardState[move.from]) {
             boardState[move.to] = boardState[move.from];

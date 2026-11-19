@@ -2,76 +2,121 @@
   {
     "ru": "доброе утро",
     "en": "good morning",
-    "example": "Good morning, everyone. Let's begin."
+    "example": "Good morning, everyone. Let's begin.",
+    "tags": [
+      "greeting"
+    ]
   },
   {
     "ru": "пожалуйста",
     "en": "please",
-    "example": "Could you open the window, please?"
+    "example": "Could you open the window, please?",
+    "tags": [
+      "polite"
+    ]
   },
   {
     "ru": "спасибо",
     "en": "thank you",
-    "example": "Thank you for your help."
+    "example": "Thank you for your help.",
+    "tags": [
+      "polite"
+    ]
   },
   {
     "ru": "извините",
     "en": "excuse me",
-    "example": "Excuse me, where is the library?"
+    "example": "Excuse me, where is the library?",
+    "tags": [
+      "travel"
+    ]
   },
   {
     "ru": "я не понимаю",
     "en": "I don't understand",
-    "example": "I don't understand this question."
+    "example": "I don't understand this question.",
+    "tags": [
+      "communication"
+    ]
   },
   {
     "ru": "сколько это стоит?",
     "en": "how much is it?",
-    "example": "How much is it? I can't see the price."
+    "example": "How much is it? I can't see the price.",
+    "tags": [
+      "shopping"
+    ]
   },
   {
     "ru": "мне нужна помощь",
     "en": "I need help",
-    "example": "I need help with this exercise."
+    "example": "I need help with this exercise.",
+    "tags": [
+      "help"
+    ]
   },
   {
     "ru": "до встречи",
     "en": "see you later",
-    "example": "See you later after class."
+    "example": "See you later after class.",
+    "tags": [
+      "farewell"
+    ]
   },
   {
     "ru": "возможно",
     "en": "perhaps",
-    "example": "Perhaps we can meet on Saturday."
+    "example": "Perhaps we can meet on Saturday.",
+    "tags": [
+      "possibility"
+    ]
   },
   {
     "ru": "обычно",
     "en": "usually",
-    "example": "I usually walk to school."
+    "example": "I usually walk to school.",
+    "tags": [
+      "frequency"
+    ]
   },
   {
     "ru": "на прошлой неделе",
     "en": "last week",
-    "example": "We visited our grandparents last week."
+    "example": "We visited our grandparents last week.",
+    "tags": [
+      "time"
+    ]
   },
   {
     "ru": "зависеть от",
     "en": "depend on",
-    "example": "The answer may depend on the context."
+    "example": "The answer may depend on the context.",
+    "tags": [
+      "verbs"
+    ]
   },
   {
     "ru": "принимать решение",
     "en": "make a decision",
-    "example": "We need to make a decision today."
+    "example": "We need to make a decision today.",
+    "tags": [
+      "decisions"
+    ]
   },
   {
     "ru": "быть уверенным",
     "en": "be sure",
-    "example": "Are you sure about the time?"
+    "example": "Are you sure about the time?",
+    "tags": [
+      "confidence"
+    ]
   },
   {
     "ru": "с нетерпением ждать",
     "en": "look forward to",
-    "example": "I look forward to seeing you again."
+    "example": "I look forward to seeing you again.",
+    "tags": [
+      "phrases"
+    ]
   }
 ]
