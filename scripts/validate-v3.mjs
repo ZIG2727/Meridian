@@ -36,7 +36,7 @@ const isAttacked = (board, targetX, targetY, byWhite) => {
 const validFen = fen => {
   const fields = String(fen || "").split(" ");
   if (fields.length !== 6 || !["w", "b"].includes(fields[1]) || !/^(?:-|[KQkq]+)$/.test(fields[2]) ||
-      !/^(?:-|[a-h][36])$/.test(fields[3]) || !/^\\d+$/.test(fields[4]) || !/^[1-9]\\d*$/.test(fields[5])) return false;
+      !/^(?:-|[a-h][36])$/.test(fields[3]) || !/^\d+$/.test(fields[4]) || !/^[1-9]\d*$/.test(fields[5])) return false;
   const rows = fields[0].split("/");
   if (rows.length !== 8) return false;
   const board = Array.from({ length: 8 }, () => Array(8).fill(null));
