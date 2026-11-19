@@ -9,10 +9,10 @@ const MODULES = {
 const ROOT = new URL("../../data/", import.meta.url);
 const cache = new Map();
 const keys = module => ({
-  completed: "mrd:" + module + ":completed",
-  session: "mrd:" + module + ":session",
-  srs: "mrd:english:srs",
-  last: "mrd:lastLesson"
+  completed: "mrd:v3:" + module + ":completed",
+  session: "mrd:v3:" + module + ":session",
+  srs: "mrd:v3:english:srs",
+  last: "mrd:v3:lastLesson"
 });
 const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const urlFor = (module, unitId, lessonId) => "#/" + module + (unitId ? "/" + unitId : "") + (lessonId ? "/" + lessonId : "");
