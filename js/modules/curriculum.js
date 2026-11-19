@@ -62,7 +62,7 @@ function writeLast(module, unitId, lessonId) {
   writeStored(keys(module).last, { module, unitId, lessonId });
   const previous = readStored(keys(module).session, null);
   const session = { unitId, lessonId };
-  if (module === "python" && previous?.lessonId === lessonId && typeof previous.draftCode === "string") session.draftCode = previous.draftCode;
+  if (module === "python" && previous?.lessonId === lessonId && typeof previous.draftCode === "string") session.draftCode = previous.draftCode;\n  if (module === "english" && previous?.lessonId === lessonId && Number.isInteger(previous.cardIndex)) session.cardIndex = previous.cardIndex;
   writeStored(keys(module).session, session);
 }
 function validLesson(unit, lesson) {
@@ -106,29 +106,46 @@ function markComplete(module,unit,lessonId,completed) {
   return unit.lessonIds.every(id=>completed.includes(id));
 }
 function renderEnglishLesson(app,module,unit,lesson,completed) {
-  const cards=lesson.content?.cards;
-  if(!Array.isArray(cards)||cards.length<10||cards.some(c=>!c.id||!c.ru||!c.en||!c.example)) throw new Error("В английском уроке отсутствуют карточки или обязательные поля.");
-  const srs=readStored("mrd:english:srs",{});
-  let index=0,revealed=false;
-  const rated=()=>cards.filter(c=>srs[c.id]&&Number.isFinite(srs[c.id].due)).length;
-  const draw=()=>{
-    const card=cards[index];const entry=srs[card.id];
-    app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+
-    '<section class="curriculum-lesson-focus"><p class="eyebrow">Карточка '+(index+1)+' из '+cards.length+'</p><h1>'+esc(lesson.title)+'</h1><div class="study-card"><p class="eyebrow">Переведите на английский</p><h2 class="prompt-word">'+esc(card.ru)+'</h2>'+
-    (revealed?'<div class="english-answer"><h2>'+esc(card.en)+'</h2><p>'+esc(card.example)+'</p></div>':'<button class="button" id="reveal-answer">Показать ответ</button>')+
-    (revealed?'<p class="field-label">Насколько легко вспомнили?</p><div class="rating-row">'+[['again','Снова'],['hard','Трудно'],['good','Хорошо'],['easy','Легко']].map(([v,l])=>'<button class="rating-button" data-rating="'+v+'">'+l+'</button>').join("")+'</div>':'')+
-    '<p class="code-note">'+(entry?'Повторение уже запланировано.':'Новая карточка.')+'</p></div><p class="lesson-feedback status-line" role="status"></p></section>'+footer(module);
-    app.querySelector("#reveal-answer")?.addEventListener("click",()=>{revealed=true;draw();});
-    app.querySelectorAll("[data-rating]").forEach(button=>button.addEventListener("click",()=>{
-      const rating=button.dataset.rating,quality={again:1,hard:3,good:4,easy:5}[rating],old=srs[card.id]||{ease:2.5,interval:0,reps:0};
-      const ease=Math.max(1.3,old.ease+0.1-(5-quality)*(0.08+(5-quality)*0.02));
-      let interval=quality<3?1:old.reps===0?1:old.reps===1?6:Math.max(1,Math.round(old.interval*ease));
-      srs[card.id]={ease:Number(ease.toFixed(2)),interval,due:Date.now()+interval*86400000,reps:quality<3?0:old.reps+1};
-      writeStored("mrd:english:srs",srs);index++;revealed=false;
-      if(index>=cards.length){const wasCompleted=completed.includes(lesson.lessonId);const unitFinished=markComplete(module,unit,lesson.lessonId,completed);app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="empty-state"><h1>Урок завершён</h1><p>Вы оценили все '+cards.length+' карточек. Повторения сохранены по стабильным ID.</p><p class="lesson-feedback status-line" role="status"></p><a class="button" href="'+urlFor(module,unit.unitId)+'">Вернуться к юниту</a></section>'+footer(module);if(!wasCompleted&&unitFinished)celebrate(app.querySelector(".lesson-feedback"),"Юнит завершён",800);}
-      else draw();
-    }));
-  };draw();
+ const cards=lesson.content?.cards;
+ if(!Array.isArray(cards)||cards.length<10||cards.some(c=>!c.id||!c.ru||!c.en||!c.example))throw new Error("В английском уроке отсутствуют карточки или обязательные поля.");
+ const srs=readStored("mrd:english:srs",{});
+ const dueCards=cards.filter(card=>!srs[card.id]||!Number.isFinite(srs[card.id].due)||srs[card.id].due<=Date.now());
+ if(!dueCards.length){
+  if(cards.every(card=>srs[card.id]&&Number.isFinite(srs[card.id].due))&&!completed.includes(lesson.lessonId))markComplete(module,unit,lesson.lessonId,completed);
+  app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="empty-state"><h1>Повторение пока не требуется</h1><p>Все карточки этого урока уже оценены. Следующий интервал повторения ещё не наступил.</p><a class="button" href="'+urlFor(module,unit.unitId)+'">Вернуться к юниту</a></section>'+footer(module);
+  return;
+ }
+ const saved=readStored(keys(module).session,null);
+ let index=saved?.lessonId===lesson.lessonId&&Number.isInteger(saved.cardIndex)?Math.min(saved.cardIndex,dueCards.length-1):0;
+ let revealed=false;
+ const draw=()=>{
+  const card=dueCards[index],entry=srs[card.id];
+  writeStored(keys(module).session,{unitId:unit.unitId,lessonId:lesson.lessonId,cardIndex:index});
+  app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+
+  '<section class="curriculum-lesson-focus"><p class="eyebrow">К повторению · карточка '+(index+1)+' из '+dueCards.length+'</p><h1>'+esc(lesson.title)+'</h1><div class="study-card"><p class="eyebrow">Переведите на английский</p><h2 class="prompt-word">'+esc(card.ru)+'</h2>'+
+  (revealed?'<div class="english-answer"><h2>'+esc(card.en)+'</h2><p>'+esc(card.example)+'</p></div>':'<button class="button" id="reveal-answer">Показать ответ</button>')+
+  (revealed?'<p class="field-label">Насколько легко вспомнили?</p><div class="rating-row">'+[['again','Снова'],['hard','Трудно'],['good','Хорошо'],['easy','Легко']].map(([v,l])=>'<button class="rating-button" data-rating="'+v+'">'+l+'</button>').join("")+'</div>':'')+
+  '<p class="code-note">'+(entry?'Срок повторения наступил.':'Новая карточка.')+'</p></div></section>'+footer(module);
+  app.querySelector("#reveal-answer")?.addEventListener("click",()=>{revealed=true;draw();});
+  app.querySelectorAll("[data-rating]").forEach(button=>button.addEventListener("click",()=>{
+   const rating=button.dataset.rating,quality={again:1,hard:3,good:4,easy:5}[rating],old=srs[card.id]||{ease:2.5,interval:0,reps:0};
+   const ease=Math.max(1.3,old.ease+0.1-(5-quality)*(0.08+(5-quality)*0.02));
+   const interval=quality<3?1:old.reps===0?1:old.reps===1?6:Math.max(1,Math.round(old.interval*ease));
+   srs[card.id]={ease:Number(ease.toFixed(2)),interval,due:Date.now()+interval*86400000,reps:quality<3?0:old.reps+1};
+   writeStored("mrd:english:srs",srs);index++;revealed=false;
+   if(index>=dueCards.length){
+    const wasCompleted=completed.includes(lesson.lessonId);
+    const allReviewed=cards.every(item=>srs[item.id]&&Number.isFinite(srs[item.id].due));
+    const unitFinished=allReviewed?markComplete(module,unit,lesson.lessonId,completed):false;
+    const nextIndex=unit.lessonIds.indexOf(lesson.lessonId)+1,nextLesson=unit.lessonIds[nextIndex];
+    if(nextLesson)writeLast(module,unit.unitId,nextLesson);
+    else{writeStored(keys(module).session,null);writeStored(keys(module).last,null);}
+    app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="empty-state"><h1>Урок завершён</h1><p>Вы оценили '+dueCards.length+' карточек, интервалы повторения сохранены.</p><p class="lesson-feedback status-line" role="status"></p><a class="button" href="'+urlFor(module,unit.unitId)+'">Вернуться к юниту</a>'+(nextLesson?'<a class="button button-secondary" href="'+urlFor(module,unit.unitId,nextLesson)+'">Следующий урок →</a>':'')+'</section>'+footer(module);
+    if(!wasCompleted&&unitFinished)celebrate(app.querySelector(".lesson-feedback"),"Юнит завершён",800);
+   } else draw();
+  }));
+ };
+ draw();
 }
 function fenBoard(fen) {
  const symbols={K:"♔",Q:"♕",R:"♖",B:"♗",N:"♘",P:"♙",k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟"};
