@@ -87,7 +87,7 @@ for (const module of modules) {
   const moduleLessonIds = new Set();
   const moduleCardIds = new Set();
   for (const unit of manifest.units) {
-    if (!Array.isArray(unit.lessonIds) || unit.lessonIds.length < 3 || unit.lessonIds.length > 4) fail(unit.unitId + ": expected 3–4 lesson IDs");
+    if (!Array.isArray(unit.lessonIds) || unit.lessonIds.length !== 4) fail(unit.unitId + ": expected exactly 4 lesson IDs");
     const data = await readJSON("data/" + module + "/units/" + unit.unitId + ".json");
     if (data.unitId !== unit.unitId || data.lessons.length !== unit.lessonIds.length) fail(unit.unitId + ": unit data mismatch");
     unique(data.lessons.map(lesson => lesson.lessonId), unit.unitId + " lesson IDs");
@@ -97,24 +97,29 @@ for (const module of modules) {
     }
     for (let index = 0; index < data.lessons.length; index++) {
       const lesson = data.lessons[index];
-      if (lesson.lessonId !== unit.lessonIds[index] || lesson.unitId !== unit.unitId || !lesson.title) fail(unit.unitId + ": lesson metadata mismatch");
+      if (lesson.lessonId !== unit.lessonIds[index] || lesson.unitId !== unit.unitId || !lesson.title ||
+          !new RegExp("^" + module + "-[a-z0-9-]+-\\d{2}$").test(lesson.lessonId) ||
+          lesson.order !== index + 1 || !Number.isInteger(lesson.estimatedMinutes) ||
+          lesson.estimatedMinutes < 5 || lesson.estimatedMinutes > 15 ||
+          !Array.isArray(lesson.tags) || !lesson.tags.length) fail(unit.unitId + ": lesson metadata mismatch");
       moduleLessons++;
       if (module === "english") {
         const cards = lesson.content?.cards;
-        if (!Array.isArray(cards) || cards.length < 10) fail(lesson.lessonId + ": needs at least 10 flashcards");
+        if (!Array.isArray(cards) || cards.length < 10 || cards.length > 15) fail(lesson.lessonId + ": needs 10–15 flashcards");
         unique(cards.map(card => card.id), lesson.lessonId + " card IDs");
         for (const card of cards) {
           if (moduleCardIds.has(card.id)) fail("Duplicate English card ID " + card.id);
           moduleCardIds.add(card.id);
         }
-        for (const card of cards) if (!card.id || !card.ru || !card.en || !card.example) fail(lesson.lessonId + ": incomplete flashcard");
+        for (const card of cards) if (!card.id || !card.ru || !card.en || !card.example || !Array.isArray(card.tags) || !card.tags.length) fail(lesson.lessonId + ": incomplete flashcard");
         totals.cards += cards.length;
       } else if (module === "chess") {
         if (!validFen(lesson.fen)) fail(lesson.lessonId + ": invalid or illegal FEN position");
-        const quiz = lesson.quiz?.[0];
-        if (!quiz || quiz.options.length < 3 || quiz.options.length > 6 || !Number.isInteger(quiz.answer) || quiz.answer < 0 || quiz.answer >= quiz.options.length) fail(lesson.lessonId + ": invalid quiz");
+        if (typeof lesson.text !== "string" || !lesson.text.trim() || !Array.isArray(lesson.quiz) || !lesson.quiz.length) fail(lesson.lessonId + ": missing chess text or quiz");
+        const quiz = lesson.quiz[0];
+        if (!Array.isArray(quiz.options) || quiz.options.length < 3 || quiz.options.length > 6 || !Number.isInteger(quiz.answer) || quiz.answer < 0 || quiz.answer >= quiz.options.length) fail(lesson.lessonId + ": invalid quiz");
       } else {
-        if (typeof lesson.theory !== "string" || typeof lesson.starterCode !== "string" || typeof lesson.expectedOutput !== "string" || typeof lesson.hint !== "string") fail(lesson.lessonId + ": incomplete Python exercise");
+        if (typeof lesson.theory !== "string" || !lesson.theory.trim() || typeof lesson.starterCode !== "string" || !lesson.starterCode.trim() || typeof lesson.expectedOutput !== "string" || typeof lesson.hint !== "string" || !lesson.hint.trim()) fail(lesson.lessonId + ": incomplete Python exercise");
         const starter = runSafePython(lesson.starterCode, lesson);
         if (!starter.ok) fail(lesson.lessonId + ": starter code rejected by safe runner: " + starter.error);
         const reference = runSafePython(lesson.solutionCode || lesson.starterCode, lesson);
