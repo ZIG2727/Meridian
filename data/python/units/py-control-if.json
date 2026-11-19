@@ -50,16 +50,16 @@
       "lessonId": "py-control-if-04",
       "unitId": "py-control-if",
       "order": 4,
-      "title": "Больше и меньше",
+      "title": "Цепочка if, elif и else",
       "estimatedMinutes": 8,
       "tags": [
         "basics",
         "if"
       ],
-      "theory": "Операторы > и < сравнивают числа и возвращают True или False.",
-      "starterCode": "speed = 55\nif speed < 50:\n    print(\"Safe\")\nelse:\n    print(\"Slow down\")",
-      "expectedOutput": "Safe",
-      "hint": "45 меньше 50, поэтому условие истинно."
+      "theory": "if проверяет первое условие, elif — следующие варианты, а else выполняется, если ни одно условие не подошло. Ветка elif позволяет не вкладывать несколько if друг в друга.",
+      "starterCode": "score = 72\nif score >= 90:\n    print(\"Excellent\")\nelif score >= 60:\n    print(\"Pass\")\nelse:\n    print(\"Try again\")",
+      "expectedOutput": "Pass",
+      "hint": "Оставь три ветки и проверь, что для score = 72 срабатывает elif score >= 60."
     }
   ]
 }
