@@ -97,6 +97,8 @@ const runnerCases = [
   { source: `first = {1, 2}\nsecond = {2, 3}\ncombined = first | second\nprint(len(combined))`, expected: "3" },
   { source: `score = 72\nif score >= 90:\n    print("Excellent")\nelif score >= 60:\n    print("Pass")\nelse:\n    print("Try again")`, expected: "Pass" },
   { source: `for number in range(1, 6):\n    if number == 3:\n        continue\n    if number == 5:\n        break\n    print(number)`, expected: ["1", "2", "4"].join("\n") }
+  ,
+  { source: 'raw = "not a number"\ntry:\n    print(int(raw))\nexcept ValueError:\n    print("Enter a whole number")', expected: "Enter a whole number" }
 ];
 for (const [index, test] of runnerCases.entries()) {
   const result = runSafePython(test.source, { exampleInput: test.exampleInput });
