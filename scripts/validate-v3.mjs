@@ -9,6 +9,68 @@ const readJSON = async path => JSON.parse(await readFile(resolve(root, path), "u
 const unique = (values, label) => {
   if (new Set(values).size !== values.length) fail("Duplicate " + label);
 };
+
+const isAttacked = (board, targetX, targetY, byWhite) => {
+  const pieceAt = (x, y) => x >= 0 && x < 8 && y >= 0 && y < 8 ? board[7 - y][x] : null;
+  for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+    const piece = pieceAt(x, y);
+    if (!piece || (piece === piece.toUpperCase()) !== byWhite) continue;
+    const type = piece.toLowerCase(), dx = targetX - x, dy = targetY - y;
+    if (type === "p" && Math.abs(dx) === 1 && dy === (byWhite ? 1 : -1)) return true;
+    if (type === "n" && ((Math.abs(dx) === 1 && Math.abs(dy) === 2) || (Math.abs(dx) === 2 && Math.abs(dy) === 1))) return true;
+    if (type === "k" && Math.max(Math.abs(dx), Math.abs(dy)) === 1) return true;
+    if (type === "b" || type === "r" || type === "q") {
+      const diagonal = Math.abs(dx) === Math.abs(dy), straight = dx === 0 || dy === 0;
+      if ((type === "b" && !diagonal) || (type === "r" && !straight) || (type === "q" && !diagonal && !straight)) continue;
+      const stepX = Math.sign(dx), stepY = Math.sign(dy);
+      let cx = x + stepX, cy = y + stepY, clear = true;
+      while (cx !== targetX || cy !== targetY) {
+        if (pieceAt(cx, cy)) { clear = false; break; }
+        cx += stepX; cy += stepY;
+      }
+      if (clear) return true;
+    }
+  }
+  return false;
+};
+const validFen = fen => {
+  const fields = String(fen || "").split(" ");
+  if (fields.length !== 6 || !["w", "b"].includes(fields[1]) || !/^(?:-|[KQkq]+)$/.test(fields[2]) ||
+      !/^(?:-|[a-h][36])$/.test(fields[3]) || !/^\\d+$/.test(fields[4]) || !/^[1-9]\\d*$/.test(fields[5])) return false;
+  const rows = fields[0].split("/");
+  if (rows.length !== 8) return false;
+  const board = Array.from({ length: 8 }, () => Array(8).fill(null));
+  for (let row = 0; row < 8; row++) {
+    let file = 0;
+    for (const token of rows[row]) {
+      if (/[1-8]/.test(token)) file += Number(token);
+      else if ("prnbqkPRNBQK".includes(token) && file < 8) board[row][file++] = token;
+      else return false;
+    }
+    if (file !== 8) return false;
+  }
+  if (board[0].some(piece => piece?.toLowerCase() === "p") || board[7].some(piece => piece?.toLowerCase() === "p")) return false;
+  const findKing = symbol => {
+    for (let row = 0; row < 8; row++) for (let file = 0; file < 8; file++) if (board[row][file] === symbol) return { x: file, y: 7 - row };
+    return null;
+  };
+  const whiteKing = findKing("K"), blackKing = findKing("k");
+  if (!whiteKing || !blackKing) return false;
+  if (Math.max(Math.abs(whiteKing.x - blackKing.x), Math.abs(whiteKing.y - blackKing.y)) <= 1) return false;
+  const sideWhite = fields[1] === "w", nonMovingKing = sideWhite ? blackKing : whiteKing;
+  if (isAttacked(board, nonMovingKing.x, nonMovingKing.y, sideWhite)) return false;
+  const has = (square, piece) => board[7 - Number(square[1])][square.charCodeAt(0) - 97] === piece;
+  for (const right of fields[2] === "-" ? "" : fields[2]) {
+    const pair = right === "K" ? ["e1", "K", "h1", "R"] : right === "Q" ? ["e1", "K", "a1", "R"] : right === "k" ? ["e8", "k", "h8", "r"] : ["e8", "k", "a8", "r"];
+    if (!has(pair[0], pair[1]) || !has(pair[2], pair[3])) return false;
+  }
+  if (fields[3] !== "-") {
+    const rank = Number(fields[3][1]), file = fields[3].charCodeAt(0) - 97;
+    if ((sideWhite && rank !== 6) || (!sideWhite && rank !== 3) || board[8 - rank][file]) return false;
+    if (sideWhite ? board[3][file] !== "p" : board[4][file] !== "P") return false;
+  }
+  return true;
+};
 let totals = { units: 0, lessons: 0, cards: 0 };
 
 for (const module of modules) {
@@ -48,13 +110,7 @@ for (const module of modules) {
         for (const card of cards) if (!card.id || !card.ru || !card.en || !card.example) fail(lesson.lessonId + ": incomplete flashcard");
         totals.cards += cards.length;
       } else if (module === "chess") {
-        const fields = String(lesson.fen || "").split(" ");
-        const placement = fields[0] || "";
-        const ranks = placement.split("/");
-        const allowed = "prnbqkPRNBQK";
-        const widths = ranks.map(rank => [...rank].reduce((sum, token) => sum + (/[1-8]/.test(token) ? Number(token) : allowed.includes(token) ? 1 : 99), 0));
-        if (fields.length !== 6 || ranks.length !== 8 || widths.some(width => width !== 8)) fail(lesson.lessonId + ": invalid FEN shape");
-        if ((placement.match(/K/g) || []).length !== 1 || (placement.match(/k/g) || []).length !== 1) fail(lesson.lessonId + ": FEN must contain one king of each colour");
+        if (!validFen(lesson.fen)) fail(lesson.lessonId + ": invalid or illegal FEN position");
         const quiz = lesson.quiz?.[0];
         if (!quiz || quiz.options.length < 3 || quiz.options.length > 6 || !Number.isInteger(quiz.answer) || quiz.answer < 0 || quiz.answer >= quiz.options.length) fail(lesson.lessonId + ": invalid quiz");
       } else {
