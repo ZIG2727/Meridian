@@ -115,7 +115,7 @@ function renderEnglishLesson(app,module,unit,lesson,completed) {
       let interval=quality<3?1:old.reps===0?1:old.reps===1?6:Math.max(1,Math.round(old.interval*ease));
       srs[card.id]={ease:Number(ease.toFixed(2)),interval,due:Date.now()+interval*86400000,reps:quality<3?0:old.reps+1};
       writeStored("mrd:english:srs",srs);index++;revealed=false;
-      if(index>=cards.length){markComplete(module,unit,lesson.lessonId,completed,app);app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="empty-state"><h1>Урок завершён</h1><p>Вы оценили все '+cards.length+' карточек. Повторения сохранены по стабильным ID.</p><a class="button" href="'+urlFor(module,unit.unitId)+'">Вернуться к юниту</a></section>'+footer(module);}
+      if(index>=cards.length){const wasCompleted=completed.includes(lesson.lessonId);const unitFinished=markComplete(module,unit,lesson.lessonId,completed);app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="empty-state"><h1>Урок завершён</h1><p>Вы оценили все '+cards.length+' карточек. Повторения сохранены по стабильным ID.</p><p class="lesson-feedback status-line" role="status"></p><a class="button" href="'+urlFor(module,unit.unitId)+'">Вернуться к юниту</a></section>'+footer(module);if(!wasCompleted&&unitFinished)celebrate(app.querySelector(".lesson-feedback"),"Юнит завершён",800);}
       else draw();
     }));
   };draw();
