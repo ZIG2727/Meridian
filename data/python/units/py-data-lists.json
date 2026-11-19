@@ -50,16 +50,16 @@
       "lessonId": "py-data-lists-04",
       "unitId": "py-data-lists",
       "order": 4,
-      "title": "Длина списка",
+      "title": "Срез списка",
       "estimatedMinutes": 9,
       "tags": [
         "data-structures",
         "lists"
       ],
-      "theory": "len() возвращает количество элементов списка, а не последний индекс.",
-      "starterCode": "colors = [\"red\", \"blue\", \"green\"]\nprint(len(colors))",
-      "expectedOutput": "3",
-      "hint": "Передай список colors в len()."
+      "theory": "Срез записывают как список[начало:конец]. Он возвращает часть последовательности от начального индекса до конечного, не включая конечный индекс.",
+      "starterCode": "colors = [\"red\", \"blue\", \"green\", \"black\"]\nprint(colors[0:2])",
+      "expectedOutput": "['blue', 'green']",
+      "hint": "Измени границы среза так, чтобы получить второй и третий элементы."
     }
   ]
 }
