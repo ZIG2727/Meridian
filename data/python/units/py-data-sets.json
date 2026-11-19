@@ -50,16 +50,16 @@
       "lessonId": "py-data-sets-04",
       "unitId": "py-data-sets",
       "order": 4,
-      "title": "Объединение",
+      "title": "Объединение множеств",
       "estimatedMinutes": 9,
       "tags": [
         "data-structures",
         "sets"
       ],
-      "theory": "Операция | создаёт множество из элементов обоих множеств без повторов.",
-      "starterCode": "combined = {1, 2, 2, 3}\nprint(len(combined))",
+      "theory": "Оператор | создаёт новое множество из элементов обоих множеств. Повторы автоматически объединяются, поэтому каждый элемент остаётся один раз.",
+      "starterCode": "first = {1, 2}\nsecond = {2, 3}\ncombined = first | second\nprint(len(combined))",
       "expectedOutput": "3",
-      "hint": "Объедини множества оператором |."
+      "hint": "Объедини first и second оператором |, затем посчитай элементы."
     }
   ]
 }
