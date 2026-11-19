@@ -1,0 +1,61 @@
+{
+  "unitId": "py-basics-types",
+  "lessons": [
+    {
+      "lessonId": "Строки",
+      "unitId": "py-basics-types",
+      "order": 1,
+      "title": "Строка — последовательность символов в кавычках. Цифры в кавычках остаются текстом.",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "types"
+      ],
+      "theory": "city = \"Kazan\"\nprint(city)",
+      "starterCode": "Kazan",
+      "expectedOutput": "Запиши название города как строку."
+    },
+    {
+      "lessonId": "Целые числа",
+      "unitId": "py-basics-types",
+      "order": 2,
+      "title": "Тип int хранит целые числа без дробной части.",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "types"
+      ],
+      "theory": "count = 7\nprint(count)",
+      "starterCode": "7",
+      "expectedOutput": "Число 7 должно быть без кавычек."
+    },
+    {
+      "lessonId": "Дробные числа",
+      "unitId": "py-basics-types",
+      "order": 3,
+      "title": "Тип float хранит числа с десятичной точкой. В Python используется точка.",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "types"
+      ],
+      "theory": "price = 12.5\nprint(price)",
+      "starterCode": "12.5",
+      "expectedOutput": "Используй точку в числе 12.5."
+    },
+    {
+      "lessonId": "Логические значения",
+      "unitId": "py-basics-types",
+      "order": 4,
+      "title": "bool принимает True или False. Первая буква пишется заглавной.",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "types"
+      ],
+      "theory": "is_ready = True\nprint(is_ready)",
+      "starterCode": "True",
+      "expectedOutput": "Значение True не нужно заключать в кавычки."
+    }
+  ]
+}

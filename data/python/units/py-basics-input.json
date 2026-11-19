@@ -1,0 +1,61 @@
+{
+  "unitId": "py-basics-input",
+  "lessons": [
+    {
+      "lessonId": "Функция input",
+      "unitId": "py-basics-input",
+      "order": 1,
+      "title": "input() получает строку, введённую пользователем. Результат можно сохранить в переменную.",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "input"
+      ],
+      "theory": "name = input()\nprint(name)",
+      "starterCode": "(введённый текст)",
+      "expectedOutput": "Сохрани результат input() в name, затем выведи name."
+    },
+    {
+      "lessonId": "Преобразование в int",
+      "unitId": "py-basics-input",
+      "order": 2,
+      "title": "input() возвращает строку. int() преобразует запись целого числа в число.",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "input"
+      ],
+      "theory": "age = int(input())\nprint(age)",
+      "starterCode": "(введённое целое число)",
+      "expectedOutput": "Оберни input() в int()."
+    },
+    {
+      "lessonId": "Преобразование в float",
+      "unitId": "py-basics-input",
+      "order": 3,
+      "title": "float() преобразует числовую строку в дробное число.",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "input"
+      ],
+      "theory": "height = float(input())\nprint(height)",
+      "starterCode": "(введённое число)",
+      "expectedOutput": "Используй float(input()) для дробного значения."
+    },
+    {
+      "lessonId": "Разделитель print",
+      "unitId": "py-basics-input",
+      "order": 4,
+      "title": "print() разделяет несколько значений пробелом. Параметр sep задаёт другой разделитель.",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "input"
+      ],
+      "theory": "print(\"red\", \"blue\", sep=\"-\")",
+      "starterCode": "red-blue",
+      "expectedOutput": "Укажи sep=\"-\" внутри print()."
+    }
+  ]
+}

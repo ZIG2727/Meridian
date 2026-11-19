@@ -1,0 +1,61 @@
+{
+  "unitId": "py-basics-variables",
+  "lessons": [
+    {
+      "lessonId": "Создание переменной",
+      "unitId": "py-basics-variables",
+      "order": 1,
+      "title": "Знак = присваивает значение имени. После присваивания имя можно использовать в print().",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "variables"
+      ],
+      "theory": "name = \"Alex\"\nprint(name)",
+      "starterCode": "Alex",
+      "expectedOutput": "Измени значение name на Alex."
+    },
+    {
+      "lessonId": "Числовая переменная",
+      "unitId": "py-basics-variables",
+      "order": 2,
+      "title": "Переменная может хранить целое число. Число записывают без кавычек.",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "variables"
+      ],
+      "theory": "score = 18\nprint(score)",
+      "starterCode": "18",
+      "expectedOutput": "Создай score со значением 18."
+    },
+    {
+      "lessonId": "Изменение значения",
+      "unitId": "py-basics-variables",
+      "order": 3,
+      "title": "Повторное присваивание заменяет прежнее значение переменной.",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "variables"
+      ],
+      "theory": "level = 1\nlevel = 2\nprint(level)",
+      "starterCode": "2",
+      "expectedOutput": "Вторая команда должна установить level в 2."
+    },
+    {
+      "lessonId": "Имена переменных",
+      "unitId": "py-basics-variables",
+      "order": 4,
+      "title": "Имя начинается с буквы или подчёркивания. Пробелы не допускаются; регистр имеет значение.",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "variables"
+      ],
+      "theory": "user_name = \"Mila\"\nprint(user_name)",
+      "starterCode": "Mila",
+      "expectedOutput": "Используй имя user_name с подчёркиванием."
+    }
+  ]
+}
