@@ -147,11 +147,11 @@ export async function renderPython(app) {
     content.innerHTML = '<div class="button-row" style="margin-bottom:16px"><button class="button button-secondary" id="python-back" type="button">К списку уроков</button><span class="eyebrow">Урок ' + (lessonIndex + 1) + ' из ' + lessons.length + '</span></div>' +
       '<div class="python-layout"><section class="panel"><p class="eyebrow">Теория</p><h2>' + escapeHTML(currentLesson.title) + '</h2><p>' + escapeHTML(currentLesson.theory).replace(/\n/g, "<br>") + '</p>' +
       '<p class="code-note">Нажмите «Запустить», чтобы увидеть вывод. Выполняется только небольшой безопасный набор учебных конструкций — произвольный Python-код не запускается.</p>' +
-      (currentLesson.id === "loops" ? '<p class="code-note">Ожидаемый вывод: <strong>1<br>2<br>3</strong></p>' : '') + '</section>' +
+      (currentLesson.id === "loops" ? '<p class="code-note">Цикл range(1, 4) включает числа от 1 до 3.</p>' : '') + '</section>' +
       '<section class="panel"><label class="field-label" for="python-editor">Редактор кода</label><textarea class="code-editor" id="python-editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Редактор кода Python"></textarea>' +
       '<div class="button-row" style="margin-top:12px"><button class="button" id="python-check" type="button">Запустить и проверить</button><button class="button button-secondary" id="python-reset" type="button">Вернуть заготовку</button><button class="button button-quiet" id="python-hint" type="button" hidden>Подсказка</button></div>' +
       '<p class="code-note" id="python-hint-text" hidden></p><div class="status-line" id="python-status" role="status"></div>' +
-      '<div class="python-output"><p class="eyebrow">Вывод программы</p><pre id="python-actual-output" aria-live="polite">(пока пусто)</pre></div>' +
+      '<div class="python-output"><div><p class="eyebrow">Ожидаемый вывод</p><pre>' + escapeHTML(currentLesson.expectedOutput) + '</pre></div><div><p class="eyebrow">Ваш вывод</p><pre id="python-actual-output" aria-live="polite">(пока пусто)</pre></div></div>' +
       '<div class="progress-track" id="python-lesson-progress" style="--progress-color:var(--color-python);margin-top:16px"><div class="progress-fill"></div></div></section></div>' +
       '<div class="button-row" style="margin-top:20px;justify-content:flex-end"><button class="button button-secondary" id="python-next" type="button">Следующий урок</button></div>';
 
