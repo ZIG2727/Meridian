@@ -126,7 +126,7 @@ function runSafePython(source,lesson) {
  const lines=String(source).replace(/\r/g,"").split("\n");
  if(lines.some(line=>/\b(import|exec|eval|open|__|os\.|sys\.)\b/.test(line)))return {ok:false,error:"Эта учебная среда поддерживает только базовые конструкции Python."};
  const vars={},out=[];
- const value=raw=>{const s=raw.trim();if(/^(['"]).*\1$/.test(s))return s.slice(1,-1);if(/^-?\d+(?:\.\d+)?$/.test(s))return Number(s);if(Object.prototype.hasOwnProperty.call(vars,s))return vars[s];throw new Error("Не удалось разобрать выражение: "+s);};
+ const value=raw=>{const s=raw.trim();if(/^(['"]).*\1$/.test(s))return s.slice(1,-1);if(s==="input()")return String(lesson.exampleInput??"");let m=s.match(/^int\(input\(\)\)$/);if(m)return Number(lesson.exampleInput??0);m=s.match(/^float\(input\(\)\)$/);if(m)return Number(lesson.exampleInput??0);if(/^-?\d+(?:\.\d+)?$/.test(s))return Number(s);if(Object.prototype.hasOwnProperty.call(vars,s))return vars[s];throw new Error("Не удалось разобрать выражение: "+s);};
  const printLine=line=>{const m=line.match(/^print\((.*)\)$/);if(!m)throw new Error("Поддерживается print() с одним значением.");out.push(String(value(m[1])));};
  try{
   for(let i=0;i<lines.length;i++){const line=lines[i];if(!line.trim()||line.trim().startsWith("#"))continue;

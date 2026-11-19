@@ -12,8 +12,10 @@
         "input"
       ],
       "theory": "name = input()\nprint(name)",
-      "starterCode": "(введённый текст)",
-      "expectedOutput": "Сохрани результат input() в name, затем выведи name."
+      "starterCode": "name = input()\nprint(name)",
+      "expectedOutput": "Mira",
+      "exampleInput": "Mira",
+      "hint": "Сохрани строку из input() в переменную name."
     },
     {
       "lessonId": "Преобразование в int",
@@ -26,8 +28,10 @@
         "input"
       ],
       "theory": "age = int(input())\nprint(age)",
-      "starterCode": "(введённое целое число)",
-      "expectedOutput": "Оберни input() в int()."
+      "starterCode": "age = int(input())\nprint(age)",
+      "expectedOutput": "15",
+      "exampleInput": "15",
+      "hint": "Преобразуй введённую строку в целое число через int()."
     },
     {
       "lessonId": "Преобразование в float",
@@ -40,8 +44,10 @@
         "input"
       ],
       "theory": "height = float(input())\nprint(height)",
-      "starterCode": "(введённое число)",
-      "expectedOutput": "Используй float(input()) для дробного значения."
+      "starterCode": "height = float(input())\nprint(height)",
+      "expectedOutput": "1.75",
+      "exampleInput": "1.75",
+      "hint": "Используй float() для дробного числа."
     },
     {
       "lessonId": "Разделитель print",
@@ -54,8 +60,10 @@
         "input"
       ],
       "theory": "print(\"red\", \"blue\", sep=\"-\")",
-      "starterCode": "red-blue",
-      "expectedOutput": "Укажи sep=\"-\" внутри print()."
+      "starterCode": "color = input()\nprint(color)",
+      "expectedOutput": "blue",
+      "exampleInput": "blue",
+      "hint": "Сохрани введённый цвет и выведи его."
     }
   ]
 }
