@@ -126,7 +126,7 @@ function runSafePython(source,lesson) {
  const lines=String(source).replace(/\r/g,"").split("\n");
  if(lines.length>300||lines.some(line=>/\b(import|exec|eval|open|__|os\.|sys\.|subprocess)\b/.test(line)))return {ok:false,error:"Эта учебная среда поддерживает только безопасные базовые конструкции Python."};
  const vars={},out=[],functions={};
- const repr=x=>x instanceof Set?"{"+[...x].map(String).join(", ")+"}":Array.isArray(x)?(x.__tuple?"("+x.map(String).join(", ")+")":"["+x.map(y=>typeof y==="string"?"'"+y+"'":String(y)).join(", ")+"]"):(x&&typeof x==="object"?"{"+Object.entries(x).map(([k,v])=>"'"+k+"': "+(typeof v==="string"?"'"+v+"'":String(v))).join(", ")+"}":String(x));
+ const repr=x=>x===true?"True":x===false?"False":x instanceof Set?"{"+[...x].map(String).join(", ")+"}":Array.isArray(x)?(x.__tuple?"("+x.map(String).join(", ")+")":"["+x.map(y=>typeof y==="string"?"'"+y+"'":String(y)).join(", ")+"]"):(x&&typeof x==="object"?"{"+Object.entries(x).map(([k,v])=>"'"+k+"': "+(typeof v==="string"?"'"+v+"'":String(v))).join(", ")+"}":String(x));
  const value=raw=>{
   const s=raw.trim();
   if(/^(['"]).*\1$/.test(s))return s.slice(1,-1);
@@ -154,7 +154,7 @@ function runSafePython(source,lesson) {
   const saved={};const localNames=[];
   fn.params.forEach((param,index)=>{const p=param.split("=")[0].trim();localNames.push(p);saved[p]=Object.prototype.hasOwnProperty.call(vars,p)?vars[p]:undefined;vars[p]=index<args.length?args[index]:param.includes("=")?value(param.split("=").slice(1).join("=")):undefined;});
   let result;
-  for(const statement of fn.body){let m=statement.match(/^return\s+(.+)$/);if(m){result=value(m[1]);break;}m=statement.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);if(m){vars[m[1]]=value(m[2]);if(!localNames.includes(m[1])){localNames.push(m[1]);saved[m[1]]=Object.prototype.hasOwnProperty.call(vars,m[1])?undefined:undefined;}continue;}if(statement.startsWith("print(")){printLine(statement);continue;}throw new Error("В функции поддерживаются присваивание, print() и return.");}
+  for(const statement of fn.body){let m=statement.match(/^return\s+(.+)$/);if(m){result=value(m[1]);break;}m=statement.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);if(m){if(!localNames.includes(m[1])){localNames.push(m[1]);saved[m[1]]=Object.prototype.hasOwnProperty.call(vars,m[1])?vars[m[1]]:undefined;}vars[m[1]]=value(m[2]);continue;}if(statement.startsWith("print(")){printLine(statement);continue;}throw new Error("В функции поддерживаются присваивание, print() и return.");}
   localNames.forEach(key=>{if(saved[key]===undefined)delete vars[key];else vars[key]=saved[key];});
   return result;
  }
