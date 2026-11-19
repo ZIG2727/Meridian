@@ -220,6 +220,23 @@
         "py-files-errors-03",
         "py-files-errors-04"
       ]
+    },
+    {
+      "unitId": "py-functions-scope",
+      "level": "Functions",
+      "title": "Область видимости и lambda",
+      "description": "Различать локальные имена и короткие анонимные функции.",
+      "order": 14,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-functions-arguments"
+      ],
+      "lessonIds": [
+        "py-functions-scope-01",
+        "py-functions-scope-02",
+        "py-functions-scope-03",
+        "py-functions-scope-04"
+      ]
     }
   ]
 }

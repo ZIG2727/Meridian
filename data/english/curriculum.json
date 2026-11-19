@@ -137,23 +137,6 @@
       ]
     },
     {
-      "unitId": "en-a2-directions-weather",
-      "level": "A2",
-      "title": "Направления и погода",
-      "description": "Ориентироваться в городе и описывать погоду.",
-      "order": 10,
-      "estimatedMinutes": 32,
-      "prerequisiteUnits": [
-        "en-a2-travel"
-      ],
-      "lessonIds": [
-        "en-a2-directions-weather-01",
-        "en-a2-directions-weather-02",
-        "en-a2-directions-weather-03",
-        "en-a2-directions-weather-04"
-      ]
-    },
-    {
       "unitId": "en-b1-work-office",
       "level": "B1",
       "title": "Работа и офис",
@@ -168,6 +151,23 @@
         "en-b1-work-office-02",
         "en-b1-work-office-03",
         "en-b1-work-office-04"
+      ]
+    },
+    {
+      "unitId": "en-a2-directions",
+      "level": "A2",
+      "title": "Направления",
+      "description": "Объяснять маршрут и спрашивать дорогу.",
+      "order": 11,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-travel"
+      ],
+      "lessonIds": [
+        "en-a2-directions-01",
+        "en-a2-directions-02",
+        "en-a2-directions-03",
+        "en-a2-directions-04"
       ]
     }
   ]

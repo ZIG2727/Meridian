@@ -1,0 +1,65 @@
+{
+  "unitId": "py-functions-scope",
+  "lessons": [
+    {
+      "lessonId": "py-functions-scope-01",
+      "unitId": "py-functions-scope",
+      "order": 1,
+      "title": "Локальная область видимости",
+      "estimatedMinutes": 9,
+      "tags": [
+        "functions",
+        "scope"
+      ],
+      "theory": "Имя, созданное внутри функции, обычно доступно только в её теле. Это помогает отделять внутренние данные от внешних.",
+      "starterCode": "message = \"Ready\"\nprint(message)",
+      "expectedOutput": "Ready",
+      "hint": "Покажи значение переменной в области текущего кода."
+    },
+    {
+      "lessonId": "py-functions-scope-02",
+      "unitId": "py-functions-scope",
+      "order": 2,
+      "title": "Глобальные имена",
+      "estimatedMinutes": 9,
+      "tags": [
+        "functions",
+        "scope"
+      ],
+      "theory": "Переменные верхнего уровня доступны в основной части программы. Не переиспользуй одно имя для разных задач.",
+      "starterCode": "level = 2\nprint(level)",
+      "expectedOutput": "2",
+      "hint": "Создай level вне функции и выведи значение."
+    },
+    {
+      "lessonId": "py-functions-scope-03",
+      "unitId": "py-functions-scope",
+      "order": 3,
+      "title": "Lambda",
+      "estimatedMinutes": 9,
+      "tags": [
+        "functions",
+        "scope"
+      ],
+      "theory": "lambda создаёт короткую анонимную функцию из одного выражения. Её часто используют для простого преобразования значения.",
+      "starterCode": "double = lambda x: x * 2\nprint(double(4))",
+      "expectedOutput": "8",
+      "hint": "Лямбда должна вернуть x, умноженное на 2."
+    },
+    {
+      "lessonId": "py-functions-scope-04",
+      "unitId": "py-functions-scope",
+      "order": 4,
+      "title": "Выбор def или lambda",
+      "estimatedMinutes": 9,
+      "tags": [
+        "functions",
+        "scope"
+      ],
+      "theory": "def удобнее для именованных функций с несколькими строками. lambda подходит для короткого выражения.",
+      "starterCode": "square = lambda x: x * x\nprint(square(3))",
+      "expectedOutput": "9",
+      "hint": "Используй lambda для возведения x в квадрат."
+    }
+  ]
+}

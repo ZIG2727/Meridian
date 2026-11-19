@@ -220,6 +220,23 @@
         "ch-endgames-basic-mates-03",
         "ch-endgames-basic-mates-04"
       ]
+    },
+    {
+      "unitId": "ch-openings-principles",
+      "level": "Openings",
+      "title": "Принципы дебюта",
+      "description": "Развивать фигуры, бороться за центр и обеспечить короля.",
+      "order": 14,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-rook"
+      ],
+      "lessonIds": [
+        "ch-openings-principles-01",
+        "ch-openings-principles-02",
+        "ch-openings-principles-03",
+        "ch-openings-principles-04"
+      ]
     }
   ]
 }

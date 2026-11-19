@@ -1,0 +1,105 @@
+{
+  "unitId": "ch-openings-principles",
+  "lessons": [
+    {
+      "lessonId": "ch-openings-principles-01",
+      "unitId": "ch-openings-principles",
+      "order": 1,
+      "title": "Контроль центра",
+      "estimatedMinutes": 8,
+      "tags": [
+        "openings",
+        "principles"
+      ],
+      "text": "В дебюте важно бороться за центральные поля e4, d4, e5 и d5: фигуры получают больше пространства и вариантов.",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "quiz": [
+        {
+          "q": "Какие поля считаются центральными?",
+          "options": [
+            "e4, d4, e5 и d5",
+            "a1, a8, h1 и h8",
+            "Только поля у края"
+          ],
+          "answer": 0,
+          "explanation": "Развитие фигур и контроль центра помогают подготовить безопасную позицию."
+        }
+      ]
+    },
+    {
+      "lessonId": "ch-openings-principles-02",
+      "unitId": "ch-openings-principles",
+      "order": 2,
+      "title": "Развитие фигур",
+      "estimatedMinutes": 8,
+      "tags": [
+        "openings",
+        "principles"
+      ],
+      "text": "Развивайте лёгкие фигуры на активные поля, не выводя одну и ту же фигуру много раз без необходимости.",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "quiz": [
+        {
+          "q": "Какие фигуры обычно развивают в первую очередь?",
+          "options": [
+            "Коней и слонов",
+            "Короля и пешки",
+            "Только ферзя"
+          ],
+          "answer": 0,
+          "explanation": "Развитие фигур и контроль центра помогают подготовить безопасную позицию."
+        }
+      ]
+    },
+    {
+      "lessonId": "ch-openings-principles-03",
+      "unitId": "ch-openings-principles",
+      "order": 3,
+      "title": "Безопасность короля",
+      "estimatedMinutes": 8,
+      "tags": [
+        "openings",
+        "principles"
+      ],
+      "text": "Рокировка обычно помогает убрать короля из центра и соединить ладьи. Но перед ней нужно проверить все условия.",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "quiz": [
+        {
+          "q": "Зачем часто делают рокировку?",
+          "options": [
+            "Обеспечить безопасность короля",
+            "Выиграть ферзя автоматически",
+            "Поставить мат одним ходом"
+          ],
+          "answer": 0,
+          "explanation": "Развитие фигур и контроль центра помогают подготовить безопасную позицию."
+        }
+      ]
+    },
+    {
+      "lessonId": "ch-openings-principles-04",
+      "unitId": "ch-openings-principles",
+      "order": 4,
+      "title": "Темп и развитие",
+      "estimatedMinutes": 8,
+      "tags": [
+        "openings",
+        "principles"
+      ],
+      "text": "Темп — это единица времени на ход. Потеря темпов в дебюте может позволить сопернику занять центр и развить фигуры.",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "quiz": [
+        {
+          "q": "Что означает потерять темп?",
+          "options": [
+            "Потратить ход без полезного развития",
+            "Выиграть фигуру",
+            "Сделать рокировку"
+          ],
+          "answer": 0,
+          "explanation": "Развитие фигур и контроль центра помогают подготовить безопасную позицию."
+        }
+      ]
+    }
+  ]
+}
