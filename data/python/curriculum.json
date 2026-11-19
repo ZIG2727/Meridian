@@ -237,6 +237,23 @@
         "py-functions-scope-03",
         "py-functions-scope-04"
       ]
+    },
+    {
+      "unitId": "py-files-text",
+      "level": "Files & Errors",
+      "title": "Текстовые данные",
+      "description": "Работать с текстом в безопасной виртуальной модели без доступа к файлам устройства.",
+      "order": 15,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-files-errors"
+      ],
+      "lessonIds": [
+        "py-files-text-01",
+        "py-files-text-02",
+        "py-files-text-03",
+        "py-files-text-04"
+      ]
     }
   ]
 }

@@ -169,6 +169,23 @@
         "en-a2-directions-03",
         "en-a2-directions-04"
       ]
+    },
+    {
+      "unitId": "en-a2-weather",
+      "level": "A2",
+      "title": "Погода",
+      "description": "Описывать погоду, температуру и сезонные условия.",
+      "order": 12,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-directions"
+      ],
+      "lessonIds": [
+        "en-a2-weather-01",
+        "en-a2-weather-02",
+        "en-a2-weather-03",
+        "en-a2-weather-04"
+      ]
     }
   ]
 }

@@ -1,0 +1,65 @@
+{
+  "unitId": "py-files-text",
+  "lessons": [
+    {
+      "lessonId": "py-files-text-01",
+      "unitId": "py-files-text",
+      "order": 1,
+      "title": "Чтение текстовых данных",
+      "estimatedMinutes": 9,
+      "tags": [
+        "files",
+        "text"
+      ],
+      "theory": "В реальной программе файл можно прочитать, но учебный запуск Meridian не обращается к диску. Здесь содержимое файла представлено строковой переменной.",
+      "starterCode": "file_text = \"Meridian notes\"\nprint(file_text)",
+      "expectedOutput": "Meridian notes",
+      "hint": "Используй переменную file_text как безопасную модель содержимого."
+    },
+    {
+      "lessonId": "py-files-text-02",
+      "unitId": "py-files-text",
+      "order": 2,
+      "title": "Подготовка текста",
+      "estimatedMinutes": 9,
+      "tags": [
+        "files",
+        "text"
+      ],
+      "theory": "Перед записью данных удобно подготовить строку и проверить её содержимое. В этом упражнении мы моделируем текст без создания файла.",
+      "starterCode": "message = \"Lesson complete\"\nprint(message)",
+      "expectedOutput": "Lesson complete",
+      "hint": "Сохрани нужный текст в message и выведи его."
+    },
+    {
+      "lessonId": "py-files-text-03",
+      "unitId": "py-files-text",
+      "order": 3,
+      "title": "Обновление содержимого",
+      "estimatedMinutes": 9,
+      "tags": [
+        "files",
+        "text"
+      ],
+      "theory": "Новое присваивание заменяет прежнее содержимое переменной. Это модель обновления текста, а не запись на диск.",
+      "starterCode": "file_text = \"Draft\"\nfile_text = \"Final version\"\nprint(file_text)",
+      "expectedOutput": "Final version",
+      "hint": "Обнови file_text перед выводом."
+    },
+    {
+      "lessonId": "py-files-text-04",
+      "unitId": "py-files-text",
+      "order": 4,
+      "title": "Безопасность файлов",
+      "estimatedMinutes": 9,
+      "tags": [
+        "files",
+        "text"
+      ],
+      "theory": "Пути и файлы могут содержать важные данные. Meridian не даёт урокам доступ к файловой системе: упражнения проверяют только текстовые значения.",
+      "starterCode": "print(\"No disk access\")",
+      "expectedOutput": "No disk access",
+      "hint": "Оставь работу в пределах учебной строки."
+    }
+  ]
+}

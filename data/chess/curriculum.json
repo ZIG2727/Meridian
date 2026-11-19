@@ -237,6 +237,23 @@
         "ch-openings-principles-03",
         "ch-openings-principles-04"
       ]
+    },
+    {
+      "unitId": "ch-openings-systems",
+      "level": "Openings",
+      "title": "Дебютные системы",
+      "description": "Знакомиться с идеями итальянской партии, сицилианской защиты и системы Лондона.",
+      "order": 15,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-openings-principles"
+      ],
+      "lessonIds": [
+        "ch-openings-systems-01",
+        "ch-openings-systems-02",
+        "ch-openings-systems-03",
+        "ch-openings-systems-04"
+      ]
     }
   ]
 }
