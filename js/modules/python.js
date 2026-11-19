@@ -200,7 +200,7 @@ export async function renderPython(app) {
       window.setTimeout(() => editor.classList.remove("is-correct"), 600);
       status.className = "status-line feedback success"; status.textContent = "Вывод совпадает с ожидаемым.";
       window.setTimeout(() => animateProgress(progressTrack, 100), 600);
-      if (!wasCompleted && lessons.every(lesson => completed.includes(lesson.id))) celebrate(status, "Раздел Python завершён.", 800);
+      if (!wasCompleted && lessons.every(lesson => completed.includes(lesson.id))) window.setTimeout(() => celebrate(status, "Раздел Python завершён.", 800), 1000);
     });
     content.querySelector("#python-next").addEventListener("click", () => {
       const next = lessons[lessonIndex + 1];
