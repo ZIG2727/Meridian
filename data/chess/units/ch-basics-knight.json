@@ -1,0 +1,101 @@
+{
+  "unitId": "ch-basics-knight",
+  "lessons": [
+    {
+      "lessonId": "ch-basics-knight-01",
+      "unitId": "ch-basics-knight",
+      "order": 1,
+      "title": "Г-образный ход",
+      "estimatedMinutes": 7,
+      "tags": [
+        "basics",
+        "knight"
+      ],
+      "text": "Конь перемещается на два поля по одной оси и на одно по перпендикулярной. Он может перепрыгивать через фигуры.",
+      "fen": "4k3/8/8/8/4N3/8/8/4K3 w - - 0 1",
+      "quiz": [
+        {
+          "q": "Куда может пойти конь с e4?",
+          "options": [
+            "f6",
+            "e6",
+            "g5"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "lessonId": "ch-basics-knight-02",
+      "unitId": "ch-basics-knight",
+      "order": 2,
+      "title": "Прыжок через фигуры",
+      "estimatedMinutes": 7,
+      "tags": [
+        "basics",
+        "knight"
+      ],
+      "text": "Конь перепрыгивает через другие фигуры; важно только конечное поле. Взятие возможно на занятом поле противника.",
+      "fen": "7k/8/8/8/8/8/5P2/4N2K w - - 0 1",
+      "quiz": [
+        {
+          "q": "Может ли конь e1 перепрыгнуть через пешку f2 и попасть на g2?",
+          "options": [
+            "Да, если g3 доступно",
+            "Нет, путь должен быть свободен",
+            "Только при шахе"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "lessonId": "ch-basics-knight-03",
+      "unitId": "ch-basics-knight",
+      "order": 3,
+      "title": "Конь в центре",
+      "estimatedMinutes": 7,
+      "tags": [
+        "basics",
+        "knight"
+      ],
+      "text": "В центре доски у коня обычно больше возможных ходов, чем у края. Поэтому центральные поля часто удобны для развития.",
+      "fen": "4k3/8/8/8/3N4/8/8/4K3 w - - 0 1",
+      "quiz": [
+        {
+          "q": "Где у коня обычно больше вариантов хода?",
+          "options": [
+            "В центре",
+            "В углу",
+            "На краю"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "lessonId": "ch-basics-knight-04",
+      "unitId": "ch-basics-knight",
+      "order": 4,
+      "title": "Развитие коня",
+      "estimatedMinutes": 7,
+      "tags": [
+        "basics",
+        "knight"
+      ],
+      "text": "В дебюте коней часто развивают к центру, например на f3 и c3. Не стоит без причины ходить одной фигурой несколько раз.",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "quiz": [
+        {
+          "q": "Какой ход развивает коня с g1 к центру?",
+          "options": [
+            "g1–f3",
+            "g1–h3",
+            "g1–g3"
+          ],
+          "answer": 0
+        }
+      ]
+    }
+  ]
+}

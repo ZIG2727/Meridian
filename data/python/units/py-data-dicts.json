@@ -1,0 +1,65 @@
+{
+  "unitId": "py-data-dicts",
+  "lessons": [
+    {
+      "lessonId": "py-data-dicts-01",
+      "unitId": "py-data-dicts",
+      "order": 1,
+      "title": "Словарь",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "dicts"
+      ],
+      "theory": "Словарь хранит пары ключ–значение. Его записывают в фигурных скобках; ключ отделяют от значения.",
+      "starterCode": "scores = {\"Mira\": 10, \"Leo\": 8}\nprint(scores)",
+      "expectedOutput": "{'Mira': 10, 'Leo': 8}",
+      "hint": "Создай словарь с двумя именами и числами."
+    },
+    {
+      "lessonId": "py-data-dicts-02",
+      "unitId": "py-data-dicts",
+      "order": 2,
+      "title": "Получение по ключу",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "dicts"
+      ],
+      "theory": "Значение получают по ключу в квадратных скобках. Ключ должен существовать в словаре.",
+      "starterCode": "scores = {\"Mira\": 10, \"Leo\": 8}\nprint(scores[\"Mira\"])",
+      "expectedOutput": "10",
+      "hint": "Обратись к словарю по ключу \"Mira\"."
+    },
+    {
+      "lessonId": "py-data-dicts-03",
+      "unitId": "py-data-dicts",
+      "order": 3,
+      "title": "Изменение значения",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "dicts"
+      ],
+      "theory": "Присваивание по существующему ключу заменяет старое значение, а по новому ключу добавляет пару.",
+      "starterCode": "scores = {\"Mira\": 10}\nscores[\"Mira\"] = 12\nprint(scores[\"Mira\"])",
+      "expectedOutput": "12",
+      "hint": "Установи значение ключа Mira равным 12."
+    },
+    {
+      "lessonId": "py-data-dicts-04",
+      "unitId": "py-data-dicts",
+      "order": 4,
+      "title": "Количество пар",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "dicts"
+      ],
+      "theory": "len() возвращает число пар ключ–значение в словаре.",
+      "starterCode": "scores = {\"Mira\": 10, \"Leo\": 8}\nprint(len(scores))",
+      "expectedOutput": "2",
+      "hint": "Передай словарь scores в len()."
+    }
+  ]
+}

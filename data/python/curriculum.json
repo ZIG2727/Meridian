@@ -1,0 +1,259 @@
+{
+  "module": "python",
+  "version": 3,
+  "units": [
+    {
+      "unitId": "py-basics-print",
+      "level": "Basics",
+      "title": "Вывод и комментарии",
+      "description": "Первые команды, вывод значений и пояснения в коде.",
+      "order": 1,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [],
+      "lessonIds": [
+        "py-basics-print-01",
+        "py-basics-print-02",
+        "py-basics-print-03",
+        "py-basics-print-04"
+      ]
+    },
+    {
+      "unitId": "py-basics-variables",
+      "level": "Basics",
+      "title": "Переменные",
+      "description": "Имена, присваивание и изменение значений.",
+      "order": 2,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-basics-print"
+      ],
+      "lessonIds": [
+        "py-basics-variables-01",
+        "py-basics-variables-02",
+        "py-basics-variables-03",
+        "py-basics-variables-04"
+      ]
+    },
+    {
+      "unitId": "py-basics-types",
+      "level": "Basics",
+      "title": "Типы данных",
+      "description": "Строки, целые числа, дроби и логические значения.",
+      "order": 3,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-basics-variables"
+      ],
+      "lessonIds": [
+        "py-basics-types-01",
+        "py-basics-types-02",
+        "py-basics-types-03",
+        "py-basics-types-04"
+      ]
+    },
+    {
+      "unitId": "py-basics-input",
+      "level": "Basics",
+      "title": "Ввод данных",
+      "description": "Получение данных пользователя и преобразование типов.",
+      "order": 4,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-basics-types"
+      ],
+      "lessonIds": [
+        "py-basics-input-01",
+        "py-basics-input-02",
+        "py-basics-input-03",
+        "py-basics-input-04"
+      ]
+    },
+    {
+      "unitId": "py-control-if",
+      "level": "Control Flow",
+      "title": "Условия if",
+      "description": "Сравнение значений и выбор ветви выполнения.",
+      "order": 5,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-basics-input"
+      ],
+      "lessonIds": [
+        "py-control-if-01",
+        "py-control-if-02",
+        "py-control-if-03",
+        "py-control-if-04"
+      ]
+    },
+    {
+      "unitId": "py-control-loops",
+      "level": "Control Flow",
+      "title": "Циклы for и while",
+      "description": "Повторение команд с заданным количеством и условием.",
+      "order": 6,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-control-if"
+      ],
+      "lessonIds": [
+        "py-control-loops-01",
+        "py-control-loops-02",
+        "py-control-loops-03",
+        "py-control-loops-04"
+      ]
+    },
+    {
+      "unitId": "py-data-lists",
+      "level": "Data Structures",
+      "title": "Списки",
+      "description": "Создавать списки, обращаться к элементам и менять коллекции.",
+      "order": 7,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-control-loops"
+      ],
+      "lessonIds": [
+        "py-data-lists-01",
+        "py-data-lists-02",
+        "py-data-lists-03",
+        "py-data-lists-04"
+      ]
+    },
+    {
+      "unitId": "py-data-dicts",
+      "level": "Data Structures",
+      "title": "Словари",
+      "description": "Хранить и получать данные по ключам.",
+      "order": 8,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-data-lists"
+      ],
+      "lessonIds": [
+        "py-data-dicts-01",
+        "py-data-dicts-02",
+        "py-data-dicts-03",
+        "py-data-dicts-04"
+      ]
+    },
+    {
+      "unitId": "py-data-tuples",
+      "level": "Data Structures",
+      "title": "Кортежи",
+      "description": "Хранить упорядоченные неизменяемые наборы значений.",
+      "order": 9,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-data-dicts"
+      ],
+      "lessonIds": [
+        "py-data-tuples-01",
+        "py-data-tuples-02",
+        "py-data-tuples-03",
+        "py-data-tuples-04"
+      ]
+    },
+    {
+      "unitId": "py-data-sets",
+      "level": "Data Structures",
+      "title": "Множества",
+      "description": "Хранить уникальные элементы и выполнять простые операции над множествами.",
+      "order": 10,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-data-tuples"
+      ],
+      "lessonIds": [
+        "py-data-sets-01",
+        "py-data-sets-02",
+        "py-data-sets-03",
+        "py-data-sets-04"
+      ]
+    },
+    {
+      "unitId": "py-functions-basics",
+      "level": "Functions",
+      "title": "Функции",
+      "description": "Создавать функции и вызывать их по имени.",
+      "order": 11,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-data-sets"
+      ],
+      "lessonIds": [
+        "py-functions-basics-01",
+        "py-functions-basics-02",
+        "py-functions-basics-03",
+        "py-functions-basics-04"
+      ]
+    },
+    {
+      "unitId": "py-functions-arguments",
+      "level": "Functions",
+      "title": "Аргументы и return",
+      "description": "Передавать аргументы и возвращать результат функции.",
+      "order": 12,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-functions-basics"
+      ],
+      "lessonIds": [
+        "py-functions-arguments-01",
+        "py-functions-arguments-02",
+        "py-functions-arguments-03",
+        "py-functions-arguments-04"
+      ]
+    },
+    {
+      "unitId": "py-functions-scope",
+      "level": "Functions",
+      "title": "Область видимости и lambda",
+      "description": "Различать локальные имена и короткие анонимные функции.",
+      "order": 13,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-functions-arguments"
+      ],
+      "lessonIds": [
+        "py-functions-scope-01",
+        "py-functions-scope-02",
+        "py-functions-scope-03",
+        "py-functions-scope-04"
+      ]
+    },
+    {
+      "unitId": "py-files-text",
+      "level": "Files & Errors",
+      "title": "Текстовые данные",
+      "description": "Работать с текстом в безопасной виртуальной модели без доступа к файлам устройства.",
+      "order": 14,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-functions-scope"
+      ],
+      "lessonIds": [
+        "py-files-text-01",
+        "py-files-text-02",
+        "py-files-text-03",
+        "py-files-text-04"
+      ]
+    },
+    {
+      "unitId": "py-files-errors",
+      "level": "Files & Errors",
+      "title": "Файлы и ошибки",
+      "description": "Разбирать текстовые файлы как данные и распознавать частые ошибки.",
+      "order": 15,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-files-text"
+      ],
+      "lessonIds": [
+        "py-files-errors-01",
+        "py-files-errors-02",
+        "py-files-errors-03",
+        "py-files-errors-04"
+      ]
+    }
+  ]
+}

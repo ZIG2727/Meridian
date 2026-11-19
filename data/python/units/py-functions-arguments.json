@@ -1,0 +1,65 @@
+{
+  "unitId": "py-functions-arguments",
+  "lessons": [
+    {
+      "lessonId": "py-functions-arguments-01",
+      "unitId": "py-functions-arguments",
+      "order": 1,
+      "title": "Параметры и аргументы",
+      "estimatedMinutes": 10,
+      "tags": [
+        "functions",
+        "arguments"
+      ],
+      "theory": "Параметр указывается в определении функции, аргумент — конкретное значение при вызове. Порядок позиционных аргументов важен.",
+      "starterCode": "def add(a, b):\n    print(a)\nadd(3, 5)",
+      "expectedOutput": "3",
+      "hint": "Передай первым аргументом число 3."
+    },
+    {
+      "lessonId": "py-functions-arguments-02",
+      "unitId": "py-functions-arguments",
+      "order": 2,
+      "title": "Несколько аргументов",
+      "estimatedMinutes": 10,
+      "tags": [
+        "functions",
+        "arguments"
+      ],
+      "theory": "Функция может принимать несколько параметров. При вызове значения сопоставляются параметрам по порядку.",
+      "starterCode": "def show_pair(first, second):\n    print(second)\nshow_pair(\"red\", \"blue\")",
+      "expectedOutput": "blue",
+      "hint": "Выведи второй параметр second."
+    },
+    {
+      "lessonId": "py-functions-arguments-03",
+      "unitId": "py-functions-arguments",
+      "order": 3,
+      "title": "Значение по умолчанию",
+      "estimatedMinutes": 10,
+      "tags": [
+        "functions",
+        "arguments"
+      ],
+      "theory": "Параметру можно задать значение по умолчанию. Тогда аргумент можно не указывать при вызове.",
+      "starterCode": "def greet(name=\"Mira\"):\n    print(name)\ngreet()",
+      "expectedOutput": "Mira",
+      "hint": "Задай name значение по умолчанию Mira."
+    },
+    {
+      "lessonId": "py-functions-arguments-04",
+      "unitId": "py-functions-arguments",
+      "order": 4,
+      "title": "Возврат результата",
+      "estimatedMinutes": 10,
+      "tags": [
+        "functions",
+        "arguments"
+      ],
+      "theory": "return возвращает значение функции, которое можно использовать в выражении или передать в print().",
+      "starterCode": "def double(number):\n    return number + number\nprint(double(4))",
+      "expectedOutput": "8",
+      "hint": "Верни сумму number и number."
+    }
+  ]
+}

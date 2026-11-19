@@ -1,0 +1,465 @@
+{
+  "unitId": "en-a2-weather",
+  "lessons": [
+    {
+      "lessonId": "en-a2-weather-01",
+      "unitId": "en-a2-weather",
+      "order": 1,
+      "title": "Состояние неба",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "weather"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-weather-1-1",
+            "en": "sunny",
+            "ru": "солнечный",
+            "example": "It's sunny this afternoon.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-1-2",
+            "en": "cloudy",
+            "ru": "облачный",
+            "example": "The sky is cloudy today.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-1-3",
+            "en": "overcast",
+            "ru": "пасмурный",
+            "example": "It's overcast, but it isn't raining.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-1-4",
+            "en": "clear",
+            "ru": "ясный",
+            "example": "The sky will be clear tonight.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-1-5",
+            "en": "rainy",
+            "ru": "дождливый",
+            "example": "It was rainy all morning.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-1-6",
+            "en": "windy",
+            "ru": "ветреный",
+            "example": "It's too windy for a picnic.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-1-7",
+            "en": "foggy",
+            "ru": "туманный",
+            "example": "Be careful; it's foggy outside.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-1-8",
+            "en": "snowy",
+            "ru": "снежный",
+            "example": "The roads are snowy in winter.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-1-9",
+            "en": "stormy",
+            "ru": "штормовой",
+            "example": "The sea is stormy today.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-1-10",
+            "en": "humid",
+            "ru": "влажный",
+            "example": "It's hot and humid in July.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-weather-02",
+      "unitId": "en-a2-weather",
+      "order": 2,
+      "title": "Температура",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "weather"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-weather-2-1",
+            "en": "temperature",
+            "ru": "температура",
+            "example": "The temperature is below zero.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-2-2",
+            "en": "degree",
+            "ru": "градус",
+            "example": "It's twenty degrees outside.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-2-3",
+            "en": "freezing",
+            "ru": "морозный",
+            "example": "It's freezing this morning.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-2-4",
+            "en": "cold",
+            "ru": "холодный",
+            "example": "The wind makes it feel cold.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-2-5",
+            "en": "cool",
+            "ru": "прохладный",
+            "example": "It's cool in the evening.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-2-6",
+            "en": "mild",
+            "ru": "мягкий",
+            "example": "The weather is mild in spring.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-2-7",
+            "en": "warm",
+            "ru": "тёплый",
+            "example": "It's warm enough to sit outside.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-2-8",
+            "en": "hot",
+            "ru": "жаркий",
+            "example": "It gets very hot in August.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-2-9",
+            "en": "below zero",
+            "ru": "ниже нуля",
+            "example": "It was five degrees below zero.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-2-10",
+            "en": "heatwave",
+            "ru": "жара",
+            "example": "The city is preparing for a heatwave.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-weather-03",
+      "unitId": "en-a2-weather",
+      "order": 3,
+      "title": "Осадки и ветер",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "weather"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-weather-3-1",
+            "en": "rain",
+            "ru": "дождь",
+            "example": "We had heavy rain last night.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-3-2",
+            "en": "shower",
+            "ru": "кратковременный дождь",
+            "example": "There may be a shower later.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-3-3",
+            "en": "drizzle",
+            "ru": "морось",
+            "example": "A light drizzle started at noon.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-3-4",
+            "en": "snowfall",
+            "ru": "снегопад",
+            "example": "The snowfall covered the roads.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-3-5",
+            "en": "hail",
+            "ru": "град",
+            "example": "The storm brought hail.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-3-6",
+            "en": "thunder",
+            "ru": "гром",
+            "example": "We heard thunder in the distance.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-3-7",
+            "en": "lightning",
+            "ru": "молния",
+            "example": "Lightning lit up the sky.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-3-8",
+            "en": "breeze",
+            "ru": "лёгкий ветерок",
+            "example": "A cool breeze came from the sea.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-3-9",
+            "en": "gust",
+            "ru": "порыв ветра",
+            "example": "A strong gust closed the door.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-3-10",
+            "en": "drought",
+            "ru": "засуха",
+            "example": "The region suffered from drought.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-weather-04",
+      "unitId": "en-a2-weather",
+      "order": 4,
+      "title": "Прогноз и планы",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "weather"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-weather-4-1",
+            "en": "forecast",
+            "ru": "прогноз",
+            "example": "What's the weather forecast?",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-4-2",
+            "en": "umbrella",
+            "ru": "зонт",
+            "example": "Take an umbrella; it may rain.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-4-3",
+            "en": "raincoat",
+            "ru": "дождевик",
+            "example": "I keep a raincoat in my bag.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-4-4",
+            "en": "sunrise",
+            "ru": "рассвет",
+            "example": "We watched the sunrise.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-4-5",
+            "en": "sunset",
+            "ru": "закат",
+            "example": "The sunset was beautiful.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-4-6",
+            "en": "season",
+            "ru": "время года",
+            "example": "Autumn is my favourite season.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-4-7",
+            "en": "spring",
+            "ru": "весна",
+            "example": "Flowers appear in spring.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-4-8",
+            "en": "summer",
+            "ru": "лето",
+            "example": "We travel in summer.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-4-9",
+            "en": "autumn",
+            "ru": "осень",
+            "example": "Leaves turn yellow in autumn.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          },
+          {
+            "id": "en-card-weather-4-10",
+            "en": "winter",
+            "ru": "зима",
+            "example": "Days are short in winter.",
+            "tags": [
+              "a2",
+              "weather"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

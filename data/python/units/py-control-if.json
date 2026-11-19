@@ -1,0 +1,68 @@
+{
+  "unitId": "py-control-if",
+  "lessons": [
+    {
+      "lessonId": "py-control-if-01",
+      "unitId": "py-control-if",
+      "order": 1,
+      "title": "Условие if",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "if"
+      ],
+      "theory": "if выполняет вложенный блок, если условие истинно. После условия ставится двоеточие.",
+      "starterCode": "temperature = 25\nif temperature < 20:\n    print(\"Take a jacket\")\nelse:\n    print(\"No jacket\")",
+      "expectedOutput": "Take a jacket",
+      "hint": "При temperature 12 условие < 20 истинно.",
+      "solutionCode": "temperature = 15\nif temperature < 20:\n    print(\"Take a jacket\")\nelse:\n    print(\"No jacket\")"
+    },
+    {
+      "lessonId": "py-control-if-02",
+      "unitId": "py-control-if",
+      "order": 2,
+      "title": "Сравнение на равенство",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "if"
+      ],
+      "theory": "Оператор == сравнивает значения. Один знак = используется для присваивания.",
+      "starterCode": "answer = 4\nif answer == 5:\n    print(\"Correct\")\nelse:\n    print(\"Try again\")",
+      "expectedOutput": "Correct",
+      "hint": "Для сравнения используй два знака равенства.",
+      "solutionCode": "answer = 5\nif answer == 5:\n    print(\"Correct\")\nelse:\n    print(\"Try again\")"
+    },
+    {
+      "lessonId": "py-control-if-03",
+      "unitId": "py-control-if",
+      "order": 3,
+      "title": "Ветвь else",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "if"
+      ],
+      "theory": "else выполняется, если условие if ложно. Выполняется только одна из двух ветвей.",
+      "starterCode": "battery = 30\nif battery > 20:\n    print(\"Enough\")\nelse:\n    print(\"Charge\")",
+      "expectedOutput": "Charge",
+      "hint": "При 10 условие > 20 ложно.",
+      "solutionCode": "battery = 10\nif battery > 20:\n    print(\"Enough\")\nelse:\n    print(\"Charge\")"
+    },
+    {
+      "lessonId": "py-control-if-04",
+      "unitId": "py-control-if",
+      "order": 4,
+      "title": "Цепочка if, elif и else",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "if"
+      ],
+      "theory": "if проверяет первое условие, elif — следующие варианты, а else выполняется, если ни одно условие не подошло. Ветка elif позволяет не вкладывать несколько if друг в друга.",
+      "starterCode": "score = 72\nif score >= 90:\n    print(\"Excellent\")\nelif score >= 60:\n    print(\"Pass\")\nelse:\n    print(\"Try again\")",
+      "expectedOutput": "Pass",
+      "hint": "Оставь три ветки и проверь, что для score = 72 срабатывает elif score >= 60."
+    }
+  ]
+}

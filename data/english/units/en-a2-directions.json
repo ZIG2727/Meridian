@@ -1,0 +1,465 @@
+{
+  "unitId": "en-a2-directions",
+  "lessons": [
+    {
+      "lessonId": "en-a2-directions-01",
+      "unitId": "en-a2-directions",
+      "order": 1,
+      "title": "Расположение",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "directions"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-directions-only-1-1",
+            "en": "opposite",
+            "ru": "напротив",
+            "example": "The library is opposite the park.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-1-2",
+            "en": "next to",
+            "ru": "рядом с",
+            "example": "The café is next to the station.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-1-3",
+            "en": "between",
+            "ru": "между",
+            "example": "The bank is between two shops.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-1-4",
+            "en": "behind",
+            "ru": "за, позади",
+            "example": "The car park is behind the hotel.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-1-5",
+            "en": "in front of",
+            "ru": "перед",
+            "example": "Wait in front of the museum.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-1-6",
+            "en": "near",
+            "ru": "рядом",
+            "example": "Is there a pharmacy near here?",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-1-7",
+            "en": "far from",
+            "ru": "далеко от",
+            "example": "The airport is far from the centre.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-1-8",
+            "en": "on the corner",
+            "ru": "на углу",
+            "example": "There's a bakery on the corner.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-1-9",
+            "en": "at the end of",
+            "ru": "в конце",
+            "example": "The school is at the end of this road.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-1-10",
+            "en": "across from",
+            "ru": "напротив",
+            "example": "The bus stop is across from the cinema.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-directions-02",
+      "unitId": "en-a2-directions",
+      "order": 2,
+      "title": "Указания",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "directions"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-directions-only-2-1",
+            "en": "turn left",
+            "ru": "повернуть налево",
+            "example": "Turn left at the traffic lights.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-2-2",
+            "en": "turn right",
+            "ru": "повернуть направо",
+            "example": "Turn right after the bridge.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-2-3",
+            "en": "go straight",
+            "ru": "идти прямо",
+            "example": "Go straight for two blocks.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-2-4",
+            "en": "go past",
+            "ru": "пройти мимо",
+            "example": "Go past the supermarket.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-2-5",
+            "en": "cross the road",
+            "ru": "перейти дорогу",
+            "example": "Cross the road carefully.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-2-6",
+            "en": "take the first left",
+            "ru": "на первой улице налево",
+            "example": "Take the first left after the bank.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-2-7",
+            "en": "take the second right",
+            "ru": "на второй улице направо",
+            "example": "Take the second right.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-2-8",
+            "en": "follow the signs",
+            "ru": "следовать указателям",
+            "example": "Follow the signs to the station.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-2-9",
+            "en": "walk along",
+            "ru": "идти вдоль",
+            "example": "Walk along the river.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-2-10",
+            "en": "on your left",
+            "ru": "слева",
+            "example": "The entrance is on your left.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-directions-03",
+      "unitId": "en-a2-directions",
+      "order": 3,
+      "title": "Транспорт в городе",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "directions"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-directions-only-3-1",
+            "en": "bus stop",
+            "ru": "автобусная остановка",
+            "example": "The bus stop is outside the school.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-3-2",
+            "en": "bus station",
+            "ru": "автовокзал",
+            "example": "The bus station is near the market.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-3-3",
+            "en": "underground",
+            "ru": "метро",
+            "example": "We took the underground across town.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-3-4",
+            "en": "subway station",
+            "ru": "станция метро",
+            "example": "Meet me at the subway station.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-3-5",
+            "en": "taxi rank",
+            "ru": "стоянка такси",
+            "example": "There's a taxi rank by the hotel.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-3-6",
+            "en": "pedestrian crossing",
+            "ru": "пешеходный переход",
+            "example": "Use the pedestrian crossing.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-3-7",
+            "en": "cycle lane",
+            "ru": "велодорожка",
+            "example": "Don't park in the cycle lane.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-3-8",
+            "en": "one-way street",
+            "ru": "улица с односторонним движением",
+            "example": "This is a one-way street.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-3-9",
+            "en": "roundabout",
+            "ru": "круговое движение",
+            "example": "Take the second exit at the roundabout.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-3-10",
+            "en": "traffic jam",
+            "ru": "пробка",
+            "example": "We were late because of a traffic jam.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-directions-04",
+      "unitId": "en-a2-directions",
+      "order": 4,
+      "title": "Спросить дорогу",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "directions"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-directions-only-4-1",
+            "en": "Excuse me, where is...?",
+            "ru": "извините, где находится...?",
+            "example": "Excuse me, where is the post office?",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-4-2",
+            "en": "How can I get to...?",
+            "ru": "как мне добраться до...?",
+            "example": "How can I get to the museum?",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-4-3",
+            "en": "Is it within walking distance?",
+            "ru": "можно дойти пешком?",
+            "example": "Is it within walking distance?",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-4-4",
+            "en": "Could you show me on the map?",
+            "ru": "покажите на карте",
+            "example": "Could you show me on the map?",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-4-5",
+            "en": "Which way is the centre?",
+            "ru": "в какой стороне центр?",
+            "example": "Which way is the city centre?",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-4-6",
+            "en": "How long does it take?",
+            "ru": "сколько времени займёт?",
+            "example": "How long does it take on foot?",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-4-7",
+            "en": "Where is the nearest...?",
+            "ru": "где ближайший...?",
+            "example": "Where is the nearest bus stop?",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-4-8",
+            "en": "Am I going the right way?",
+            "ru": "я правильно иду?",
+            "example": "Am I going the right way?",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-4-9",
+            "en": "It's about ten minutes away.",
+            "ru": "это примерно в десяти минутах",
+            "example": "It's about ten minutes away.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          },
+          {
+            "id": "en-card-directions-only-4-10",
+            "en": "You can't miss it.",
+            "ru": "не пройдёте мимо",
+            "example": "Go straight; you can't miss it.",
+            "tags": [
+              "a2",
+              "directions"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

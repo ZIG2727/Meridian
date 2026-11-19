@@ -1,0 +1,101 @@
+{
+  "unitId": "ch-basics-board",
+  "lessons": [
+    {
+      "lessonId": "ch-basics-board-01",
+      "unitId": "ch-basics-board",
+      "order": 1,
+      "title": "Координаты доски",
+      "estimatedMinutes": 7,
+      "tags": [
+        "basics",
+        "board"
+      ],
+      "text": "Доска имеет восемь вертикалей a–h и восемь горизонталей 1–8. Поле записывается буквой и цифрой.",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "quiz": [
+        {
+          "q": "Как называется нижнее левое поле со стороны белых?",
+          "options": [
+            "a1",
+            "a8",
+            "h1"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "lessonId": "ch-basics-board-02",
+      "unitId": "ch-basics-board",
+      "order": 2,
+      "title": "Начальная расстановка",
+      "estimatedMinutes": 7,
+      "tags": [
+        "basics",
+        "board"
+      ],
+      "text": "В начальной позиции белые фигуры занимают первую и вторую горизонтали, чёрные — седьмую и восьмую. Ферзь стоит на поле своего цвета.",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "quiz": [
+        {
+          "q": "На какой горизонтали стоят белые пешки?",
+          "options": [
+            "На первой",
+            "На второй",
+            "На восьмой"
+          ],
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "lessonId": "ch-basics-board-03",
+      "unitId": "ch-basics-board",
+      "order": 3,
+      "title": "Запись хода",
+      "estimatedMinutes": 7,
+      "tags": [
+        "basics",
+        "board"
+      ],
+      "text": "В длинной нотации указывают поле отправления и поле назначения. Ход пешки e2–e4 означает переход с e2 на e4.",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "quiz": [
+        {
+          "q": "Как записать ход пешки с e2 на e4?",
+          "options": [
+            "e2–e4",
+            "e4–e2",
+            "e2–d4"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "lessonId": "ch-basics-board-04",
+      "unitId": "ch-basics-board",
+      "order": 4,
+      "title": "Обозначения фигур",
+      "estimatedMinutes": 7,
+      "tags": [
+        "basics",
+        "board"
+      ],
+      "text": "В английской нотации K — король, Q — ферзь, R — ладья, B — слон, N — конь. Пешка не имеет буквенного обозначения.",
+      "fen": "4k3/8/8/8/8/8/8/RNB1K3 w - - 0 1",
+      "quiz": [
+        {
+          "q": "Как обозначается конь?",
+          "options": [
+            "K",
+            "N",
+            "B"
+          ],
+          "answer": 1
+        }
+      ]
+    }
+  ]
+}

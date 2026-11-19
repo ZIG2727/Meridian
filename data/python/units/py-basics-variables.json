@@ -1,0 +1,68 @@
+{
+  "unitId": "py-basics-variables",
+  "lessons": [
+    {
+      "lessonId": "py-basics-variables-01",
+      "unitId": "py-basics-variables",
+      "order": 1,
+      "title": "Создание переменной",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "variables"
+      ],
+      "theory": "Знак = присваивает значение имени. После присваивания имя можно использовать в print().",
+      "starterCode": "name = \"Mira\"\nprint(name)",
+      "expectedOutput": "Alex",
+      "hint": "Измени значение name на Alex.",
+      "solutionCode": "name = \"Alex\"\nprint(name)"
+    },
+    {
+      "lessonId": "py-basics-variables-02",
+      "unitId": "py-basics-variables",
+      "order": 2,
+      "title": "Числовая переменная",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "variables"
+      ],
+      "theory": "Переменная может хранить целое число. Число записывают без кавычек.",
+      "starterCode": "score = 10\nprint(score)",
+      "expectedOutput": "18",
+      "hint": "Создай score со значением 18.",
+      "solutionCode": "score = 18\nprint(score)"
+    },
+    {
+      "lessonId": "py-basics-variables-03",
+      "unitId": "py-basics-variables",
+      "order": 3,
+      "title": "Изменение значения",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "variables"
+      ],
+      "theory": "Повторное присваивание заменяет прежнее значение переменной.",
+      "starterCode": "level = 1\nlevel = 1\nprint(level)",
+      "expectedOutput": "2",
+      "hint": "Вторая команда должна установить level в 2.",
+      "solutionCode": "level = 1\nlevel = 2\nprint(level)"
+    },
+    {
+      "lessonId": "py-basics-variables-04",
+      "unitId": "py-basics-variables",
+      "order": 4,
+      "title": "Имена переменных",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "variables"
+      ],
+      "theory": "Имя начинается с буквы или подчёркивания. Пробелы не допускаются; регистр имеет значение.",
+      "starterCode": "userName = \"Mila\"\nprint(userName)",
+      "expectedOutput": "Mila",
+      "hint": "Используй имя user_name с подчёркиванием."
+    }
+  ]
+}

@@ -1,0 +1,259 @@
+{
+  "module": "english",
+  "version": 3,
+  "units": [
+    {
+      "unitId": "en-a1-greetings",
+      "level": "A1",
+      "title": "Приветствия",
+      "description": "Поздороваться, попрощаться и выбрать вежливую форму.",
+      "order": 1,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [],
+      "lessonIds": [
+        "en-a1-greetings-01",
+        "en-a1-greetings-02",
+        "en-a1-greetings-03",
+        "en-a1-greetings-04"
+      ]
+    },
+    {
+      "unitId": "en-a1-introductions",
+      "level": "A1",
+      "title": "Знакомство",
+      "description": "Представиться и задать вопросы о собеседнике.",
+      "order": 2,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a1-greetings"
+      ],
+      "lessonIds": [
+        "en-a1-introductions-01",
+        "en-a1-introductions-02",
+        "en-a1-introductions-03",
+        "en-a1-introductions-04"
+      ]
+    },
+    {
+      "unitId": "en-a1-numbers-time",
+      "level": "A1",
+      "title": "Числа и время",
+      "description": "Называть числа, дни недели и время.",
+      "order": 3,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a1-introductions"
+      ],
+      "lessonIds": [
+        "en-a1-numbers-time-01",
+        "en-a1-numbers-time-02",
+        "en-a1-numbers-time-03",
+        "en-a1-numbers-time-04"
+      ]
+    },
+    {
+      "unitId": "en-a1-food-drink",
+      "level": "A1",
+      "title": "Еда и напитки",
+      "description": "Заказывать еду, говорить о вкусах и количестве.",
+      "order": 4,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a1-numbers-time"
+      ],
+      "lessonIds": [
+        "en-a1-food-drink-01",
+        "en-a1-food-drink-02",
+        "en-a1-food-drink-03",
+        "en-a1-food-drink-04"
+      ]
+    },
+    {
+      "unitId": "en-a1-family",
+      "level": "A1",
+      "title": "Семья",
+      "description": "Называть родственников и описывать отношения.",
+      "order": 5,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a1-food-drink"
+      ],
+      "lessonIds": [
+        "en-a1-family-01",
+        "en-a1-family-02",
+        "en-a1-family-03",
+        "en-a1-family-04"
+      ]
+    },
+    {
+      "unitId": "en-a2-daily-routine",
+      "level": "A2",
+      "title": "Распорядок дня",
+      "description": "Описывать повседневные действия и привычки.",
+      "order": 6,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a1-family"
+      ],
+      "lessonIds": [
+        "en-a2-daily-routine-01",
+        "en-a2-daily-routine-02",
+        "en-a2-daily-routine-03",
+        "en-a2-daily-routine-04"
+      ]
+    },
+    {
+      "unitId": "en-a2-shopping",
+      "level": "A2",
+      "title": "Покупки",
+      "description": "Спросить цену, размер и оплатить покупку.",
+      "order": 7,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-daily-routine"
+      ],
+      "lessonIds": [
+        "en-a2-shopping-01",
+        "en-a2-shopping-02",
+        "en-a2-shopping-03",
+        "en-a2-shopping-04"
+      ]
+    },
+    {
+      "unitId": "en-a2-travel",
+      "level": "A2",
+      "title": "Путешествия",
+      "description": "Планировать поездку, транспорт и проживание.",
+      "order": 8,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-shopping"
+      ],
+      "lessonIds": [
+        "en-a2-travel-01",
+        "en-a2-travel-02",
+        "en-a2-travel-03",
+        "en-a2-travel-04"
+      ]
+    },
+    {
+      "unitId": "en-a2-directions",
+      "level": "A2",
+      "title": "Направления",
+      "description": "Объяснять маршрут и спрашивать дорогу.",
+      "order": 9,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-travel"
+      ],
+      "lessonIds": [
+        "en-a2-directions-01",
+        "en-a2-directions-02",
+        "en-a2-directions-03",
+        "en-a2-directions-04"
+      ]
+    },
+    {
+      "unitId": "en-a2-weather",
+      "level": "A2",
+      "title": "Погода",
+      "description": "Описывать погоду, температуру и сезонные условия.",
+      "order": 10,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-directions"
+      ],
+      "lessonIds": [
+        "en-a2-weather-01",
+        "en-a2-weather-02",
+        "en-a2-weather-03",
+        "en-a2-weather-04"
+      ]
+    },
+    {
+      "unitId": "en-b1-work-office",
+      "level": "B1",
+      "title": "Работа и офис",
+      "description": "Обсуждать рабочие задачи, встречи и обязанности.",
+      "order": 11,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-weather"
+      ],
+      "lessonIds": [
+        "en-b1-work-office-01",
+        "en-b1-work-office-02",
+        "en-b1-work-office-03",
+        "en-b1-work-office-04"
+      ]
+    },
+    {
+      "unitId": "en-b1-health",
+      "level": "B1",
+      "title": "Здоровье",
+      "description": "Обсуждать самочувствие, симптомы и полезные привычки.",
+      "order": 12,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-b1-work-office"
+      ],
+      "lessonIds": [
+        "en-b1-health-01",
+        "en-b1-health-02",
+        "en-b1-health-03",
+        "en-b1-health-04"
+      ]
+    },
+    {
+      "unitId": "en-b1-opinions",
+      "level": "B1",
+      "title": "Мнения и аргументы",
+      "description": "Выражать мнение, соглашаться и приводить причины.",
+      "order": 13,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-b1-health"
+      ],
+      "lessonIds": [
+        "en-b1-opinions-01",
+        "en-b1-opinions-02",
+        "en-b1-opinions-03",
+        "en-b1-opinions-04"
+      ]
+    },
+    {
+      "unitId": "en-b1-past-events",
+      "level": "B1",
+      "title": "События в прошлом",
+      "description": "Рассказывать о событиях, впечатлениях и опыте.",
+      "order": 14,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-b1-opinions"
+      ],
+      "lessonIds": [
+        "en-b1-past-events-01",
+        "en-b1-past-events-02",
+        "en-b1-past-events-03",
+        "en-b1-past-events-04"
+      ]
+    },
+    {
+      "unitId": "en-b1-future-plans",
+      "level": "B1",
+      "title": "Планы на будущее",
+      "description": "Говорить о намерениях, договорённостях и прогнозах.",
+      "order": 15,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-b1-past-events"
+      ],
+      "lessonIds": [
+        "en-b1-future-plans-01",
+        "en-b1-future-plans-02",
+        "en-b1-future-plans-03",
+        "en-b1-future-plans-04"
+      ]
+    }
+  ]
+}

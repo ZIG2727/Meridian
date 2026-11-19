@@ -1,0 +1,465 @@
+{
+  "unitId": "en-b1-opinions",
+  "lessons": [
+    {
+      "lessonId": "en-b1-opinions-01",
+      "unitId": "en-b1-opinions",
+      "order": 1,
+      "title": "Выразить мнение",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "opinions"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-opinions-1-1",
+            "en": "in my opinion",
+            "ru": "по моему мнению",
+            "example": "In my opinion, the plan is practical.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-1-2",
+            "en": "I think that",
+            "ru": "я думаю, что",
+            "example": "I think that we should leave early.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-1-3",
+            "en": "I believe",
+            "ru": "я считаю",
+            "example": "I believe this is a fair decision.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-1-4",
+            "en": "as far as I know",
+            "ru": "насколько мне известно",
+            "example": "As far as I know, the shop closes at six.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-1-5",
+            "en": "from my point of view",
+            "ru": "с моей точки зрения",
+            "example": "From my point of view, the change is useful.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-1-6",
+            "en": "personally",
+            "ru": "лично",
+            "example": "Personally, I prefer the first option.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-1-7",
+            "en": "it seems to me",
+            "ru": "мне кажется",
+            "example": "It seems to me that we need more time.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-1-8",
+            "en": "I would say",
+            "ru": "я бы сказал",
+            "example": "I would say the result is positive.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-1-9",
+            "en": "to be honest",
+            "ru": "честно говоря",
+            "example": "To be honest, I expected something different.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-1-10",
+            "en": "I agree that",
+            "ru": "я согласен, что",
+            "example": "I agree that practice is important.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-opinions-02",
+      "unitId": "en-b1-opinions",
+      "order": 2,
+      "title": "Согласие и несогласие",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "opinions"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-opinions-2-1",
+            "en": "I completely agree",
+            "ru": "полностью согласен",
+            "example": "I completely agree with your point.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-2-2",
+            "en": "I partly agree",
+            "ru": "частично согласен",
+            "example": "I partly agree, but there is another issue.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-2-3",
+            "en": "I see your point",
+            "ru": "понимаю твою мысль",
+            "example": "I see your point, but I disagree.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-2-4",
+            "en": "I'm not sure about that",
+            "ru": "я в этом не уверен",
+            "example": "I'm not sure about that conclusion.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-2-5",
+            "en": "I disagree",
+            "ru": "я не согласен",
+            "example": "I disagree with the last argument.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-2-6",
+            "en": "that's a good point",
+            "ru": "это хороший аргумент",
+            "example": "That's a good point about the cost.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-2-7",
+            "en": "exactly",
+            "ru": "именно",
+            "example": "Exactly. That's what I meant.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-2-8",
+            "en": "not necessarily",
+            "ru": "не обязательно",
+            "example": "Not necessarily; it depends on the situation.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-2-9",
+            "en": "on the other hand",
+            "ru": "с другой стороны",
+            "example": "On the other hand, it may be cheaper.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-2-10",
+            "en": "fair enough",
+            "ru": "справедливо",
+            "example": "Fair enough. Let's try your idea.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-opinions-03",
+      "unitId": "en-b1-opinions",
+      "order": 3,
+      "title": "Причины и примеры",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "opinions"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-opinions-3-1",
+            "en": "because",
+            "ru": "потому что",
+            "example": "I chose it because it was reliable.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-3-2",
+            "en": "since",
+            "ru": "поскольку",
+            "example": "Since it's late, let's go home.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-3-3",
+            "en": "that's why",
+            "ru": "вот почему",
+            "example": "The road was closed; that's why we were late.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-3-4",
+            "en": "for example",
+            "ru": "например",
+            "example": "For example, we could take the train.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-3-5",
+            "en": "such as",
+            "ru": "такой как",
+            "example": "I enjoy outdoor activities such as cycling.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-3-6",
+            "en": "as a result",
+            "ru": "в результате",
+            "example": "As a result, the team finished early.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-3-7",
+            "en": "therefore",
+            "ru": "следовательно",
+            "example": "The price is lower; therefore, it's a good option.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-3-8",
+            "en": "however",
+            "ru": "однако",
+            "example": "However, we should check the details.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-3-9",
+            "en": "although",
+            "ru": "хотя",
+            "example": "Although it was difficult, we succeeded.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-3-10",
+            "en": "in addition",
+            "ru": "кроме того",
+            "example": "In addition, the service is free.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-opinions-04",
+      "unitId": "en-b1-opinions",
+      "order": 4,
+      "title": "Обсуждение",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "opinions"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-opinions-4-1",
+            "en": "argument",
+            "ru": "аргумент",
+            "example": "Her argument was clear and convincing.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-4-2",
+            "en": "evidence",
+            "ru": "доказательство",
+            "example": "We need evidence to support the claim.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-4-3",
+            "en": "advantage",
+            "ru": "преимущество",
+            "example": "One advantage is the low cost.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-4-4",
+            "en": "disadvantage",
+            "ru": "недостаток",
+            "example": "A disadvantage is the long journey.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-4-5",
+            "en": "benefit",
+            "ru": "польза",
+            "example": "The main benefit is flexibility.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-4-6",
+            "en": "drawback",
+            "ru": "минус",
+            "example": "The biggest drawback is the noise.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-4-7",
+            "en": "compare",
+            "ru": "сравнивать",
+            "example": "Let's compare the two options.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-4-8",
+            "en": "consider",
+            "ru": "рассматривать",
+            "example": "We should consider every possibility.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-4-9",
+            "en": "reasonable",
+            "ru": "разумный",
+            "example": "That sounds like a reasonable choice.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          },
+          {
+            "id": "en-card-opinions-4-10",
+            "en": "convincing",
+            "ru": "убедительный",
+            "example": "He gave a convincing explanation.",
+            "tags": [
+              "b1",
+              "opinions"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
