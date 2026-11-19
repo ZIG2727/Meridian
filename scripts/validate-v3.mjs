@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";\nimport { runSafePython } from "../js/modules/curriculum.js";
+import { resolve } from "node:path";
+import { runSafePython } from "../js/modules/curriculum.js";
 
 const root = process.cwd();
 const modules = ["english", "chess", "python"];
@@ -57,7 +58,8 @@ for (const module of modules) {
         const quiz = lesson.quiz?.[0];
         if (!quiz || quiz.options.length < 3 || quiz.options.length > 6 || !Number.isInteger(quiz.answer) || quiz.answer < 0 || quiz.answer >= quiz.options.length) fail(lesson.lessonId + ": invalid quiz");
       } else {
-        if (typeof lesson.theory !== "string" || typeof lesson.starterCode !== "string" || typeof lesson.expectedOutput !== "string" || typeof lesson.hint !== "string") fail(lesson.lessonId + ": incomplete Python exercise");\n        const run = runSafePython(lesson.starterCode, lesson);\n        if (!run.ok) fail(lesson.lessonId + ": starter code rejected by safe runner: " + run.error);
+        if (typeof lesson.theory !== "string" || typeof lesson.starterCode !== "string" || typeof lesson.expectedOutput !== "string" || typeof lesson.hint !== "string") fail(lesson.lessonId + ": incomplete Python exercise");
+        const run = runSafePython(lesson.starterCode, lesson);\n        if (!run.ok) fail(lesson.lessonId + ": starter code rejected by safe runner: " + run.error);
       }
     }
   }
