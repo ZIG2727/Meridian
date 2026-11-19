@@ -1,0 +1,465 @@
+{
+  "unitId": "en-a2-daily-routine",
+  "lessons": [
+    {
+      "lessonId": "en-a2-daily-routine-01",
+      "unitId": "en-a2-daily-routine",
+      "order": 1,
+      "title": "Утренние действия",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "routine"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-routine-1-1",
+            "en": "wake up",
+            "ru": "просыпаться",
+            "example": "I wake up at seven on weekdays.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-1-2",
+            "en": "get up",
+            "ru": "вставать с постели",
+            "example": "I get up as soon as the alarm rings.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-1-3",
+            "en": "brush my teeth",
+            "ru": "чистить зубы",
+            "example": "I brush my teeth after breakfast.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-1-4",
+            "en": "get dressed",
+            "ru": "одеваться",
+            "example": "I get dressed before I leave.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-1-5",
+            "en": "have breakfast",
+            "ru": "завтракать",
+            "example": "We have breakfast together.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-1-6",
+            "en": "leave home",
+            "ru": "выходить из дома",
+            "example": "I leave home at eight.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-1-7",
+            "en": "catch the bus",
+            "ru": "успеть на автобус",
+            "example": "I catch the bus near the library.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-1-8",
+            "en": "go to school",
+            "ru": "ходить в школу",
+            "example": "My brother goes to school by bike.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-1-9",
+            "en": "start work",
+            "ru": "начинать работу",
+            "example": "Dad starts work at nine.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-1-10",
+            "en": "make the bed",
+            "ru": "заправлять кровать",
+            "example": "I make the bed every morning.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-daily-routine-02",
+      "unitId": "en-a2-daily-routine",
+      "order": 2,
+      "title": "Дела днём",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "routine"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-routine-2-1",
+            "en": "have lunch",
+            "ru": "обедать",
+            "example": "We have lunch at half past twelve.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-2-2",
+            "en": "finish school",
+            "ru": "заканчивать занятия",
+            "example": "I finish school at three.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-2-3",
+            "en": "come home",
+            "ru": "возвращаться домой",
+            "example": "I come home before my parents.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-2-4",
+            "en": "do homework",
+            "ru": "делать домашнее задание",
+            "example": "I do my homework after a short break.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-2-5",
+            "en": "take a break",
+            "ru": "делать перерыв",
+            "example": "Let's take a break for ten minutes.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-2-6",
+            "en": "go shopping",
+            "ru": "ходить за покупками",
+            "example": "We go shopping on Fridays.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-2-7",
+            "en": "meet friends",
+            "ru": "встречаться с друзьями",
+            "example": "I meet friends after class.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-2-8",
+            "en": "practise the piano",
+            "ru": "заниматься на пианино",
+            "example": "She practises the piano every day.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-2-9",
+            "en": "walk the dog",
+            "ru": "выгуливать собаку",
+            "example": "I walk the dog in the evening.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-2-10",
+            "en": "help around the house",
+            "ru": "помогать по дому",
+            "example": "We help around the house at weekends.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-daily-routine-03",
+      "unitId": "en-a2-daily-routine",
+      "order": 3,
+      "title": "Вечер",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "routine"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-routine-3-1",
+            "en": "have dinner",
+            "ru": "ужинать",
+            "example": "We have dinner at seven.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-3-2",
+            "en": "watch TV",
+            "ru": "смотреть телевизор",
+            "example": "They watch TV after dinner.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-3-3",
+            "en": "read a book",
+            "ru": "читать книгу",
+            "example": "I read a book before bed.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-3-4",
+            "en": "take a shower",
+            "ru": "принимать душ",
+            "example": "He takes a shower in the evening.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-3-5",
+            "en": "relax",
+            "ru": "отдыхать",
+            "example": "I relax after a busy day.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-3-6",
+            "en": "go to bed",
+            "ru": "ложиться спать",
+            "example": "I go to bed at ten.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-3-7",
+            "en": "fall asleep",
+            "ru": "засыпать",
+            "example": "I fall asleep quickly.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-3-8",
+            "en": "stay up late",
+            "ru": "поздно ложиться",
+            "example": "I don't stay up late on school nights.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-3-9",
+            "en": "at night",
+            "ru": "ночью",
+            "example": "The streets are quiet at night.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-3-10",
+            "en": "every evening",
+            "ru": "каждый вечер",
+            "example": "We talk every evening.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a2-daily-routine-04",
+      "unitId": "en-a2-daily-routine",
+      "order": 4,
+      "title": "Частотность",
+      "estimatedMinutes": 9,
+      "tags": [
+        "a2",
+        "routine"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-routine-4-1",
+            "en": "always",
+            "ru": "всегда",
+            "example": "She always checks her timetable.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-4-2",
+            "en": "usually",
+            "ru": "обычно",
+            "example": "I usually walk to school.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-4-3",
+            "en": "often",
+            "ru": "часто",
+            "example": "We often cook together.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-4-4",
+            "en": "sometimes",
+            "ru": "иногда",
+            "example": "I sometimes listen to podcasts.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-4-5",
+            "en": "rarely",
+            "ru": "редко",
+            "example": "He rarely drinks coffee.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-4-6",
+            "en": "never",
+            "ru": "никогда",
+            "example": "I never skip breakfast.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-4-7",
+            "en": "once a week",
+            "ru": "раз в неделю",
+            "example": "I swim once a week.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-4-8",
+            "en": "twice a day",
+            "ru": "дважды в день",
+            "example": "Brush your teeth twice a day.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-4-9",
+            "en": "on weekdays",
+            "ru": "по будням",
+            "example": "The shop opens early on weekdays.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          },
+          {
+            "id": "en-card-routine-4-10",
+            "en": "at weekends",
+            "ru": "по выходным",
+            "example": "We visit family at weekends.",
+            "tags": [
+              "a2",
+              "routine"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

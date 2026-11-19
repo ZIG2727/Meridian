@@ -1,0 +1,65 @@
+{
+  "unitId": "py-data-tuples",
+  "lessons": [
+    {
+      "lessonId": "py-data-tuples-01",
+      "unitId": "py-data-tuples",
+      "order": 1,
+      "title": "Создание кортежа",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "tuples"
+      ],
+      "theory": "Кортеж похож на список, но после создания его элементы нельзя менять. Кортеж часто записывают в круглых скобках.",
+      "starterCode": "point = (3, 5)\nprint(point)",
+      "expectedOutput": "(3, 5)",
+      "hint": "Запиши два числа в круглых скобках через запятую."
+    },
+    {
+      "lessonId": "py-data-tuples-02",
+      "unitId": "py-data-tuples",
+      "order": 2,
+      "title": "Доступ по индексу",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "tuples"
+      ],
+      "theory": "У кортежа, как и у списка, индексация начинается с нуля.",
+      "starterCode": "point = (3, 5)\nprint(point[1])",
+      "expectedOutput": "5",
+      "hint": "Второй элемент имеет индекс 1."
+    },
+    {
+      "lessonId": "py-data-tuples-03",
+      "unitId": "py-data-tuples",
+      "order": 3,
+      "title": "Длина кортежа",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "tuples"
+      ],
+      "theory": "len() возвращает число элементов кортежа.",
+      "starterCode": "point = (2, 4, 6)\nprint(len(point))",
+      "expectedOutput": "3",
+      "hint": "Передай кортеж point в len()."
+    },
+    {
+      "lessonId": "py-data-tuples-04",
+      "unitId": "py-data-tuples",
+      "order": 4,
+      "title": "Распаковка",
+      "estimatedMinutes": 9,
+      "tags": [
+        "data-structures",
+        "tuples"
+      ],
+      "theory": "Распаковка присваивает элементы кортежа отдельным переменным в том же порядке.",
+      "starterCode": "x, y = (3, 5)\nprint(y)",
+      "expectedOutput": "5",
+      "hint": "Поставь две переменные слева от знака равенства."
+    }
+  ]
+}
