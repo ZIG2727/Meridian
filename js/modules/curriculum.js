@@ -17,17 +17,45 @@ const keys = module => ({
 const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const urlFor = (module, unitId, lessonId) => "#/" + module + (unitId ? "/" + unitId : "") + (lessonId ? "/" + lessonId : "");
 function readCompleted(module) {
- const stored=readStored(keys(module).completed,[],value=>Array.isArray(value)&&value.every(item=>typeof item==="string"));
- const legacy={
+ const valid=value=>Array.isArray(value)&&value.every(item=>typeof item==="string");
+ const versioned=readStored(keys(module).completed,null,valid);
+ const legacy=readStored("mrd:"+module+":completed",[],valid);
+ const stored=versioned||legacy.slice();
+ const legacyMap={
   chess:{notation:"ch-basics-board-01",pieces:"ch-basics-knight-01",pawn:"ch-basics-pawn-01",mate:"ch-endgames-basic-mates-01"},
   python:{print:"py-basics-print-01",variables:"py-basics-variables-01",conditions:"py-control-if-01",loops:"py-control-loops-01"}
  };
- let changed=false;
- for(const [oldId,newId] of Object.entries(legacy[module]||{})){
-  if(stored.includes(oldId)&&!stored.includes(newId)){stored.push(newId);changed=true;}
+ let changed=!versioned&&legacy.length>0;
+ for(const [oldId,newId] of Object.entries(legacyMap[module]||{})){
+  if(legacy.includes(oldId)&&!stored.includes(newId)){stored.push(newId);changed=true;}
  }
  if(changed)writeStored(keys(module).completed,stored);
  return stored;
+}
+function readSession(module) {
+ const current=readStored(keys(module).session,null);
+ if(current)return current;
+ const legacy=readStored("mrd:"+module+":session",null);
+ if(!legacy)return null;
+ let migrated=null;
+ if(module==="python"&&typeof legacy==="object"){
+  const map={print:["py-basics-print","py-basics-print-01"],variables:["py-basics-variables","py-basics-variables-01"],conditions:["py-control-if","py-control-if-01"],loops:["py-control-loops","py-control-loops-01"]};
+  const item=map[legacy.lessonId];
+  if(item)migrated={unitId:item[0],lessonId:item[1],draftCode:legacy.draftCode||legacy.code||""};
+  else if(legacy.unitId&&legacy.lessonId)migrated={unitId:legacy.unitId,lessonId:legacy.lessonId,draftCode:legacy.draftCode||legacy.code||""};
+ } else if(module==="chess"&&typeof legacy==="string"){
+  const map={notation:["ch-basics-board","ch-basics-board-01"],pieces:["ch-basics-knight","ch-basics-knight-01"],pawn:["ch-basics-pawn","ch-basics-pawn-01"],mate:["ch-endgames-basic-mates","ch-endgames-basic-mates-01"]};
+  const item=map[legacy];if(item)migrated={unitId:item[0],lessonId:item[1]};
+ } else if(legacy.unitId&&legacy.lessonId)migrated={unitId:legacy.unitId,lessonId:legacy.lessonId,cardIndex:legacy.cardIndex,draftCode:legacy.draftCode};
+ if(migrated)writeStored(keys(module).session,migrated);
+ return migrated;
+}
+function readSRS() {
+ const current=readStored(keys("english").srs,null);
+ if(current&&typeof current==="object")return current;
+ const legacy=readStored("mrd:english:srs",{});
+ if(legacy&&typeof legacy==="object")writeStored(keys("english").srs,legacy);
+ return legacy&&typeof legacy==="object"?legacy:{};
 }
 
 async function curriculum(module) {
@@ -75,7 +103,7 @@ function header(module, crumbs = []) {
 function footer(module) { return '</main><footer class="footer-inner">' + esc(MODULES[module].title) + ' · Прогресс сохраняется в этом браузере</footer>'; }
 function writeLast(module, unitId, lessonId) {
   writeStored(keys(module).last, { module, unitId, lessonId });
-  const previous = readStored(keys(module).session, null);
+  const previous = readSession(module);
   const session = { unitId, lessonId };
   if (module === "python" && previous?.lessonId === lessonId && typeof previous.draftCode === "string") session.draftCode = previous.draftCode;
   if (module === "english" && previous?.lessonId === lessonId && Number.isInteger(previous.cardIndex)) session.cardIndex = previous.cardIndex;
@@ -129,7 +157,7 @@ function markComplete(module,unit,lessonId,completed) {
 function renderEnglishLesson(app,module,unit,lesson,completed) {
  const cards=lesson.content?.cards;
  if(!Array.isArray(cards)||cards.length<10||cards.some(c=>!c.id||!c.ru||!c.en||!c.example))throw new Error("В английском уроке отсутствуют карточки или обязательные поля.");
- const srs=readStored("mrd:english:srs",{});
+ const srs=readSRS();
  const dueCards=cards.filter(card=>!srs[card.id]||!Number.isFinite(srs[card.id].due)||srs[card.id].due<=Date.now());
  if(!dueCards.length){
   const allReviewed=cards.every(card=>srs[card.id]&&Number.isFinite(srs[card.id].due));if(allReviewed&&!completed.includes(lesson.lessonId))markComplete(module,unit,lesson.lessonId,completed);
@@ -137,7 +165,7 @@ function renderEnglishLesson(app,module,unit,lesson,completed) {
   app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="empty-state"><h1>Повторение пока не требуется</h1><p>Все карточки этого урока уже оценены. Следующий интервал повторения ещё не наступил.</p>'+navigation+'</section>'+footer(module);
   return;
  }
- const saved=readStored(keys(module).session,null);
+ const saved=readSession(module);
  let index=saved?.lessonId===lesson.lessonId&&Number.isInteger(saved.cardIndex)?Math.min(saved.cardIndex,dueCards.length-1):0;
  let revealed=false;
  const draw=()=>{

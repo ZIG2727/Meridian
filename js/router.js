@@ -40,12 +40,12 @@ async function renderDashboard(app) {
   app.innerHTML='<header class="site-header"><div class="header-inner"><a class="brand" href="#/" aria-label="Meridian — главная"><img src="'+new URL("../assets/icons/meridian.svg",import.meta.url).href+'" alt="Meridian"><span>Meridian</span></a><nav class="header-nav" aria-label="Разделы"><a class="button button-quiet" href="#/english">Английский</a><a class="button button-quiet" href="#/chess">Шахматы</a><a class="button button-quiet" href="#/python">Python</a></nav></div></header><main class="page"><section class="dashboard-intro"><p class="eyebrow">Учебное пространство</p><h1>Три предмета. Один маршрут.</h1><p>Выберите занятие или продолжите с того места, где остановились.</p></section><section class="subject-grid" aria-label="Учебные разделы"><div class="empty-state">Загружаем учебные маршруты…</div></section></main><footer class="footer-inner">Meridian · Прогресс хранится в этом браузере</footer>';
   const data=await loadDashboardData(),grid=app.querySelector(".subject-grid");if(!grid)return;
   const english=data.english||[],chess=data.chess||[],python=data.python||[];
-  const englishCompleted=readStored("mrd:english:completed",[],isStringArray);
-  const chessCompleted=readStored("mrd:chess:completed",[],isStringArray);
-  const pythonCompleted=readStored("mrd:python:completed",[],isStringArray);
-  const englishSession=readStored("mrd:english:session",null);
-  const chessSession=readStored("mrd:chess:session",null);
-  const pythonSession=readStored("mrd:python:session",null);
+  const englishCompleted=readStored("mrd:v3:english:completed",[],isStringArray);
+  const chessCompleted=readStored("mrd:v3:chess:completed",[],isStringArray);
+  const pythonCompleted=readStored("mrd:v3:python:completed",[],isStringArray);
+  const englishSession=readStored("mrd:v3:english:session",null);
+  const chessSession=readStored("mrd:v3:chess:session",null);
+  const pythonSession=readStored("mrd:v3:python:session",null);
   const countLessons=units=>units.reduce((sum,unit)=>sum+unit.lessonIds.length,0);
   const countDone=(units,done)=>units.reduce((sum,unit)=>sum+unit.lessonIds.filter(id=>done.includes(id)).length,0);
   const eTotal=countLessons(english),cTotal=countLessons(chess),pTotal=countLessons(python);
