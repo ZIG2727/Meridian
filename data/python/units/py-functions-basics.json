@@ -50,16 +50,16 @@
       "lessonId": "py-functions-basics-04",
       "unitId": "py-functions-basics",
       "order": 4,
-      "title": "Локальная переменная",
+      "title": "Повторный вызов функции",
       "estimatedMinutes": 10,
       "tags": [
         "functions",
         "basics"
       ],
-      "theory": "Переменная, созданная внутри функции, локальна: она доступна внутри этой функции и не создаёт автоматически глобальное имя.",
-      "starterCode": "def show():\n    message = \"Ready\"\n    print(message)\nshow()",
-      "expectedOutput": "Ready",
-      "hint": "Создай message внутри show() и выведи её до выхода из функции."
+      "theory": "Определённую функцию можно вызывать несколько раз. Каждый вызов выполняет её тело заново, поэтому не нужно копировать одинаковые строки программы.",
+      "starterCode": "def greet():\n    print(\"Ready\")\ngreet()\ngreet()",
+      "expectedOutput": "Ready\nReady",
+      "hint": "После определения greet() вызови её два раза."
     }
   ]
 }
