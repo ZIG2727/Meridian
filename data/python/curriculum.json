@@ -135,6 +135,23 @@
         "py-data-dicts-03",
         "py-data-dicts-04"
       ]
+    },
+    {
+      "unitId": "py-data-tuples",
+      "level": "Data Structures",
+      "title": "Кортежи",
+      "description": "Хранить упорядоченные неизменяемые наборы значений.",
+      "order": 10,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-data-dicts"
+      ],
+      "lessonIds": [
+        "py-data-tuples-01",
+        "py-data-tuples-02",
+        "py-data-tuples-03",
+        "py-data-tuples-04"
+      ]
     }
   ]
 }

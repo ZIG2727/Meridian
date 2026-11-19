@@ -135,6 +135,23 @@
         "ch-tactics-skewers-03",
         "ch-tactics-skewers-04"
       ]
+    },
+    {
+      "unitId": "ch-tactics-double-check",
+      "level": "Tactics",
+      "title": "Двойной шах",
+      "description": "Распознавать двойной шах и способы защиты.",
+      "order": 10,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-tactics-skewers"
+      ],
+      "lessonIds": [
+        "ch-tactics-double-check-01",
+        "ch-tactics-double-check-02",
+        "ch-tactics-double-check-03",
+        "ch-tactics-double-check-04"
+      ]
     }
   ]
 }

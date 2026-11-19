@@ -84,6 +84,23 @@
         "en-a1-family-03",
         "en-a1-family-04"
       ]
+    },
+    {
+      "unitId": "en-a2-daily-routine",
+      "level": "A2",
+      "title": "Распорядок дня",
+      "description": "Описывать повседневные действия и привычки.",
+      "order": 7,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a1-family"
+      ],
+      "lessonIds": [
+        "en-a2-daily-routine-01",
+        "en-a2-daily-routine-02",
+        "en-a2-daily-routine-03",
+        "en-a2-daily-routine-04"
+      ]
     }
   ]
 }
