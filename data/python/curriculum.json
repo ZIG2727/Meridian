@@ -118,6 +118,23 @@
         "py-data-lists-03",
         "py-data-lists-04"
       ]
+    },
+    {
+      "unitId": "py-data-dicts",
+      "level": "Data Structures",
+      "title": "Словари",
+      "description": "Хранить и получать данные по ключам.",
+      "order": 8,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-data-lists"
+      ],
+      "lessonIds": [
+        "py-data-dicts-01",
+        "py-data-dicts-02",
+        "py-data-dicts-03",
+        "py-data-dicts-04"
+      ]
     }
   ]
 }

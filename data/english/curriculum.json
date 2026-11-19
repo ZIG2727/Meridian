@@ -67,6 +67,23 @@
         "en-a1-food-drink-03",
         "en-a1-food-drink-04"
       ]
+    },
+    {
+      "unitId": "en-a1-family",
+      "level": "A1",
+      "title": "Семья",
+      "description": "Называть родственников и описывать отношения.",
+      "order": 5,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a1-food-drink"
+      ],
+      "lessonIds": [
+        "en-a1-family-01",
+        "en-a1-family-02",
+        "en-a1-family-03",
+        "en-a1-family-04"
+      ]
     }
   ]
 }

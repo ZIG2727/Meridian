@@ -118,6 +118,23 @@
         "ch-tactics-pins-03",
         "ch-tactics-pins-04"
       ]
+    },
+    {
+      "unitId": "ch-tactics-skewers",
+      "level": "Tactics",
+      "title": "Сквозные нападения",
+      "description": "Находить сквозные удары по линиям.",
+      "order": 8,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-tactics-pins"
+      ],
+      "lessonIds": [
+        "ch-tactics-skewers-01",
+        "ch-tactics-skewers-02",
+        "ch-tactics-skewers-03",
+        "ch-tactics-skewers-04"
+      ]
     }
   ]
 }
