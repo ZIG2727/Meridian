@@ -222,37 +222,37 @@
       ]
     },
     {
-      "unitId": "py-files-errors",
+      "unitId": "py-files-text",
       "level": "Files & Errors",
-      "title": "Файлы и ошибки",
-      "description": "Разбирать текстовые файлы как данные и распознавать частые ошибки.",
+      "title": "Текстовые данные",
+      "description": "Работать с текстом в безопасной виртуальной модели без доступа к файлам устройства.",
       "order": 14,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "py-functions-scope"
       ],
       "lessonIds": [
-        "py-files-errors-01",
-        "py-files-errors-02",
-        "py-files-errors-03",
-        "py-files-errors-04"
-      ]
-    },
-    {
-      "unitId": "py-files-text",
-      "level": "Files & Errors",
-      "title": "Текстовые данные",
-      "description": "Работать с текстом в безопасной виртуальной модели без доступа к файлам устройства.",
-      "order": 15,
-      "estimatedMinutes": 32,
-      "prerequisiteUnits": [
-        "py-files-errors"
-      ],
-      "lessonIds": [
         "py-files-text-01",
         "py-files-text-02",
         "py-files-text-03",
         "py-files-text-04"
+      ]
+    },
+    {
+      "unitId": "py-files-errors",
+      "level": "Files & Errors",
+      "title": "Файлы и ошибки",
+      "description": "Разбирать текстовые файлы как данные и распознавать частые ошибки.",
+      "order": 15,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-files-text"
+      ],
+      "lessonIds": [
+        "py-files-errors-01",
+        "py-files-errors-02",
+        "py-files-errors-03",
+        "py-files-errors-04"
       ]
     }
   ]
