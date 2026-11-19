@@ -37,6 +37,23 @@ function parsePosition(position) {
   return pieces;
 }
 
+function isValidFen(fen) {
+  if (typeof fen !== "string") return false;
+  const placement = fen.split(" ")[0];
+  const ranks = placement.split("/");
+  if (ranks.length !== 8) return false;
+  const validRanks = ranks.every(rank => {
+    let width = 0;
+    for (const token of rank) {
+      if (/^[1-8]$/.test(token)) width += Number(token);
+      else if (/^[prnbqkPRNBQK]$/.test(token)) width += 1;
+      else return false;
+    }
+    return width === 8;
+  });
+  return validRanks && (placement.match(/K/g) || []).length === 1 && (placement.match(/k/g) || []).length === 1;
+}
+
 function renderStaticBoard(container, position) {
   const pieces = parsePosition(position);
   const squares = [];
@@ -180,8 +197,10 @@ function renderShell(app) {
 
 export async function renderChess(app) {
   const lessons = await loadJSON(lessonsUrl);
-  if (!Array.isArray(lessons) || lessons.length < 6 || lessons.some(lesson =>
-    !lesson.id || !lesson.title || !lesson.text || !Array.isArray(lesson.quiz) || lesson.quiz.length === 0
+  if (!Array.isArray(lessons) || lessons.length !== 6 || lessons.some(lesson =>
+    !lesson.id || !lesson.title || !lesson.text || !isValidFen(lesson.fen) || !Array.isArray(lesson.quiz) || lesson.quiz.length !== 1 ||
+    !Array.isArray(lesson.quiz[0].options) || lesson.quiz[0].options.length !== 3 ||
+    !Number.isInteger(lesson.quiz[0].answer) || lesson.quiz[0].answer < 0 || lesson.quiz[0].answer > 2
   )) throw new Error("Набор шахматных уроков имеет неверный формат.");
 
   const completed = readStored(COMPLETED_KEY, [], isStringArray);
