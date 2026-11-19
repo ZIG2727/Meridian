@@ -60,3 +60,8 @@ lib/chessboard.min.js — небольшой локальный компонен
 V3 organizes every subject into a curriculum manifest, 15 units and 60 lessons. English contains 600 stable-ID flashcards with SM-2 scheduling; chess lessons use FEN positions and quizzes; Python lessons use a bounded educational interpreter that never executes arbitrary user code.
 
 The V3 implementation is currently developed on the `v3-curriculum` branch. The default `main` branch and GitHub Pages deployment are kept separate until browser verification is complete.
+
+
+### Validate the V3 curriculum
+
+Run `node scripts/validate-v3.mjs` to check unit counts, lesson IDs, English card completeness, chess FEN/quiz shape, Python lesson fields and unsafe execution patterns. The same validation runs in GitHub Actions on the `v3-curriculum` branch.
