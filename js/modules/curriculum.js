@@ -69,12 +69,12 @@ function renderModule(app, module, data, completed, search = "") {
   app.querySelector("#curriculum-search").addEventListener("input",event=>renderModule(app,module,data,completed,event.target.value));
   app.querySelectorAll("[data-progress]").forEach(node=>animateProgress(node,Number(node.dataset.progress)));
 }
-function renderUnit(app,module,data,unit,completed) {
+function renderUnit(app,module,data,unit,unitContent,completed) {
   const stats=unitStats(unit,completed);
   app.innerHTML=header(module,[{label:unit.title}])+'<section class="curriculum-heading"><div><p class="eyebrow">'+esc(unit.level)+'</p><h1>'+esc(unit.title)+'</h1><p>'+esc(unit.description)+'</p></div><div class="curriculum-total"><strong>'+stats.done+' / '+stats.total+'</strong><span>уроков завершено</span></div></section>'+
   '<div class="progress-track" data-progress="'+(stats.done/stats.total*100)+'"><div class="progress-fill"></div></div>'+
   (unit.prerequisiteUnits?.length ? '<p class="code-note">Рекомендуется сначала пройти: '+unit.prerequisiteUnits.map(id=>esc(data.units.find(u=>u.unitId===id)?.title||id)).join(", ")+'. Это рекомендация, переход не заблокирован.</p>' : '')+
-  '<ol class="curriculum-lessons">'+unit.lessonIds.map((id,i)=>{const done=completed.includes(id);const lesson=cache.get(module+":"+unit.unitId)?.lessons?.find(x=>x.lessonId===id);return '<li><a class="curriculum-lesson '+(done?'is-complete':'')+'" href="'+urlFor(module,unit.unitId,id)+'"><span class="lesson-number">'+(done?'✓':i+1)+'</span><span class="curriculum-lesson-title"><strong>'+esc(lesson?.title||("Урок "+(i+1)))+'</strong><small>'+(done?'Завершено':'Занятие')+'</small></span><span class="lesson-duration">'+(lesson?.estimatedMinutes||8)+' мин</span></a></li>';}).join("")+'</ol>'+footer(module);
+  '<ol class="curriculum-lessons">'+unit.lessonIds.map((id,i)=>{const done=completed.includes(id);const lesson=unitContent.lessons.find(x=>x.lessonId===id);return '<li><a class="curriculum-lesson '+(done?'is-complete':'')+'" href="'+urlFor(module,unit.unitId,id)+'"><span class="lesson-number">'+(done?'✓':i+1)+'</span><span class="curriculum-lesson-title"><strong>'+esc(lesson?.title||("Урок "+(i+1)))+'</strong><small>'+(done?'Завершено':'Занятие')+'</small></span><span class="lesson-duration">'+(lesson?.estimatedMinutes||8)+' мин</span></a></li>';}).join("")+'</ol>'+footer(module);
   animateProgress(app.querySelector("[data-progress]"),stats.done/stats.total*100);
 }
 function markComplete(module,unit,lessonId,completed,app) {
@@ -112,7 +112,7 @@ function fenBoard(fen) {
  const ranks=fen.split(" ")[0].split("/");
  if(ranks.length!==8) return null;
  const cells=[];
- for(let r=0;r<8;r++){let f=0;for(const token of ranks[r]){if(/[1-8]/.test(token)){for(let n=0;n<Number(token);n++)cells.push("");f+=Number(token);}else{cells.push(symbols[token]||"");f++;}}if(f!==8)return null;}
+ for(let r=0;r<8;r++){let f=0;for(const token of ranks[r]){if(/[1-8]/.test(token)){for(let n=0;n<Number(token);n++)cells.push("");f+=Number(token);}else if(symbols[token]){cells.push(symbols[token]);f++;}else{return null;}}if(f!==8)return null;}
  return cells;
 }
 function renderChessLesson(app,module,unit,lesson,completed) {
@@ -160,7 +160,7 @@ export async function renderCurriculum(app,module) {
  const unit=data.units.find(u=>u.unitId===unitId);if(!unit){window.location.hash="#/"+module;return;}
  const unitContent=await unitData(module,unitId);
  if(unitContent.lessons.length!==unit.lessonIds.length||unitContent.lessons.some(l=>!validLesson(unit,l)))throw new Error("Список уроков не совпадает с файлом юнита.");
- if(!lessonId){renderUnit(app,module,data,unit,completed);return;}
+ if(!lessonId){renderUnit(app,module,data,unit,unitContent,completed);return;}
  const lesson=unitContent.lessons.find(l=>l.lessonId===lessonId);if(!lesson){window.location.hash=urlFor(module,unitId);return;}
  writeLast(module,unitId,lessonId);
  if(module==="english")renderEnglishLesson(app,module,unit,lesson,completed);
