@@ -311,7 +311,7 @@ export async function renderChess(app) {
         writeStored(COMPLETED_KEY, completed);
         animateProgress(progressTrack, 100);
         const moduleComplete = lessons.every(item => completed.includes(item.id));
-        if (moduleComplete) celebrate(status, "Раздел шахмат завершён.", 800);
+        celebrate(status, moduleComplete ? "Раздел шахмат завершён." : "Урок завершён.", 800);
       } else {
         animateProgress(progressTrack, 100);
       }

@@ -87,7 +87,7 @@ async function renderDashboard(app) {
 
   const resumeItems = [];
   if (englishValid) {
-    const dueIndices = english.map((_, index) => index).filter(index => !englishProgress[String(index)] || !Number.isFinite(englishProgress[String(index)].due) || englishProgress[String(index)].due <= Date.now());
+    const dueIndices = englishSession.deckFilter === "all" ? english.map((_, index) => index) : english.map((_, index) => index).filter(index => !englishProgress[String(index)] || !Number.isFinite(englishProgress[String(index)].due) || englishProgress[String(index)].due <= Date.now());
     const position = Math.max(0, dueIndices.indexOf(englishSession.currentCardIndex));
     resumeItems.push({ label: "Английский", detail: "Карточка " + (position + 1) + " из " + dueIndices.length, href: "#/english" });
   }
