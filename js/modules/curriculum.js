@@ -112,8 +112,8 @@ function renderEnglishLesson(app,module,unit,lesson,completed) {
  const srs=readStored("mrd:english:srs",{});
  const dueCards=cards.filter(card=>!srs[card.id]||!Number.isFinite(srs[card.id].due)||srs[card.id].due<=Date.now());
  if(!dueCards.length){
-  if(cards.every(card=>srs[card.id]&&Number.isFinite(srs[card.id].due))&&!completed.includes(lesson.lessonId))markComplete(module,unit,lesson.lessonId,completed);
-  app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="empty-state"><h1>Повторение пока не требуется</h1><p>Все карточки этого урока уже оценены. Следующий интервал повторения ещё не наступил.</p><a class="button" href="'+urlFor(module,unit.unitId)+'">Вернуться к юниту</a></section>'+footer(module);
+  const allReviewed=cards.every(card=>srs[card.id]&&Number.isFinite(srs[card.id].due));if(allReviewed&&!completed.includes(lesson.lessonId))markComplete(module,unit,lesson.lessonId,completed);
+  app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="empty-state"><h1>Повторение пока не требуется</h1><p>Все карточки этого урока уже оценены. Следующий интервал повторения ещё не наступил.</p><a class="button" href="'+(allReviewed?nextLessonNavigation(module,unit,lesson):urlFor(module,unit.unitId))+'">Вернуться к юниту</a></section>'+footer(module);
   return;
  }
  const saved=readStored(keys(module).session,null);
