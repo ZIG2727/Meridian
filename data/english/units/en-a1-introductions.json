@@ -2,10 +2,10 @@
   "unitId": "en-a1-introductions",
   "lessons": [
     {
-      "lessonId": "Имя и знакомство",
+      "lessonId": "en-a1-introductions-01",
       "unitId": "en-a1-introductions",
       "order": 1,
-      "title": "What's your name?",
+      "title": "Имя и знакомство",
       "estimatedMinutes": 8,
       "tags": [
         "a1",
@@ -14,96 +14,100 @@
       "content": {
         "cards": [
           {
-            "id": "en-card-introductions-1-1",
+            "id": "en-card-introductions-01-01",
+            "en": "What's your name?",
             "ru": "как тебя зовут?",
-            "en": "What's your name? I'm Daniel.",
-            "example": "My name is...",
+            "example": "What's your name? I'm Daniel.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-1-2",
+            "id": "en-card-introductions-01-02",
+            "en": "My name is...",
             "ru": "меня зовут...",
-            "en": "My name is Olivia.",
-            "example": "I'm...",
+            "example": "My name is Olivia.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-1-3",
+            "id": "en-card-introductions-01-03",
+            "en": "I'm...",
             "ru": "я...",
-            "en": "I'm Alex. Nice to meet you.",
-            "example": "Nice to meet you",
+            "example": "I'm Alex. Nice to meet you.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-1-4",
+            "id": "en-card-introductions-01-04",
+            "en": "Nice to meet you",
             "ru": "приятно познакомиться",
-            "en": "Nice to meet you, too.",
-            "example": "This is...",
+            "example": "Nice to meet you, too.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-1-5",
+            "id": "en-card-introductions-01-05",
+            "en": "This is...",
             "ru": "это...",
-            "en": "This is my friend Leo.",
-            "example": "first name",
+            "example": "This is my friend Leo.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-1-6",
+            "id": "en-card-introductions-01-06",
+            "en": "first name",
             "ru": "имя",
-            "en": "My first name is Maya.",
-            "example": "last name",
+            "example": "My first name is Maya.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-1-7",
+            "id": "en-card-introductions-01-07",
+            "en": "last name",
             "ru": "фамилия",
-            "en": "Could you spell your last name?",
-            "example": "How do you spell it?",
+            "example": "Could you spell your last name?",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-1-8",
+            "id": "en-card-introductions-01-08",
+            "en": "How do you spell it?",
             "ru": "как это пишется?",
-            "en": "How do you spell your surname?",
-            "example": "call me...",
+            "example": "How do you spell your surname?",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-1-9",
+            "id": "en-card-introductions-01-09",
+            "en": "call me...",
             "ru": "зови меня...",
-            "en": "Call me Ben, please.",
+            "example": "Call me Ben, please.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-1-10",
+            "id": "en-card-introductions-01-10",
+            "en": "surname",
+            "ru": "фамилия",
+            "example": "My surname is Green.",
             "tags": [
               "a1",
               "introductions"
@@ -113,10 +117,10 @@
       }
     },
     {
-      "lessonId": "Страны и языки",
+      "lessonId": "en-a1-introductions-02",
       "unitId": "en-a1-introductions",
       "order": 2,
-      "title": "country",
+      "title": "Страны и языки",
       "estimatedMinutes": 8,
       "tags": [
         "a1",
@@ -125,99 +129,100 @@
       "content": {
         "cards": [
           {
-            "id": "en-card-introductions-2-1",
+            "id": "en-card-introductions-02-01",
+            "en": "country",
             "ru": "страна",
-            "en": "Which country are you from?",
-            "example": "I'm from...",
+            "example": "Which country are you from?",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-2-2",
+            "id": "en-card-introductions-02-02",
+            "en": "I'm from...",
             "ru": "я из...",
-            "en": "I'm from Canada.",
-            "example": "Where are you from?",
+            "example": "I'm from Canada.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-2-3",
+            "id": "en-card-introductions-02-03",
+            "en": "Where are you from?",
             "ru": "откуда ты?",
-            "en": "Where are you from originally?",
-            "example": "British",
+            "example": "Where are you from originally?",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-2-4",
+            "id": "en-card-introductions-02-04",
+            "en": "British",
             "ru": "британский",
-            "en": "My neighbour is British.",
-            "example": "American",
+            "example": "My neighbour is British.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-2-5",
+            "id": "en-card-introductions-02-05",
+            "en": "American",
             "ru": "американский",
-            "en": "She's American, but lives in Rome.",
-            "example": "Canadian",
+            "example": "She's American, but lives in Rome.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-2-6",
+            "id": "en-card-introductions-02-06",
+            "en": "Canadian",
             "ru": "канадский",
-            "en": "My cousin is Canadian.",
-            "example": "Germany",
+            "example": "My cousin is Canadian.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-2-7",
+            "id": "en-card-introductions-02-07",
+            "en": "Germany",
             "ru": "Германия",
-            "en": "Berlin is in Germany.",
-            "example": "Japan",
+            "example": "Berlin is in Germany.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-2-8",
+            "id": "en-card-introductions-02-08",
+            "en": "Japan",
             "ru": "Япония",
-            "en": "My aunt works in Japan.",
-            "example": "language",
+            "example": "My aunt works in Japan.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-2-9",
+            "id": "en-card-introductions-02-09",
+            "en": "language",
             "ru": "язык",
-            "en": "What languages do you speak?",
-            "example": "speak",
+            "example": "What languages do you speak?",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-2-10",
+            "id": "en-card-introductions-02-10",
+            "en": "speak",
             "ru": "говорить",
-            "en": "I speak English and Russian.",
+            "example": "I speak English and Russian.",
             "tags": [
               "a1",
               "introductions"
@@ -227,10 +232,10 @@
       }
     },
     {
-      "lessonId": "Личные сведения",
+      "lessonId": "en-a1-introductions-03",
       "unitId": "en-a1-introductions",
       "order": 3,
-      "title": "How old are you?",
+      "title": "Личные сведения",
       "estimatedMinutes": 8,
       "tags": [
         "a1",
@@ -239,100 +244,100 @@
       "content": {
         "cards": [
           {
-            "id": "en-card-introductions-3-1",
+            "id": "en-card-introductions-03-01",
+            "en": "How old are you?",
             "ru": "сколько тебе лет?",
-            "en": "How old are you, if you don't mind?",
-            "example": "I'm ... years old",
+            "example": "How old are you, if you don't mind?",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-3-2",
+            "id": "en-card-introductions-03-02",
+            "en": "I'm ... years old",
             "ru": "мне ... лет",
-            "en": "I'm fifteen years old.",
-            "example": "birthday",
+            "example": "I'm fifteen years old.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-3-3",
+            "id": "en-card-introductions-03-03",
+            "en": "birthday",
             "ru": "день рождения",
-            "en": "My birthday is in May.",
-            "example": "address",
+            "example": "My birthday is in May.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-3-4",
+            "id": "en-card-introductions-03-04",
+            "en": "address",
             "ru": "адрес",
-            "en": "What's your home address?",
-            "example": "phone number",
+            "example": "What's your home address?",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-3-5",
+            "id": "en-card-introductions-03-05",
+            "en": "phone number",
             "ru": "номер телефона",
-            "en": "Can I have your phone number?",
-            "example": "email address",
+            "example": "Can I have your phone number?",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-3-6",
+            "id": "en-card-introductions-03-06",
+            "en": "email address",
             "ru": "адрес электронной почты",
-            "en": "Send the details to my email address.",
-            "example": "live",
+            "example": "Send the details to my email address.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-3-7",
+            "id": "en-card-introductions-03-07",
+            "en": "live",
             "ru": "жить",
-            "en": "I live near the city centre.",
-            "example": "from",
+            "example": "I live near the city centre.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-3-8",
+            "id": "en-card-introductions-03-08",
+            "en": "from",
             "ru": "родом из",
-            "en": "My parents are from Poland.",
-            "example": "study",
+            "example": "My parents are from Poland.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-3-9",
+            "id": "en-card-introductions-03-09",
+            "en": "study",
             "ru": "учиться",
-            "en": "I study at the local school.",
-            "example": "favourite",
+            "example": "I study at the local school.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-3-10",
+            "id": "en-card-introductions-03-10",
+            "en": "favourite",
             "ru": "любимый",
-            "en": "What's your favourite subject?",
-            "example": "free time",
+            "example": "What's your favourite subject?",
             "tags": [
               "a1",
               "introductions"
@@ -342,10 +347,10 @@
       }
     },
     {
-      "lessonId": "Учёба и занятия",
+      "lessonId": "en-a1-introductions-04",
       "unitId": "en-a1-introductions",
       "order": 4,
-      "title": "student",
+      "title": "Учёба и занятия",
       "estimatedMinutes": 8,
       "tags": [
         "a1",
@@ -354,99 +359,100 @@
       "content": {
         "cards": [
           {
-            "id": "en-card-introductions-4-1",
+            "id": "en-card-introductions-04-01",
+            "en": "student",
             "ru": "ученик, студент",
-            "en": "I'm a student at this school.",
-            "example": "school",
+            "example": "I'm a student at this school.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-4-2",
+            "id": "en-card-introductions-04-02",
+            "en": "school",
             "ru": "школа",
-            "en": "Our school is near the park.",
-            "example": "classmate",
+            "example": "Our school is near the park.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-4-3",
+            "id": "en-card-introductions-04-03",
+            "en": "classmate",
             "ru": "одноклассник",
-            "en": "My classmate sits next to me.",
-            "example": "teacher",
+            "example": "My classmate sits next to me.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-4-4",
+            "id": "en-card-introductions-04-04",
+            "en": "teacher",
             "ru": "учитель",
-            "en": "Our English teacher is kind.",
-            "example": "subject",
+            "example": "Our English teacher is kind.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-4-5",
+            "id": "en-card-introductions-04-05",
+            "en": "subject",
             "ru": "предмет",
-            "en": "Science is my favourite subject.",
-            "example": "learn",
+            "example": "Science is my favourite subject.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-4-6",
+            "id": "en-card-introductions-04-06",
+            "en": "learn",
             "ru": "изучать",
-            "en": "I learn English after school.",
-            "example": "lesson",
+            "example": "I learn English after school.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-4-7",
+            "id": "en-card-introductions-04-07",
+            "en": "lesson",
             "ru": "урок",
-            "en": "Our first lesson starts at nine.",
-            "example": "homework",
+            "example": "Our first lesson starts at nine.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-4-8",
+            "id": "en-card-introductions-04-08",
+            "en": "homework",
             "ru": "домашняя работа",
-            "en": "I have maths homework tonight.",
-            "example": "break",
+            "example": "I have maths homework tonight.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-4-9",
+            "id": "en-card-introductions-04-09",
+            "en": "break",
             "ru": "перемена",
-            "en": "Let's talk during the break.",
-            "example": "classroom",
+            "example": "Let's talk during the break.",
             "tags": [
               "a1",
               "introductions"
             ]
           },
           {
-            "id": "en-card-introductions-4-10",
+            "id": "en-card-introductions-04-10",
+            "en": "classroom",
             "ru": "класс",
-            "en": "The classroom is on the second floor.",
+            "example": "The classroom is on the second floor.",
             "tags": [
               "a1",
               "introductions"
