@@ -98,7 +98,7 @@ for (const module of modules) {
     for (let index = 0; index < data.lessons.length; index++) {
       const lesson = data.lessons[index];
       if (lesson.lessonId !== unit.lessonIds[index] || lesson.unitId !== unit.unitId || !lesson.title ||
-          !new RegExp("^" + module + "-[a-z0-9-]+-\\d{2}$").test(lesson.lessonId) ||
+          !new RegExp("^" + ({ english: "en", chess: "ch", python: "py" })[module] + "-[a-z0-9-]+-\\d{2}$").test(lesson.lessonId) ||
           lesson.order !== index + 1 || !Number.isInteger(lesson.estimatedMinutes) ||
           lesson.estimatedMinutes < 5 || lesson.estimatedMinutes > 15 ||
           !Array.isArray(lesson.tags) || !lesson.tags.length) fail(unit.unitId + ": lesson metadata mismatch");
