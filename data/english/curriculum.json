@@ -186,6 +186,40 @@
         "en-a2-weather-03",
         "en-a2-weather-04"
       ]
+    },
+    {
+      "unitId": "en-b1-health",
+      "level": "B1",
+      "title": "Здоровье",
+      "description": "Обсуждать самочувствие, симптомы и полезные привычки.",
+      "order": 12,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-b1-work-office"
+      ],
+      "lessonIds": [
+        "en-b1-health-01",
+        "en-b1-health-02",
+        "en-b1-health-03",
+        "en-b1-health-04"
+      ]
+    },
+    {
+      "unitId": "en-b1-opinions",
+      "level": "B1",
+      "title": "Мнения и аргументы",
+      "description": "Выражать мнение, соглашаться и приводить причины.",
+      "order": 13,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-b1-health"
+      ],
+      "lessonIds": [
+        "en-b1-opinions-01",
+        "en-b1-opinions-02",
+        "en-b1-opinions-03",
+        "en-b1-opinions-04"
+      ]
     }
   ]
 }
