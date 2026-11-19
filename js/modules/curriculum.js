@@ -16,7 +16,19 @@ const keys = module => ({
 });
 const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const urlFor = (module, unitId, lessonId) => "#/" + module + (unitId ? "/" + unitId : "") + (lessonId ? "/" + lessonId : "");
-const readCompleted = module => readStored(keys(module).completed, [], Array.isArray);
+function readCompleted(module) {
+ const stored=readStored(keys(module).completed,[],value=>Array.isArray(value)&&value.every(item=>typeof item==="string"));
+ const legacy={
+  chess:{notation:"ch-basics-board-01",pieces:"ch-basics-knight-01",pawn:"ch-basics-pawn-01",mate:"ch-endgames-basic-mates-01"},
+  python:{print:"py-basics-print-01",variables:"py-basics-variables-01",conditions:"py-control-if-01",loops:"py-control-loops-01"}
+ };
+ let changed=false;
+ for(const [oldId,newId] of Object.entries(legacy[module]||{})){
+  if(stored.includes(oldId)&&!stored.includes(newId)){stored.push(newId);changed=true;}
+ }
+ if(changed)writeStored(keys(module).completed,stored);
+ return stored;
+}
 
 async function curriculum(module) {
   const url = new URL(module + "/curriculum.json", ROOT);
