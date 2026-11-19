@@ -220,6 +220,40 @@
         "en-b1-opinions-03",
         "en-b1-opinions-04"
       ]
+    },
+    {
+      "unitId": "en-b1-past-events",
+      "level": "B1",
+      "title": "События в прошлом",
+      "description": "Рассказывать о событиях, впечатлениях и опыте.",
+      "order": 14,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-b1-opinions"
+      ],
+      "lessonIds": [
+        "en-b1-past-events-01",
+        "en-b1-past-events-02",
+        "en-b1-past-events-03",
+        "en-b1-past-events-04"
+      ]
+    },
+    {
+      "unitId": "en-b1-future-plans",
+      "level": "B1",
+      "title": "Планы на будущее",
+      "description": "Говорить о намерениях, договорённостях и прогнозах.",
+      "order": 15,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-b1-past-events"
+      ],
+      "lessonIds": [
+        "en-b1-future-plans-01",
+        "en-b1-future-plans-02",
+        "en-b1-future-plans-03",
+        "en-b1-future-plans-04"
+      ]
     }
   ]
 }

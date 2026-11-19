@@ -1,0 +1,465 @@
+{
+  "unitId": "en-b1-future-plans",
+  "lessons": [
+    {
+      "lessonId": "en-b1-future-plans-01",
+      "unitId": "en-b1-future-plans",
+      "order": 1,
+      "title": "Намерения",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "future"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-future-1-1",
+            "en": "plan to",
+            "ru": "планировать",
+            "example": "I plan to study abroad one day.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-1-2",
+            "en": "intend to",
+            "ru": "намереваться",
+            "example": "We intend to finish the project soon.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-1-3",
+            "en": "hope to",
+            "ru": "надеяться",
+            "example": "I hope to visit Scotland.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-1-4",
+            "en": "would like to",
+            "ru": "хотел бы",
+            "example": "I'd like to learn another language.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-1-5",
+            "en": "decide to",
+            "ru": "решить",
+            "example": "She decided to take a course.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-1-6",
+            "en": "be going to",
+            "ru": "собираться",
+            "example": "I'm going to call him tonight.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-1-7",
+            "en": "aim to",
+            "ru": "стремиться",
+            "example": "We aim to improve the service.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-1-8",
+            "en": "expect to",
+            "ru": "ожидать",
+            "example": "I expect to hear from them soon.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-1-9",
+            "en": "think about",
+            "ru": "обдумывать",
+            "example": "I'm thinking about changing my schedule.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-1-10",
+            "en": "make a plan",
+            "ru": "составить план",
+            "example": "Let's make a plan for the weekend.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-future-plans-02",
+      "unitId": "en-b1-future-plans",
+      "order": 2,
+      "title": "Договорённости",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "future"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-future-2-1",
+            "en": "arrange",
+            "ru": "договариваться",
+            "example": "We arranged to meet at six.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-2-2",
+            "en": "book in advance",
+            "ru": "бронировать заранее",
+            "example": "It's better to book in advance.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-2-3",
+            "en": "appointment",
+            "ru": "встреча по записи",
+            "example": "I've got an appointment on Friday.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-2-4",
+            "en": "schedule",
+            "ru": "планировать",
+            "example": "We scheduled the call for Monday.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-2-5",
+            "en": "confirm",
+            "ru": "подтверждать",
+            "example": "Please confirm your attendance.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-2-6",
+            "en": "available",
+            "ru": "свободный",
+            "example": "Are you available tomorrow?",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-2-7",
+            "en": "postpone",
+            "ru": "переносить",
+            "example": "They postponed the meeting.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-2-8",
+            "en": "reschedule",
+            "ru": "переназначить",
+            "example": "Can we reschedule the lesson?",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-2-9",
+            "en": "deadline",
+            "ru": "срок",
+            "example": "The deadline is next week.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-2-10",
+            "en": "remind",
+            "ru": "напоминать",
+            "example": "Remind me to send the email.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-future-plans-03",
+      "unitId": "en-b1-future-plans",
+      "order": 3,
+      "title": "Прогнозы",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "future"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-future-3-1",
+            "en": "probably",
+            "ru": "вероятно",
+            "example": "It will probably rain later.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-3-2",
+            "en": "perhaps",
+            "ru": "возможно",
+            "example": "Perhaps we'll take the train.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-3-3",
+            "en": "likely",
+            "ru": "вероятный",
+            "example": "The team is likely to win.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-3-4",
+            "en": "unlikely",
+            "ru": "маловероятный",
+            "example": "It's unlikely to snow in May.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-3-5",
+            "en": "forecast",
+            "ru": "прогноз",
+            "example": "The forecast says it will be warm.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-3-6",
+            "en": "expect",
+            "ru": "ожидать",
+            "example": "Experts expect prices to change.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-3-7",
+            "en": "predict",
+            "ru": "предсказывать",
+            "example": "It's difficult to predict the result.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-3-8",
+            "en": "in the future",
+            "ru": "в будущем",
+            "example": "I'd like to work abroad in the future.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-3-9",
+            "en": "by next year",
+            "ru": "к следующему году",
+            "example": "By next year, I'll finish the course.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-3-10",
+            "en": "soon",
+            "ru": "скоро",
+            "example": "The new library will open soon.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-future-plans-04",
+      "unitId": "en-b1-future-plans",
+      "order": 4,
+      "title": "Обсудить планы",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "future"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-future-4-1",
+            "en": "What are you doing...?",
+            "ru": "что ты делаешь...?",
+            "example": "What are you doing this weekend?",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-4-2",
+            "en": "Are you free...?",
+            "ru": "ты свободен...?",
+            "example": "Are you free on Saturday?",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-4-3",
+            "en": "Would you like to...?",
+            "ru": "хочешь...?",
+            "example": "Would you like to join us?",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-4-4",
+            "en": "Let's arrange...",
+            "ru": "давай договоримся...",
+            "example": "Let's arrange a time to meet.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-4-5",
+            "en": "I'm looking forward to...",
+            "ru": "с нетерпением жду...",
+            "example": "I'm looking forward to the holidays.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-4-6",
+            "en": "That sounds good",
+            "ru": "звучит хорошо",
+            "example": "That sounds good to me.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-4-7",
+            "en": "I'll let you know",
+            "ru": "я дам знать",
+            "example": "I'll let you know tomorrow.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-4-8",
+            "en": "It depends",
+            "ru": "это зависит",
+            "example": "It depends on the weather.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-4-9",
+            "en": "I'm not sure yet",
+            "ru": "я пока не уверен",
+            "example": "I'm not sure yet; I'll check.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          },
+          {
+            "id": "en-card-future-4-10",
+            "en": "Maybe another time",
+            "ru": "может быть, в другой раз",
+            "example": "Maybe another time. Thanks.",
+            "tags": [
+              "b1",
+              "future"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
