@@ -1,0 +1,465 @@
+{
+  "unitId": "en-a1-family",
+  "lessons": [
+    {
+      "lessonId": "en-a1-family-01",
+      "unitId": "en-a1-family",
+      "order": 1,
+      "title": "Ближайшая семья",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "family"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-family-1-1",
+            "en": "mother",
+            "ru": "мама",
+            "example": "My mother works at a hospital.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-1-2",
+            "en": "father",
+            "ru": "папа",
+            "example": "His father is a bus driver.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-1-3",
+            "en": "parent",
+            "ru": "родитель",
+            "example": "A parent must sign this form.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-1-4",
+            "en": "parents",
+            "ru": "родители",
+            "example": "My parents live in a small town.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-1-5",
+            "en": "sister",
+            "ru": "сестра",
+            "example": "My sister is two years younger.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-1-6",
+            "en": "brother",
+            "ru": "брат",
+            "example": "I share a room with my brother.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-1-7",
+            "en": "son",
+            "ru": "сын",
+            "example": "Their son starts school in September.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-1-8",
+            "en": "daughter",
+            "ru": "дочь",
+            "example": "Her daughter loves drawing.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-1-9",
+            "en": "child",
+            "ru": "ребёнок",
+            "example": "They have one child.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-1-10",
+            "en": "children",
+            "ru": "дети",
+            "example": "The children are playing outside.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-family-02",
+      "unitId": "en-a1-family",
+      "order": 2,
+      "title": "Родственники",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "family"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-family-2-1",
+            "en": "grandmother",
+            "ru": "бабушка",
+            "example": "My grandmother tells great stories.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-2-2",
+            "en": "grandfather",
+            "ru": "дедушка",
+            "example": "We visit our grandfather every Sunday.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-2-3",
+            "en": "grandparents",
+            "ru": "бабушка и дедушка",
+            "example": "My grandparents live by the sea.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-2-4",
+            "en": "aunt",
+            "ru": "тётя",
+            "example": "My aunt sent me a postcard.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-2-5",
+            "en": "uncle",
+            "ru": "дядя",
+            "example": "Our uncle is coming for dinner.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-2-6",
+            "en": "cousin",
+            "ru": "двоюродный родственник",
+            "example": "My cousin studies in London.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-2-7",
+            "en": "niece",
+            "ru": "племянница",
+            "example": "His niece is learning to swim.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-2-8",
+            "en": "nephew",
+            "ru": "племянник",
+            "example": "I bought a book for my nephew.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-2-9",
+            "en": "relative",
+            "ru": "родственник",
+            "example": "A relative is staying with us.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-2-10",
+            "en": "only child",
+            "ru": "единственный ребёнок",
+            "example": "She is an only child.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-family-03",
+      "unitId": "en-a1-family",
+      "order": 3,
+      "title": "Отношения",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "family"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-family-3-1",
+            "en": "husband",
+            "ru": "муж",
+            "example": "Her husband is a teacher.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-3-2",
+            "en": "wife",
+            "ru": "жена",
+            "example": "His wife speaks three languages.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-3-3",
+            "en": "married",
+            "ru": "женатый, замужняя",
+            "example": "They have been married for ten years.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-3-4",
+            "en": "single",
+            "ru": "не состоящий в браке",
+            "example": "My uncle is single.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-3-5",
+            "en": "together",
+            "ru": "вместе",
+            "example": "We all live together.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-3-6",
+            "en": "get on well",
+            "ru": "хорошо ладить",
+            "example": "I get on well with my cousin.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-3-7",
+            "en": "look like",
+            "ru": "быть похожим",
+            "example": "You look like your mother.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-3-8",
+            "en": "care about",
+            "ru": "заботиться",
+            "example": "They care about each other.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-3-9",
+            "en": "close",
+            "ru": "близкий",
+            "example": "I'm close to my older sister.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-3-10",
+            "en": "family member",
+            "ru": "член семьи",
+            "example": "Every family member helped.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-family-04",
+      "unitId": "en-a1-family",
+      "order": 4,
+      "title": "Характер",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "family"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-family-4-1",
+            "en": "kind",
+            "ru": "добрый",
+            "example": "My grandmother is very kind.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-4-2",
+            "en": "patient",
+            "ru": "терпеливый",
+            "example": "Dad is patient with young children.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-4-3",
+            "en": "funny",
+            "ru": "забавный",
+            "example": "My brother is funny.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-4-4",
+            "en": "quiet",
+            "ru": "спокойный, тихий",
+            "example": "My aunt is quiet but friendly.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-4-5",
+            "en": "friendly",
+            "ru": "дружелюбный",
+            "example": "Our neighbours are friendly.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-4-6",
+            "en": "helpful",
+            "ru": "отзывчивый",
+            "example": "My cousin is always helpful.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-4-7",
+            "en": "tall",
+            "ru": "высокий",
+            "example": "My older brother is tall.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-4-8",
+            "en": "young",
+            "ru": "молодой",
+            "example": "Their youngest child is five.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-4-9",
+            "en": "older",
+            "ru": "старше",
+            "example": "I'm older than my cousin.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          },
+          {
+            "id": "en-card-family-4-10",
+            "en": "younger",
+            "ru": "младше",
+            "example": "My sister is younger than me.",
+            "tags": [
+              "a1",
+              "family"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
