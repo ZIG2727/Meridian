@@ -124,21 +124,48 @@ function renderChessLesson(app,module,unit,lesson,completed) {
 }
 function runSafePython(source,lesson) {
  const lines=String(source).replace(/\r/g,"").split("\n");
- if(lines.some(line=>/\b(import|exec|eval|open|__|os\.|sys\.)\b/.test(line)))return {ok:false,error:"Эта учебная среда поддерживает только базовые конструкции Python."};
+ if(lines.length>300||lines.some(line=>/\b(import|exec|eval|open|__|os\.|sys\.|subprocess)\b/.test(line)))return {ok:false,error:"Эта учебная среда поддерживает только безопасные базовые конструкции Python."};
  const vars={},out=[];
- const value=raw=>{const s=raw.trim();if(/^(['"]).*\1$/.test(s))return s.slice(1,-1);if(s==="input()")return String(lesson.exampleInput??"");let m=s.match(/^int\(input\(\)\)$/);if(m)return Number(lesson.exampleInput??0);m=s.match(/^float\(input\(\)\)$/);if(m)return Number(lesson.exampleInput??0);if(s==="True")return true;if(s==="False")return false;if(/^-?\d+(?:\.\d+)?$/.test(s))return Number(s);m=s.match(/^len\(([A-Za-z_]\w*)\)$/);if(m&&Array.isArray(vars[m[1]]))return vars[m[1]].length;m=s.match(/^([A-Za-z_]\w*)\[(\d+)\]$/);if(m&&Array.isArray(vars[m[1]]))return vars[m[1]][Number(m[2])];if(Object.prototype.hasOwnProperty.call(vars,s))return vars[s];if(s.startsWith("[")&&s.endsWith("]")){const body=s.slice(1,-1).trim();if(!body)return [];return body.split(",").map(part=>value(part));}if(s.startsWith("{")&&s.endsWith("}")){const body=s.slice(1,-1).trim(),obj={};if(!body)return obj;for(const pair of body.split(",")){const p=pair.split(":");if(p.length!==2)throw new Error("Проверь пары ключ: значение.");obj[String(value(p[0]))]=value(p[1]);}return obj;}m=s.match(/^([A-Za-z_]\w*)\[(["'])(.*?)\2\]$/);if(m&&vars[m[1]]&&typeof vars[m[1]]==="object")return vars[m[1]][m[3]];throw new Error("Не удалось разобрать выражение: "+s);};
- const printLine=line=>{const m=line.match(/^print\((.*)\)$/);if(!m)throw new Error("Поддерживается print() с одним значением.");const v=value(m[1]);const repr=x=>Array.isArray(x)?"["+x.map(y=>typeof y==="string"?"'"+y+"'":String(y)).join(", ")+"]":(x&&typeof x==="object"?"{"+Object.entries(x).map(([k,v])=>"'"+k+"': "+(typeof v==="string"?"'"+v+"'":String(v))).join(", ")+"}":String(x));out.push(repr(v));};
+ const value=raw=>{
+  const s=raw.trim();
+  if(/^(['"]).*\1$/.test(s))return s.slice(1,-1);
+  if(s==="input()")return String(lesson.exampleInput??"");
+  if(s==="int(input())")return Number(lesson.exampleInput??0);
+  if(s==="float(input())")return Number(lesson.exampleInput??0);
+  if(s==="True")return true;if(s==="False")return false;
+  if(/^-?\d+(?:\.\d+)?$/.test(s))return Number(s);
+  let m=s.match(/^len\(([A-Za-z_]\w*)\)$/);
+  if(m&&vars[m[1]]&&typeof vars[m[1]]==="object")return Object.keys(vars[m[1]]).length;
+  m=s.match(/^([A-Za-z_]\w*)\[(\d+)\]$/);
+  if(m&&Array.isArray(vars[m[1]]))return vars[m[1]][Number(m[2])];
+  m=s.match(/^([A-Za-z_]\w*)\[(["'])(.*?)\2\]$/);
+  if(m&&vars[m[1]]&&typeof vars[m[1]]==="object")return vars[m[1]][m[3]];
+  if(Object.prototype.hasOwnProperty.call(vars,s))return vars[s];
+  if(s.startsWith("[")&&s.endsWith("]")){const body=s.slice(1,-1).trim();return body?body.split(",").map(part=>value(part)):[];}
+  if(s.startsWith("(")&&s.endsWith(")")){const body=s.slice(1,-1).trim(),tuple=body?body.split(",").map(part=>value(part)):[];tuple.__tuple=true;return tuple;}
+  if(s.startsWith("{")&&s.endsWith("}")){const body=s.slice(1,-1).trim(),obj={};if(!body)return obj;for(const pair of body.split(",")){const p=pair.split(":");if(p.length!==2)throw new Error("Проверь пары ключ: значение.");obj[String(value(p[0]))]=value(p[1]);}return obj;}
+  throw new Error("Не удалось разобрать выражение: "+s);
+ };
+ const repr=x=>Array.isArray(x)?(x.__tuple?"("+x.map(v=>String(v)).join(", ")+")":"["+x.map(v=>typeof v==="string"?"'"+v+"'":String(v)).join(", ")+"]"):(x&&typeof x==="object"?"{"+Object.entries(x).map(([k,v])=>"'"+k+"': "+(typeof v==="string"?"'"+v+"'":String(v))).join(", ")+"}":String(x));
+ const printLine=line=>{const m=line.match(/^print\((.*)\)$/);if(!m)throw new Error("Поддерживается print() с одним значением.");out.push(repr(value(m[1])));if(out.length>200)throw new Error("Превышен лимит вывода.");};
  try{
-  for(let i=0;i<lines.length;i++){const line=lines[i];if(!line.trim()||line.trim().startsWith("#"))continue;
-   let m=line.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);if(m){vars[m[1]]=value(m[2]);continue;}
-   m=line.match(/^([A-Za-z_]\w*)\.append\((.*)\)$/);if(m&&Array.isArray(vars[m[1]])){vars[m[1]].push(value(m[2]));continue;}
-   m=line.match(/^([A-Za-z_]\w*)\[(["'])(.*?)\2\]\s*=\s*(.+)$/);if(m&&vars[m[1]]&&typeof vars[m[1]]==="object"){vars[m[1]][m[3]]=value(m[4]);continue;}
+  for(let i=0;i<lines.length;i++){
+   const line=lines[i];if(!line.trim()||line.trim().startsWith("#"))continue;
+   let m=line.match(/^([A-Za-z_]\w*),\s*([A-Za-z_]\w*)\s*=\s*(.+)$/);
+   if(m){const tuple=value(m[3]);if(!Array.isArray(tuple)||tuple.length!==2)throw new Error("Для распаковки нужны ровно два значения.");vars[m[1]]=tuple[0];vars[m[2]]=tuple[1];continue;}
+   m=line.match(/^([A-Za-z_]\w*)\[(["'])(.*?)\2\]\s*=\s*(.+)$/);
+   if(m&&vars[m[1]]&&typeof vars[m[1]]==="object"){vars[m[1]][m[3]]=value(m[4]);continue;}
+   m=line.match(/^([A-Za-z_]\w*)\.append\((.*)\)$/);
+   if(m&&Array.isArray(vars[m[1]])){vars[m[1]].push(value(m[2]));continue;}
+   m=line.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);
+   if(m){vars[m[1]]=value(m[2]);continue;}
    if(/^print\(/.test(line)){printLine(line);continue;}
    m=line.match(/^for\s+([A-Za-z_]\w*)\s+in\s+range\((\d+),\s*(\d+)\):$/);
-   if(m){const body=lines[i+1];if(!body||!/^\s{4}print\(\w+\)$/.test(body))throw new Error("В учебном цикле добавь print(имя) с отступом в четыре пробела.");for(let n=Number(m[2]);n<Number(m[3]);n++){vars[m[1]]=n;out.push(String(n));}i++;continue;}
+   if(m){const body=lines[i+1];if(!body||! /^\s{4}print\(\w+\)$/.test(body))throw new Error("В учебном цикле добавь print(имя) с отступом в четыре пробела.");for(let n=Number(m[2]);n<Number(m[3]);n++){vars[m[1]]=n;out.push(String(n));}i++;continue;}
    m=line.match(/^if\s+([A-Za-z_]\w*)\s*(==|!=|<=|>=|<|>)\s*(-?\d+(?:\.\d+)?):$/);
    if(m){const yes=lines[i+1],no=lines[i+2],els=lines[i+3];if(!yes||!no||!els||!/^else:$/.test(no.trim()))throw new Error("Для if используй блоки if и else с отступами.");const a=Number(vars[m[1]]),b=Number(m[3]);const result={"==":a===b,"!=":a!==b,"<":a<b,">":a>b,"<=":a<=b,">=":a>=b}[m[2]];const selected=result?yes:els;if(!/^\s{4}print\(/.test(selected))throw new Error("Внутри if/else нужен print() с отступом.");printLine(selected.trim());i+=3;continue;}
-   m=line.match(/^while\s+([A-Za-z_]\w*)\s*(<|<=|>|>=|==|!=)\s*(\d+):$/);if(m){const body=lines[i+1],increment=lines[i+2];if(!body||body.trim()!=="print("+m[1]+")"||!increment||increment.trim()!==m[1]+" = "+m[1]+" + 1")throw new Error("Для while нужны print(счётчик) и увеличение счётчика на 1.");let guard=0;const limit=Number(m[3]),test=n=>({"<":n<limit,"<=":n<=limit,">":n>limit,">=":n>=limit,"==":n===limit,"!=":n!==limit}[m[2]]);while(test(Number(vars[m[1]]))&&guard++<100){out.push(String(vars[m[1]]));vars[m[1]]=Number(vars[m[1]])+1;}if(guard>=100)throw new Error("Цикл остановлен: превышен безопасный лимит.");i+=2;continue;}
+   m=line.match(/^while\s+([A-Za-z_]\w*)\s*(<|<=|>|>=|==|!=)\s*(\d+):$/);
+   if(m){const body=lines[i+1],increment=lines[i+2];if(!body||body.trim()!=="print("+m[1]+")"||!increment||increment.trim()!==m[1]+" = "+m[1]+" + 1")throw new Error("Для while нужны print(счётчик) и увеличение счётчика на 1.");let guard=0;const limit=Number(m[3]),test=n=>({"<":n<limit,"<=":n<=limit,">":n>limit,">=":n>=limit,"==":n===limit,"!=":n!==limit}[m[2]]);while(test(Number(vars[m[1]]))&&guard++<100){out.push(String(vars[m[1]]));vars[m[1]]=Number(vars[m[1]])+1;}if(guard>=100)throw new Error("Цикл остановлен: превышен безопасный лимит.");i+=2;continue;}
    throw new Error("Строка пока не входит в безопасный учебный Python: "+line.trim());
   }
   return {ok:true,output:out.join("\n")};
