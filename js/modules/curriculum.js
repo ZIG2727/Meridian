@@ -34,10 +34,25 @@ async function curriculum(module) {
   const url = new URL(module + "/curriculum.json", ROOT);
   const data = await loadJSON(url);
   if (!data || data.module !== module || !Array.isArray(data.units)) throw new Error("Повреждён список учебных юнитов.");
+  if (data.units.length !== 15) throw new Error("В программе должно быть ровно 15 юнитов.");
   const ids = new Set();
+  const lessonIds = new Set();
   for (const unit of data.units) {
-    if (!unit.unitId || ids.has(unit.unitId) || !Array.isArray(unit.lessonIds) || unit.lessonIds.length < 3 || unit.lessonIds.length > 4) throw new Error("Неверная структура юнита " + (unit.unitId || ""));
+    if (!unit.unitId || ids.has(unit.unitId) || !Array.isArray(unit.lessonIds) || unit.lessonIds.length !== 4 ||
+        typeof unit.title !== "string" || typeof unit.description !== "string" ||
+        !Number.isInteger(unit.order) || !Array.isArray(unit.prerequisiteUnits)) {
+      throw new Error("Неверная структура юнита " + (unit.unitId || ""));
+    }
     ids.add(unit.unitId);
+    for (const lessonId of unit.lessonIds) {
+      if (typeof lessonId !== "string" || lessonIds.has(lessonId) || !lessonId.startsWith(module + "-")) {
+        throw new Error("Повторяющийся или неверный ID урока: " + lessonId);
+      }
+      lessonIds.add(lessonId);
+    }
+  }
+  for (const unit of data.units) {
+    if (unit.prerequisiteUnits.some(id => !ids.has(id))) throw new Error("Юнит " + unit.unitId + " ссылается на отсутствующий пререквизит.");
   }
   return data;
 }
@@ -99,7 +114,8 @@ function renderUnit(app,module,data,unit,unitContent,completed) {
   app.innerHTML=header(module,[{label:unit.title}])+'<section class="curriculum-heading"><div><p class="eyebrow">'+esc(unit.level)+'</p><h1>'+esc(unit.title)+'</h1><p>'+esc(unit.description)+'</p></div><div class="curriculum-total"><strong>'+stats.done+' / '+stats.total+'</strong><span>уроков завершено</span></div></section>'+
   '<div class="progress-track" data-progress="'+(stats.done/stats.total*100)+'"><div class="progress-fill"></div></div>'+
   (unit.prerequisiteUnits?.length ? '<p class="code-note">Рекомендуется сначала пройти: '+unit.prerequisiteUnits.map(id=>esc(data.units.find(u=>u.unitId===id)?.title||id)).join(", ")+'. Это рекомендация, переход не заблокирован.</p>' : '')+
-  '<ol class="curriculum-lessons">'+unit.lessonIds.map((id,i)=>{const done=completed.includes(id);const lesson=unitContent.lessons.find(x=>x.lessonId===id);return '<li><a class="curriculum-lesson '+(done?'is-complete':'')+'" href="'+urlFor(module,unit.unitId,id)+'"><span class="lesson-number">'+(done?'✓':i+1)+'</span><span class="curriculum-lesson-title"><strong>'+esc(lesson?.title||("Урок "+(i+1)))+'</strong><small>'+(done?'Завершено':'Занятие')+'</small></span><span class="lesson-duration">'+(lesson?.estimatedMinutes||8)+' мин</span></a></li>';}).join("")+'</ol>'+footer(module);
+  const nextLessonId=unit.lessonIds.find(id=>!completed.includes(id));
+  '<ol class="curriculum-lessons">'+unit.lessonIds.map((id,i)=>{const done=completed.includes(id),isNext=id===nextLessonId;const lesson=unitContent.lessons.find(x=>x.lessonId===id);return '<li><a class="curriculum-lesson '+(done?'is-complete ':'')+(isNext?'is-next':'')+'" href="'+urlFor(module,unit.unitId,id)+'"><span class="lesson-number">'+(done?'✓':i+1)+'</span><span class="curriculum-lesson-title"><strong>'+esc(lesson?.title||("Урок "+(i+1)))+'</strong><small>'+(done?'Завершено':isNext?'Следующий шаг':'Занятие')+'</small></span><span class="lesson-duration">'+(lesson?.estimatedMinutes||8)+' мин</span></a></li>';}).join("")+'</ol>'+footer(module);
   animateProgress(app.querySelector("[data-progress]"),stats.done/stats.total*100);
 }
 function markComplete(module,unit,lessonId,completed) {
@@ -153,13 +169,18 @@ function fenBoard(fen) {
  const symbols={K:"♔",Q:"♕",R:"♖",B:"♗",N:"♘",P:"♙",k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟"};
  const ranks=fen.split(" ")[0].split("/");
  if(ranks.length!==8) return null;
- const cells=[];
- for(let r=0;r<8;r++){let f=0;for(const token of ranks[r]){if(/[1-8]/.test(token)){for(let n=0;n<Number(token);n++)cells.push("");f+=Number(token);}else if(symbols[token]){cells.push(symbols[token]);f++;}else{return null;}}if(f!==8)return null;}
+ const cells=[];let whiteKings=0,blackKings=0;
+ for(let r=0;r<8;r++){let f=0;for(const token of ranks[r]){if(/[1-8]/.test(token)){for(let n=0;n<Number(token);n++)cells.push("");f+=Number(token);}else if(symbols[token]){cells.push(symbols[token]);f++;if(token==="K")whiteKings++;if(token==="k")blackKings++;}else{return null;}}if(f!==8)return null;}
+ if(whiteKings!==1||blackKings!==1)return null;
  return cells;
 }
 function nextLessonNavigation(module,unit,lesson) {
  const index=unit.lessonIds.indexOf(lesson.lessonId),next=unit.lessonIds[index+1];
  if(next){writeLast(module,unit.unitId,next);return '<a class="button" href="'+urlFor(module,unit.unitId,next)+'">Следующий урок →</a>';}
+ if(unit.nextUnitId&&unit.nextUnitFirstLessonId){
+  writeLast(module,unit.nextUnitId,unit.nextUnitFirstLessonId);
+  return '<a class="button" href="'+urlFor(module,unit.nextUnitId,unit.nextUnitFirstLessonId)+'">Следующий юнит →</a>';
+ }
  writeStored(keys(module).session,null);writeStored(keys(module).last,null);
  return '<a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">Вернуться к юниту</a>';
 }
@@ -247,6 +268,7 @@ export async function renderCurriculum(app,module) {
  const parts=(window.location.hash||"#/"+module).replace(/^#\//,"").split("/");
  const unitId=parts[1]||null,lessonId=parts[2]||null;
  const data=await curriculum(module),completed=readCompleted(module);
+ data.units.forEach((item,index)=>{const next=data.units[index+1];item.nextUnitId=next?.unitId||null;item.nextUnitFirstLessonId=next?.lessonIds?.[0]||null;});
  if(!unitId){renderModule(app,module,data,completed);return;}
  const unit=data.units.find(u=>u.unitId===unitId);if(!unit){window.location.hash="#/"+module;return;}
  const unitContent=await unitData(module,unitId);
