@@ -93,9 +93,10 @@ function getPieceTargets(square, piece, pieces) {
   return targets;
 }
 
-function enablePieceHints(container, board, position, status) {
+function enablePieceHints(container, board, initialPosition, status) {
   let selected = null;
-  const readPieces = () => board ? board.position() : parsePosition(position);
+  let currentPosition = initialPosition;
+  const readPieces = () => board ? board.position() : parsePosition(currentPosition);
   const clear = () => container.querySelectorAll(".is-move-target,.is-selected-piece").forEach(node =>
     node.classList.remove("is-move-target", "is-selected-piece"));
   const selectSquare = square => {
@@ -122,8 +123,8 @@ function enablePieceHints(container, board, position, status) {
       if (board) board.movePiece({ from: selected, to: square }, { animate: true });
       else {
         const pieces = readPieces(); pieces[square] = pieces[selected]; delete pieces[selected];
-        const fen = position;
-        renderStaticBoard(container, piecesToFen(pieces, fen));
+        currentPosition = piecesToFen(pieces, currentPosition);
+        renderStaticBoard(container, currentPosition);
       }
       selected = null; clear(); status.textContent = "Фигура перемещена на " + square + ".";
       return;
