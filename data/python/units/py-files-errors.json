@@ -50,16 +50,16 @@
       "lessonId": "py-files-errors-04",
       "unitId": "py-files-errors",
       "order": 4,
-      "title": "IndexError",
+      "title": "Обработка ошибки: try и except",
       "estimatedMinutes": 8,
       "tags": [
         "files-errors",
         "errors"
       ],
-      "theory": "IndexError возникает при обращении к несуществующему индексу последовательности. Индексация начинается с нуля.",
-      "starterCode": "print(\"IndexError\")",
-      "expectedOutput": "IndexError",
-      "hint": "Убедись, что индекс находится в диапазоне от 0 до len(список)-1."
+      "theory": "Блок try содержит действие, которое может завершиться ошибкой. Если возникает ожидаемый тип ошибки, except перехватывает его и выполняет запасной блок. В Meridian пример ограничен безопасной проверкой преобразования строки в число.",
+      "starterCode": "raw = \"not a number\"\ntry:\n    print(int(raw))\nexcept ValueError:\n    print(\"Enter a whole number\")",
+      "expectedOutput": "Enter a whole number",
+      "hint": "int(raw) не может превратить текст в целое число. Добавь except ValueError и выведи сообщение."
     }
   ]
 }
