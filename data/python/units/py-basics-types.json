@@ -14,7 +14,8 @@
       "theory": "Строка — последовательность символов в кавычках. Цифры в кавычках остаются текстом.",
       "starterCode": "city = \"Rome\"\nprint(city)",
       "expectedOutput": "Kazan",
-      "hint": "Запиши название города Kazan как строку."
+      "hint": "Запиши название города Kazan как строку.",
+      "solutionCode": "city = \"Kazan\"\nprint(city)"
     },
     {
       "lessonId": "py-basics-types-02",
@@ -29,7 +30,8 @@
       "theory": "Тип int хранит целые числа без дробной части.",
       "starterCode": "count = 5\nprint(count)",
       "expectedOutput": "7",
-      "hint": "Число 7 должно быть без кавычек."
+      "hint": "Число 7 должно быть без кавычек.",
+      "solutionCode": "count = 7\nprint(count)"
     },
     {
       "lessonId": "py-basics-types-03",
@@ -44,7 +46,8 @@
       "theory": "Тип float хранит числа с десятичной точкой. В Python используется точка.",
       "starterCode": "price = 10.5\nprint(price)",
       "expectedOutput": "12.5",
-      "hint": "Используй точку в числе 12.5."
+      "hint": "Используй точку в числе 12.5.",
+      "solutionCode": "price = 12.5\nprint(price)"
     },
     {
       "lessonId": "py-basics-types-04",
@@ -59,7 +62,8 @@
       "theory": "bool принимает True или False. Первая буква пишется заглавной.",
       "starterCode": "is_ready = False\nprint(is_ready)",
       "expectedOutput": "True",
-      "hint": "Значение True не нужно заключать в кавычки."
+      "hint": "Значение True не нужно заключать в кавычки.",
+      "solutionCode": "is_ready = True\nprint(is_ready)"
     }
   ]
 }
