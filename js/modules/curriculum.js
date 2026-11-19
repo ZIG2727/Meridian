@@ -86,7 +86,10 @@ async function curriculum(module) {
 }
 async function unitData(module, unitId) {
   const key = module + ":" + unitId;
-  if (!cache.has(key)) cache.set(key, loadJSON(new URL(module + "/units/" + unitId + ".json", ROOT)));
+  if (!cache.has(key)) {
+    const request=loadJSON(new URL(module + "/units/" + unitId + ".json", ROOT)).catch(error=>{cache.delete(key);throw error;});
+    cache.set(key,request);
+  }
   const data = await cache.get(key);
   if (data.unitId !== unitId || !Array.isArray(data.lessons)) throw new Error("Не удалось проверить содержимое юнита.");
   return data;
@@ -182,15 +185,17 @@ function renderEnglishLesson(app,module,unit,lesson,completed) {
    const ease=Math.max(1.3,old.ease+0.1-(5-quality)*(0.08+(5-quality)*0.02));
    const interval=quality<3?1:old.reps===0?1:old.reps===1?6:Math.max(1,Math.round(old.interval*ease));
    srs[card.id]={ease:Number(ease.toFixed(2)),interval,due:Date.now()+interval*86400000,reps:quality<3?0:old.reps+1};
-   writeStored("mrd:english:srs",srs);index++;revealed=false;
+   writeStored(keys("english").srs,srs);index++;revealed=false;
    if(index>=dueCards.length){
     const wasCompleted=completed.includes(lesson.lessonId);
     const allReviewed=cards.every(item=>srs[item.id]&&Number.isFinite(srs[item.id].due));
     const unitFinished=allReviewed?markComplete(module,unit,lesson.lessonId,completed):false;
     const nextIndex=unit.lessonIds.indexOf(lesson.lessonId)+1,nextLesson=unit.lessonIds[nextIndex];
-    if(nextLesson)writeLast(module,unit.unitId,nextLesson);
+    let nextNavigation='<a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">Вернуться к юниту</a>';
+    if(nextLesson){writeLast(module,unit.unitId,nextLesson);nextNavigation='<a class="button" href="'+urlFor(module,unit.unitId,nextLesson)+'">Следующий урок →</a>';}
+    else if(unit.nextUnitId&&unit.nextUnitFirstLessonId){writeLast(module,unit.nextUnitId,unit.nextUnitFirstLessonId);nextNavigation='<a class="button" href="'+urlFor(module,unit.nextUnitId,unit.nextUnitFirstLessonId)+'">Следующий юнит →</a>';}
     else{writeStored(keys(module).session,null);writeStored(keys(module).last,null);}
-    app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="empty-state"><h1>Урок завершён</h1><p>Вы оценили '+dueCards.length+' карточек, интервалы повторения сохранены.</p><p class="lesson-feedback status-line" role="status"></p><a class="button" href="'+urlFor(module,unit.unitId)+'">Вернуться к юниту</a>'+(nextLesson?'<a class="button button-secondary" href="'+urlFor(module,unit.unitId,nextLesson)+'">Следующий урок →</a>':'')+'</section>'+footer(module);
+    app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="empty-state"><h1>Урок завершён</h1><p>Вы оценили '+dueCards.length+' карточек, интервалы повторения сохранены.</p><p class="lesson-feedback status-line" role="status"></p>'+nextNavigation+'</section>'+footer(module);
     if(!wasCompleted&&unitFinished)celebrate(app.querySelector(".lesson-feedback"),"Юнит завершён",800);
    } else draw();
   }));
@@ -339,10 +344,10 @@ export function runSafePython(source,lesson) {
  }catch(error){return {ok:false,error:error.message};}
 }
 function renderPythonLesson(app,module,unit,lesson,completed) {
- let draft=readStored("mrd:python:session",null);let code=draft?.lessonId===lesson.lessonId?draft.draftCode:lesson.starterCode;
+ let draft=readSession(module);let code=draft?.lessonId===lesson.lessonId?draft.draftCode:lesson.starterCode;
  const done=completed.includes(lesson.lessonId);
  const draw=()=>{app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="curriculum-lesson-focus"><p class="eyebrow">Python · '+lesson.estimatedMinutes+' мин</p><h1>'+esc(lesson.title)+'</h1><article class="lesson-card"><p>'+esc(lesson.theory)+'</p></article><section class="panel"><label class="field-label" for="python-code">Ваш код</label><textarea class="code-editor" id="python-code" spellcheck="false">'+esc(code)+'</textarea><div class="button-row"><button class="button" id="run-python">Запустить</button><button class="button button-secondary" id="show-hint">Подсказка</button></div><p class="code-note" id="python-hint" hidden>'+esc(lesson.hint)+'</p><div class="python-output"><div><p class="eyebrow">Ожидаемый вывод</p><pre>'+esc(lesson.expectedOutput)+'</pre></div><div><p class="eyebrow">Ваш вывод</p><pre id="actual-output">—</pre></div></div><p class="lesson-feedback status-line" role="status">'+(done?'Урок уже завершён.':'')+'</p><div id="lesson-next">'+(done?nextLessonNavigation(module,unit,lesson):'')+'</div></section></section>'+footer(module);
- const editor=app.querySelector("#python-code");editor.addEventListener("input",()=>{code=editor.value;writeStored("mrd:python:session",{unitId:unit.unitId,lessonId:lesson.lessonId,draftCode:code});});
+ const editor=app.querySelector("#python-code");editor.addEventListener("input",()=>{code=editor.value;writeStored(keys(module).session,{unitId:unit.unitId,lessonId:lesson.lessonId,draftCode:code});});
  app.querySelector("#show-hint").addEventListener("click",()=>{app.querySelector("#python-hint").hidden=false;});
  app.querySelector("#run-python").addEventListener("click",()=>{const result=runSafePython(editor.value,lesson);const output=app.querySelector("#actual-output"),status=app.querySelector(".lesson-feedback");output.textContent=result.ok?result.output:result.error;if(!result.ok){status.textContent=result.error;return;}if(result.output===lesson.expectedOutput){status.textContent="Вывод совпадает. Урок завершён.";if(!completed.includes(lesson.lessonId)){const unitFinished=markComplete(module,unit,lesson.lessonId,completed);if(unitFinished)celebrate(status,"Юнит завершён",800);app.querySelector("#lesson-next").innerHTML=nextLessonNavigation(module,unit,lesson);}}else status.textContent="Вывод отличается от ожидаемого. Проверьте строки и значения.";});
  };draw();
