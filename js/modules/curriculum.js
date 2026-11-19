@@ -126,7 +126,7 @@ function runSafePython(source,lesson) {
  const lines=String(source).replace(/\r/g,"").split("\n");
  if(lines.some(line=>/\b(import|exec|eval|open|__|os\.|sys\.)\b/.test(line)))return {ok:false,error:"Эта учебная среда поддерживает только базовые конструкции Python."};
  const vars={},out=[];
- const value=raw=>{const s=raw.trim();if(/^(['"]).*\1$/.test(s))return s.slice(1,-1);if(s==="input()")return String(lesson.exampleInput??"");let m=s.match(/^int\(input\(\)\)$/);if(m)return Number(lesson.exampleInput??0);m=s.match(/^float\(input\(\)\)$/);if(m)return Number(lesson.exampleInput??0);if(/^-?\d+(?:\.\d+)?$/.test(s))return Number(s);if(Object.prototype.hasOwnProperty.call(vars,s))return vars[s];throw new Error("Не удалось разобрать выражение: "+s);};
+ const value=raw=>{const s=raw.trim();if(/^(['"]).*\1$/.test(s))return s.slice(1,-1);if(s==="input()")return String(lesson.exampleInput??"");let m=s.match(/^int\(input\(\)\)$/);if(m)return Number(lesson.exampleInput??0);m=s.match(/^float\(input\(\)\)$/);if(m)return Number(lesson.exampleInput??0);if(s==="True")return true;if(s==="False")return false;if(/^-?\d+(?:\.\d+)?$/.test(s))return Number(s);if(Object.prototype.hasOwnProperty.call(vars,s))return vars[s];throw new Error("Не удалось разобрать выражение: "+s);};
  const printLine=line=>{const m=line.match(/^print\((.*)\)$/);if(!m)throw new Error("Поддерживается print() с одним значением.");out.push(String(value(m[1])));};
  try{
   for(let i=0;i<lines.length;i++){const line=lines[i];if(!line.trim()||line.trim().startsWith("#"))continue;
@@ -136,7 +136,7 @@ function runSafePython(source,lesson) {
    if(m){const body=lines[i+1];if(!body||!/^\s{4}print\(\w+\)$/.test(body))throw new Error("В учебном цикле добавь print(имя) с отступом в четыре пробела.");for(let n=Number(m[2]);n<Number(m[3]);n++){vars[m[1]]=n;out.push(String(n));}i++;continue;}
    m=line.match(/^if\s+([A-Za-z_]\w*)\s*(==|!=|<=|>=|<|>)\s*(-?\d+(?:\.\d+)?):$/);
    if(m){const yes=lines[i+1],no=lines[i+2],els=lines[i+3];if(!yes||!no||!els||!/^else:$/.test(no.trim()))throw new Error("Для if используй блоки if и else с отступами.");const a=Number(vars[m[1]]),b=Number(m[3]);const result={"==":a===b,"!=":a!==b,"<":a<b,">":a>b,"<=":a<=b,">=":a>=b}[m[2]];const selected=result?yes:els;if(!/^\s{4}print\(/.test(selected))throw new Error("Внутри if/else нужен print() с отступом.");printLine(selected.trim());i+=3;continue;}
-   if(/^while\s/.test(line))throw new Error("Для while в этой версии используйте только ограниченные задания с for.");
+   m=line.match(/^while\s+([A-Za-z_]\w*)\s*(<|<=|>|>=|==|!=)\s*(\d+):$/);if(m){const body=lines[i+1],increment=lines[i+2];if(!body||body.trim()!=="print("+m[1]+")"||!increment||increment.trim()!==m[1]+" = "+m[1]+" + 1")throw new Error("Для while нужны print(счётчик) и увеличение счётчика на 1.");let guard=0;const limit=Number(m[3]),test=n=>({"<":n<limit,"<=":n<=limit,">":n>limit,">=":n>=limit,"==":n===limit,"!=":n!==limit}[m[2]]);while(test(Number(vars[m[1]]))&&guard++<100){out.push(String(vars[m[1]]));vars[m[1]]=Number(vars[m[1]])+1;}if(guard>=100)throw new Error("Цикл остановлен: превышен безопасный лимит.");i+=2;continue;}
    throw new Error("Строка пока не входит в безопасный учебный Python: "+line.trim());
   }
   return {ok:true,output:out.join("\n")};

@@ -54,8 +54,8 @@
         "types"
       ],
       "theory": "is_ready = True\nprint(is_ready)",
-      "starterCode": "True",
-      "expectedOutput": "Значение True не нужно заключать в кавычки."
+      "starterCode": "is_ready = True\nprint(is_ready)",
+      "expectedOutput": "True"
     }
   ]
 }
