@@ -111,10 +111,10 @@ function renderModule(app,module,data,completed) {
 }
 function renderUnit(app,module,data,unit,unitContent,completed) {
   const stats=unitStats(unit,completed);
+  const nextLessonId=unit.lessonIds.find(id=>!completed.includes(id));
   app.innerHTML=header(module,[{label:unit.title}])+'<section class="curriculum-heading"><div><p class="eyebrow">'+esc(unit.level)+'</p><h1>'+esc(unit.title)+'</h1><p>'+esc(unit.description)+'</p></div><div class="curriculum-total"><strong>'+stats.done+' / '+stats.total+'</strong><span>уроков завершено</span></div></section>'+
   '<div class="progress-track" data-progress="'+(stats.done/stats.total*100)+'"><div class="progress-fill"></div></div>'+
   (unit.prerequisiteUnits?.length ? '<p class="code-note">Рекомендуется сначала пройти: '+unit.prerequisiteUnits.map(id=>esc(data.units.find(u=>u.unitId===id)?.title||id)).join(", ")+'. Это рекомендация, переход не заблокирован.</p>' : '')+
-  const nextLessonId=unit.lessonIds.find(id=>!completed.includes(id));
   '<ol class="curriculum-lessons">'+unit.lessonIds.map((id,i)=>{const done=completed.includes(id),isNext=id===nextLessonId;const lesson=unitContent.lessons.find(x=>x.lessonId===id);return '<li><a class="curriculum-lesson '+(done?'is-complete ':'')+(isNext?'is-next':'')+'" href="'+urlFor(module,unit.unitId,id)+'"><span class="lesson-number">'+(done?'✓':i+1)+'</span><span class="curriculum-lesson-title"><strong>'+esc(lesson?.title||("Урок "+(i+1)))+'</strong><small>'+(done?'Завершено':isNext?'Следующий шаг':'Занятие')+'</small></span><span class="lesson-duration">'+(lesson?.estimatedMinutes||8)+' мин</span></a></li>';}).join("")+'</ol>'+footer(module);
   animateProgress(app.querySelector("[data-progress]"),stats.done/stats.total*100);
 }
