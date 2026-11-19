@@ -54,3 +54,9 @@ Meridian — спокойная учебная среда с тремя марш
 lib/chessboard.min.js — небольшой локальный компонент отображения позиции для Meridian с методом movePiece. Он отвечает только за доску и визуальное перемещение фигуры, а не за проверку легальности ходов. Правила объясняются в учебных текстах; доска не является шахматным движком.
 
 \n## Meridian V3 — учебная программа\n\nV3 переводит разделы на иерархию «модуль → юнит → урок». Метаданные юнитов находятся в `data/<module>/curriculum.json`, а содержимое каждого юнита — в отдельном `data/<module>/units/<unitId>.json`. Список юнитов загружается при входе в раздел; содержимое юнита запрашивается только при его открытии. Маршруты: `#/<module>`, `#/<module>/<unitId>`, `#/<module>/<unitId>/<lessonId>`.\n\nПрогресс V3 привязан к стабильным ID уроков и карточек. Английский использует `mrd:english:srs`, модули сохраняют массивы завершённых lessonId, а `mrd:lastLesson` указывает последний открытый урок. Python-исполнитель ограничен учебным подмножеством и не запускает произвольный код.\n\n**Статус наполнения:** контент добавляется поэтапно. Число уроков на главной берётся из фактического curriculum.json; V3 не считается завершённой, пока в каждом модуле не будет 15 юнитов и не менее 50 полноценных уроков, а английский курс не получит не менее 500 карточек.\n
+
+## V3 curriculum
+
+V3 organizes every subject into a curriculum manifest, 15 units and 60 lessons. English contains 600 stable-ID flashcards with SM-2 scheduling; chess lessons use FEN positions and quizzes; Python lessons use a bounded educational interpreter that never executes arbitrary user code.
+
+The V3 implementation is currently developed on the `v3-curriculum` branch. The default `main` branch and GitHub Pages deployment are kept separate until browser verification is complete.
