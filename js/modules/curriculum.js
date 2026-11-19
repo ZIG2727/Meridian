@@ -92,20 +92,24 @@ function renderModule(app,module,data,completed) {
  app.innerHTML=header(module)+'<section class="curriculum-heading"><div><p class="eyebrow">'+esc(MODULES[module].subtitle)+'</p><h1>'+esc(MODULES[module].title)+'</h1><p>Учебная программа: тематические юниты и короткие занятия.</p></div><div class="curriculum-total"><strong>'+done+' / '+total+'</strong><span>уроков завершено</span></div></section>'+
  (last&&data.units.some(u=>u.unitId===last.unitId&&u.lessonIds.includes(last.lessonId))?'<a class="button button-secondary" href="'+urlFor(module,last.unitId,last.lessonId)+'">Продолжить последний урок →</a>':'')+
  '<div class="curriculum-tools"><label class="curriculum-search"><span class="field-label">Поиск по урокам и темам</span><input class="form-field" id="curriculum-search" type="search" placeholder="Название урока или тег"></label></div>'+
- '<section class="unit-groups" id="unit-groups" aria-label="Учебные юниты">'+groups.map(level=>'<section class="unit-level-group" data-level-group="'+esc(level)+'"><h2>'+esc(level)+'</h2><div class="unit-level-grid">'+data.units.filter(u=>u.level===level).map(renderCard).join("")+'</div></section>').join("")+'</section><p class="empty-state" id="unit-search-empty" hidden>По этому запросу уроков не найдено.</p>'+footer(module);
- const searchInput=app.querySelector("#curriculum-search");let searchVersion=0;
+ '<section class="unit-groups" id="unit-groups" aria-label="Учебные юниты">'+groups.map(level=>'<section class="unit-level-group" data-level-group="'+esc(level)+'"><h2>'+esc(level)+'</h2><div class="unit-level-grid">'+data.units.filter(u=>u.level===level).map(renderCard).join("")+'</div></section>').join("")+'</section><section class="lesson-search-results" id="lesson-search-results" aria-label="Найденные уроки" hidden></section><p class="empty-state" id="unit-search-empty" hidden>По этому запросу уроков не найдено.</p>'+footer(module);
+ const searchInput=app.querySelector("#curriculum-search"),unitGroups=app.querySelector("#unit-groups"),results=app.querySelector("#lesson-search-results"),empty=app.querySelector("#unit-search-empty");
+ let searchVersion=0;
  searchInput.addEventListener("input",async()=>{
   const query=searchInput.value.trim().toLocaleLowerCase("ru"),version=++searchVersion;
-  if(!query){app.querySelectorAll(".unit-card").forEach(card=>card.hidden=false);app.querySelectorAll("[data-level-group]").forEach(group=>group.hidden=false);app.querySelector("#unit-search-empty").hidden=true;return;}
+  if(!query){unitGroups.hidden=false;results.hidden=true;results.innerHTML="";empty.hidden=true;return;}
   const matches=await Promise.all(data.units.map(async unit=>{
-   try{const content=await unitData(module,unit.unitId);const text=unit.title+" "+unit.description+" "+unit.level+" "+content.lessons.map(lesson=>lesson.title+" "+(lesson.tags||[]).join(" ")).join(" ");return [unit.unitId,text.toLocaleLowerCase("ru").includes(query)];}
-   catch{return [unit.unitId,false];}
+   try{
+    const content=await unitData(module,unit.unitId);
+    return content.lessons.filter(lesson=>(lesson.title+" "+(lesson.tags||[]).join(" ")+" "+unit.title).toLocaleLowerCase("ru").includes(query)).map(lesson=>({unit,lesson}));
+   }catch{return [];}
   }));
   if(version!==searchVersion)return;
-  const matchMap=new Map(matches);let visible=0;
-  app.querySelectorAll(".unit-card").forEach(card=>{const show=Boolean(matchMap.get(card.dataset.unit));card.hidden=!show;if(show)visible++;});
-  app.querySelectorAll("[data-level-group]").forEach(group=>{group.hidden=!group.querySelector(".unit-card:not([hidden])");});
-  app.querySelector("#unit-search-empty").hidden=visible!==0;
+  const found=matches.flat();
+  unitGroups.hidden=true;
+  results.hidden=found.length===0;
+  results.innerHTML=found.map(({unit,lesson})=>'<a class="lesson-search-result" href="'+urlFor(module,unit.unitId,lesson.lessonId)+'"><span><strong>'+esc(lesson.title)+'</strong><small>'+esc(unit.title)+' · '+esc(lesson.tags?.join(", ")||unit.level)+'</small></span><span class="lesson-duration">'+(lesson.estimatedMinutes||8)+' мин →</span></a>').join("");
+  empty.hidden=found.length!==0;
  });
  app.querySelectorAll("[data-progress]").forEach(node=>animateProgress(node,Number(node.dataset.progress)));
 }
