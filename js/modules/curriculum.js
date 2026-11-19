@@ -213,6 +213,31 @@ function fenBoard(fen) {
  if(whiteKings!==1||blackKings!==1)return null;
  return cells;
 }
+function isWhitePiece(piece) { return "♔♕♖♗♘♙".includes(piece); }
+function squareName(index) { return String.fromCharCode(97 + index % 8) + (8 - Math.floor(index / 8)); }
+function pseudoLegalMoves(cells,index,turn) {
+ const piece=cells[index];if(!piece)return [];
+ const white=isWhitePiece(piece);if(white!==(turn==="w"))return [];
+ const type=({"♙":"p","♟":"p","♘":"n","♞":"n","♗":"b","♝":"b","♖":"r","♜":"r","♕":"q","♛":"q","♔":"k","♚":"k"})[piece];
+ const x=index%8,y=Math.floor(index/8),moves=[];
+ const at=(fx,fy)=>fx>=0&&fx<8&&fy>=0&&fy<8?cells[fy*8+fx]:null;
+ const add=(fx,fy)=>{if(fx<0||fx>7||fy<0||fy>7)return false;const target=at(fx,fy);if(!target||isWhitePiece(target)!==white)moves.push(fy*8+fx);return !target;};
+ if(type==="p"){
+  const direction=white?-1:1,startRow=white?6:1;
+  if(!at(x,y+direction)){add(x,y+direction);if(y===startRow&&!at(x,y+2*direction))add(x,y+2*direction);}
+  for(const dx of [-1,1]){const target=at(x+dx,y+direction);if(target&&isWhitePiece(target)!==white)add(x+dx,y+direction);}
+ }else if(type==="n"){
+  for(const [dx,dy] of [[1,2],[2,1],[2,-1],[1,-2],[-1,-2],[-2,-1],[-2,1],[-1,2]])add(x+dx,y+dy);
+ }else if(type==="k"){
+  for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)if(dx||dy)add(x+dx,y+dy);
+ }else{
+  const directions=[];
+  if(type==="b"||type==="q")directions.push([1,1],[1,-1],[-1,1],[-1,-1]);
+  if(type==="r"||type==="q")directions.push([1,0],[-1,0],[0,1],[0,-1]);
+  for(const [dx,dy] of directions){let fx=x+dx,fy=y+dy;while(fx>=0&&fx<8&&fy>=0&&fy<8){const target=at(fx,fy);if(!target){moves.push(fy*8+fx);}else{if(isWhitePiece(target)!==white)moves.push(fy*8+fx);break;}fx+=dx;fy+=dy;}}
+ }
+ return moves;
+}
 function nextLessonNavigation(module,unit,lesson) {
  const index=unit.lessonIds.indexOf(lesson.lessonId),next=unit.lessonIds[index+1];
  if(next){writeLast(module,unit.unitId,next);return '<a class="button" href="'+urlFor(module,unit.unitId,next)+'">Следующий урок →</a>';}
@@ -225,8 +250,22 @@ function nextLessonNavigation(module,unit,lesson) {
 }
 function renderChessLesson(app,module,unit,lesson,completed) {
  const cells=fenBoard(lesson.fen);if(!cells||!Array.isArray(lesson.quiz)||!lesson.quiz.length)throw new Error("Неверная шахматная позиция или тест.");
- const q=lesson.quiz[0];let choice=null,answered=completed.includes(lesson.lessonId);
- app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="curriculum-lesson-focus"><p class="eyebrow">Шахматы · '+lesson.order+' из '+unit.lessonIds.length+'</p><h1>'+esc(lesson.title)+'</h1><article class="lesson-card"><p>'+esc(lesson.text)+'</p></article><section class="panel"><p class="eyebrow">Позиция из FEN</p><div class="chess-board curriculum-board" role="grid" aria-label="Шахматная позиция">'+cells.map((piece,i)=>'<div class="chess-square '+((Math.floor(i/8)+i%8)%2?'dark':'light')+'" role="gridcell">'+esc(piece)+'</div>').join("")+'</div><p class="code-note">Доска показана по FEN, указанному в данных урока.</p></section><section class="panel"><p class="eyebrow">Проверка</p><p class="quiz-question">'+esc(q.q)+'</p><div class="quiz-options">'+q.options.map((o,i)=>'<button class="quiz-option" data-choice="'+i+'" aria-pressed="false">'+esc(o)+'</button>').join("")+'</div><button class="button" id="check-answer" '+(answered?'disabled':'')+'>Проверить</button><p class="lesson-feedback status-line" role="status">'+(answered?'Урок уже завершён.':'')+'</p><div id="lesson-next">'+(answered?nextLessonNavigation(module,unit,lesson):'')+'</div></section><div class="button-row lesson-navigation"><a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">← К юниту</a></div></section>'+footer(module);
+ const q=lesson.quiz[0],turn=lesson.fen.split(" ")[1];let choice=null,answered=completed.includes(lesson.lessonId);
+ const board=cells.map((piece,index)=>{const square=squareName(index),shade=(Math.floor(index/8)+index%8)%2?"dark":"light";return '<button type="button" class="chess-square '+shade+'" data-square="'+square+'" data-index="'+index+'" aria-pressed="false" aria-label="'+(piece?esc(piece)+" на ":"Пустое поле ")+square+'">'+esc(piece)+'</button>';}).join("");
+ app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="curriculum-lesson-focus"><p class="eyebrow">Шахматы · '+lesson.order+' из '+unit.lessonIds.length+'</p><h1>'+esc(lesson.title)+'</h1><article class="lesson-card"><p>'+esc(lesson.text)+'</p></article><section class="panel"><p class="eyebrow">Позиция из FEN</p><div class="chess-board curriculum-board" role="grid" aria-label="Шахматная позиция">'+board+'</div><p class="code-note">Нажмите на фигуру стороны, чей ход указан в FEN, чтобы увидеть возможные поля. Это подсказка по геометрии ходов, не полный шахматный движок.</p><p class="status-line" id="board-feedback" aria-live="polite"></p></section><section class="panel"><p class="eyebrow">Проверка</p><p class="quiz-question">'+esc(q.q)+'</p><div class="quiz-options">'+q.options.map((o,i)=>'<button class="quiz-option" data-choice="'+i+'" aria-pressed="false">'+esc(o)+'</button>').join("")+'</div><button class="button" id="check-answer" '+(answered?'disabled':'')+'>Проверить</button><p class="lesson-feedback status-line" role="status">'+(answered?'Урок уже завершён.':'')+'</p><div id="lesson-next">'+(answered?nextLessonNavigation(module,unit,lesson):'')+'</div></section><div class="button-row lesson-navigation"><a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">← К юниту</a></div></section>'+footer(module);
+ let selected=-1,targets=[];
+ const squares=[...app.querySelectorAll("[data-square]")],boardFeedback=app.querySelector("#board-feedback");
+ const clearSelection=()=>squares.forEach(button=>{button.classList.remove("is-selected-piece","is-move-target");button.setAttribute("aria-pressed","false");});
+ squares.forEach(button=>button.addEventListener("click",()=>{
+  const index=Number(button.dataset.index);
+  if(selected>=0&&targets.includes(index)){boardFeedback.textContent="Поле "+squareName(index)+" доступно для хода. Позиция на доске не меняется.";return;}
+  const piece=cells[index];
+  if(!piece||isWhitePiece(piece)!==(turn==="w")){selected=-1;targets=[];clearSelection();boardFeedback.textContent="Выберите фигуру стороны, чей ход указан в FEN.";return;}
+  selected=index;targets=pseudoLegalMoves(cells,index,turn);clearSelection();
+  button.classList.add("is-selected-piece");button.setAttribute("aria-pressed","true");
+  for(const target of targets)squares[target].classList.add("is-move-target");
+  boardFeedback.textContent=targets.length?"Фигура "+squareName(index)+": возможные поля — "+targets.map(squareName).join(", ")+".":"У этой фигуры нет доступных полей в показанной геометрии.";
+ }));
  app.querySelectorAll("[data-choice]").forEach(btn=>btn.addEventListener("click",()=>{if(answered)return;choice=Number(btn.dataset.choice);app.querySelectorAll("[data-choice]").forEach(x=>x.setAttribute("aria-pressed",String(x===btn)));}));
  app.querySelector("#check-answer").addEventListener("click",()=>{const status=app.querySelector(".lesson-feedback");if(choice===null){status.textContent="Сначала выберите вариант.";return;}if(choice!==q.answer){status.textContent="Пока неверно. Вернитесь к объяснению и попробуйте ещё раз.";return;}answered=true;const unitFinished=markComplete(module,unit,lesson.lessonId,completed);status.textContent=q.explanation||"Верно. Урок завершён.";if(unitFinished)celebrate(status,"Юнит завершён",800);app.querySelector("#lesson-next").innerHTML=nextLessonNavigation(module,unit,lesson);app.querySelector("#check-answer").disabled=true;});
 }
@@ -354,13 +393,18 @@ export function runSafePython(source,lesson) {
   return {ok:true,output:out.join("\n")};
  }catch(error){return {ok:false,error:error.message};}
 }
+function firstOutputDifference(expected,actual) {
+ const a=String(expected).split("\n"),b=String(actual).split("\n"),length=Math.max(a.length,b.length);
+ for(let i=0;i<length;i++)if(a[i]!==b[i])return "Первая разница в строке "+(i+1)+": ожидалось «"+(a[i]??"нет строки")+"», получено «"+(b[i]??"нет строки")+"».";
+ return "Количество или формат строк вывода отличается.";
+}
 function renderPythonLesson(app,module,unit,lesson,completed) {
  let draft=readSession(module);let code=draft?.lessonId===lesson.lessonId?draft.draftCode:lesson.starterCode;
  const done=completed.includes(lesson.lessonId);
  const draw=()=>{app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="curriculum-lesson-focus"><p class="eyebrow">Python · '+lesson.estimatedMinutes+' мин</p><h1>'+esc(lesson.title)+'</h1><article class="lesson-card"><p>'+esc(lesson.theory)+'</p></article><section class="panel"><label class="field-label" for="python-code">Ваш код</label><textarea class="code-editor" id="python-code" spellcheck="false">'+esc(code)+'</textarea><div class="button-row"><button class="button" id="run-python">Запустить</button><button class="button button-secondary" id="show-hint">Подсказка</button></div><p class="code-note" id="python-hint" hidden>'+esc(lesson.hint)+'</p><div class="python-output"><div><p class="eyebrow">Ожидаемый вывод</p><pre>'+esc(lesson.expectedOutput)+'</pre></div><div><p class="eyebrow">Ваш вывод</p><pre id="actual-output">—</pre></div></div><p class="lesson-feedback status-line" role="status">'+(done?'Урок уже завершён.':'')+'</p><div id="lesson-next">'+(done?nextLessonNavigation(module,unit,lesson):'')+'</div></section><div class="button-row lesson-navigation"><a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">← К юниту</a></div></section>'+footer(module);
  const editor=app.querySelector("#python-code");editor.addEventListener("input",()=>{code=editor.value;writeStored(keys(module).session,{unitId:unit.unitId,lessonId:lesson.lessonId,draftCode:code});});
  app.querySelector("#show-hint").addEventListener("click",()=>{app.querySelector("#python-hint").hidden=false;});
- app.querySelector("#run-python").addEventListener("click",()=>{const result=runSafePython(editor.value,lesson);const output=app.querySelector("#actual-output"),status=app.querySelector(".lesson-feedback");output.textContent=result.ok?result.output:result.error;if(!result.ok){status.textContent=result.error;return;}if(result.output===lesson.expectedOutput){status.textContent="Вывод совпадает. Урок завершён.";if(!completed.includes(lesson.lessonId)){const unitFinished=markComplete(module,unit,lesson.lessonId,completed);if(unitFinished)celebrate(status,"Юнит завершён",800);app.querySelector("#lesson-next").innerHTML=nextLessonNavigation(module,unit,lesson);}}else status.textContent="Вывод отличается от ожидаемого. Проверьте строки и значения.";});
+ app.querySelector("#run-python").addEventListener("click",()=>{const result=runSafePython(editor.value,lesson);const output=app.querySelector("#actual-output"),status=app.querySelector(".lesson-feedback");output.textContent=result.ok?result.output:result.error;if(!result.ok){status.textContent=result.error;return;}if(result.output===lesson.expectedOutput){status.textContent="Вывод совпадает. Урок завершён.";if(!completed.includes(lesson.lessonId)){const unitFinished=markComplete(module,unit,lesson.lessonId,completed);if(unitFinished)celebrate(status,"Юнит завершён",800);app.querySelector("#lesson-next").innerHTML=nextLessonNavigation(module,unit,lesson);}}else status.textContent=firstOutputDifference(lesson.expectedOutput,result.output);});
  };draw();
 }
 export async function renderCurriculum(app,module) {
