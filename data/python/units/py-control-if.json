@@ -2,60 +2,64 @@
   "unitId": "py-control-if",
   "lessons": [
     {
-      "lessonId": "Условие if",
+      "lessonId": "py-control-if-01",
       "unitId": "py-control-if",
       "order": 1,
-      "title": "if выполняет вложенный блок, если условие истинно. После условия ставится двоеточие.",
+      "title": "Условие if",
       "estimatedMinutes": 8,
       "tags": [
         "basics",
         "if"
       ],
-      "theory": "temperature = 12\nif temperature < 20:\n    print(\"Take a jacket\")\nelse:\n    print(\"No jacket\")",
-      "starterCode": "Take a jacket",
-      "expectedOutput": "При temperature 12 условие < 20 истинно."
+      "theory": "if выполняет вложенный блок, если условие истинно. После условия ставится двоеточие.",
+      "starterCode": "temperature = 25\nif temperature < 20:\n    print(\"Take a jacket\")\nelse:\n    print(\"No jacket\")",
+      "expectedOutput": "Take a jacket",
+      "hint": "При temperature 12 условие < 20 истинно."
     },
     {
-      "lessonId": "Сравнение на равенство",
+      "lessonId": "py-control-if-02",
       "unitId": "py-control-if",
       "order": 2,
-      "title": "Оператор == сравнивает значения. Один знак = используется для присваивания.",
+      "title": "Сравнение на равенство",
       "estimatedMinutes": 8,
       "tags": [
         "basics",
         "if"
       ],
-      "theory": "answer = 5\nif answer == 5:\n    print(\"Correct\")\nelse:\n    print(\"Try again\")",
-      "starterCode": "Correct",
-      "expectedOutput": "Для сравнения используй два знака равенства."
+      "theory": "Оператор == сравнивает значения. Один знак = используется для присваивания.",
+      "starterCode": "answer = 4\nif answer == 5:\n    print(\"Correct\")\nelse:\n    print(\"Try again\")",
+      "expectedOutput": "Correct",
+      "hint": "Для сравнения используй два знака равенства."
     },
     {
-      "lessonId": "Ветвь else",
+      "lessonId": "py-control-if-03",
       "unitId": "py-control-if",
       "order": 3,
-      "title": "else выполняется, если условие if ложно. Выполняется только одна из двух ветвей.",
+      "title": "Ветвь else",
       "estimatedMinutes": 8,
       "tags": [
         "basics",
         "if"
       ],
-      "theory": "battery = 10\nif battery > 20:\n    print(\"Enough\")\nelse:\n    print(\"Charge\")",
-      "starterCode": "Charge",
-      "expectedOutput": "При 10 условие > 20 ложно."
+      "theory": "else выполняется, если условие if ложно. Выполняется только одна из двух ветвей.",
+      "starterCode": "battery = 30\nif battery > 20:\n    print(\"Enough\")\nelse:\n    print(\"Charge\")",
+      "expectedOutput": "Charge",
+      "hint": "При 10 условие > 20 ложно."
     },
     {
-      "lessonId": "Больше и меньше",
+      "lessonId": "py-control-if-04",
       "unitId": "py-control-if",
       "order": 4,
-      "title": "Операторы > и < сравнивают числа и возвращают True или False.",
+      "title": "Больше и меньше",
       "estimatedMinutes": 8,
       "tags": [
         "basics",
         "if"
       ],
-      "theory": "speed = 45\nif speed < 50:\n    print(\"Safe\")\nelse:\n    print(\"Slow down\")",
-      "starterCode": "Safe",
-      "expectedOutput": "45 меньше 50, поэтому условие истинно."
+      "theory": "Операторы > и < сравнивают числа и возвращают True или False.",
+      "starterCode": "speed = 55\nif speed < 50:\n    print(\"Safe\")\nelse:\n    print(\"Slow down\")",
+      "expectedOutput": "Safe",
+      "hint": "45 меньше 50, поэтому условие истинно."
     }
   ]
 }
