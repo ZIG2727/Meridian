@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate:v3": "node scripts/validate-v3.mjs"
+  }
+}\n

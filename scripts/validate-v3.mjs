@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { resolve } from "node:path";\nimport { runSafePython } from "../js/modules/curriculum.js";
 
 const root = process.cwd();
 const modules = ["english", "chess", "python"];
@@ -57,7 +57,7 @@ for (const module of modules) {
         const quiz = lesson.quiz?.[0];
         if (!quiz || quiz.options.length < 3 || quiz.options.length > 6 || !Number.isInteger(quiz.answer) || quiz.answer < 0 || quiz.answer >= quiz.options.length) fail(lesson.lessonId + ": invalid quiz");
       } else {
-        if (typeof lesson.theory !== "string" || typeof lesson.starterCode !== "string" || typeof lesson.expectedOutput !== "string" || typeof lesson.hint !== "string") fail(lesson.lessonId + ": incomplete Python exercise");
+        if (typeof lesson.theory !== "string" || typeof lesson.starterCode !== "string" || typeof lesson.expectedOutput !== "string" || typeof lesson.hint !== "string") fail(lesson.lessonId + ": incomplete Python exercise");\n        const run = runSafePython(lesson.starterCode, lesson);\n        if (!run.ok) fail(lesson.lessonId + ": starter code rejected by safe runner: " + run.error);
       }
     }
   }
@@ -72,3 +72,24 @@ if (/\beval\s*\(/.test(curriculumSource) || /new\s+Function\s*\(/.test(curriculu
 const html = await readFile(resolve(root, "index.html"), "utf8");
 if (/\bonclick\s*=/i.test(html)) fail("Inline onclick found");
 console.log("V3 curriculum validation passed:", JSON.stringify(totals));
+
+const runnerCases = [
+  { source: 'print("Hello")', expected: "Hello" },
+  { source: 'name = input()\nprint(name)', exampleInput: "Mira", expected: "Mira" },
+  { source: 'age = int(input())\nprint(age)', exampleInput: "15", expected: "15" },
+  { source: 'ready = True\nprint(ready)', expected: "True" },
+  { source: 'items = ["red", "blue"]\nitems.append("green")\nprint(len(items))', expected: "3" },
+  { source: 'scores = {"Mira": 10}\nscores["Mira"] = 12\nprint(scores["Mira"])', expected: "12" },
+  { source: 'x, y = (3, 5)\nprint(y)', expected: "5" },
+  { source: 'items = {1, 2}\nitems.add(3)\nprint(len(items))', expected: "3" },
+  { source: 'value = 2\nif value < 3:\n    print("yes")\nelse:\n    print("no")', expected: "yes" },
+  { source: 'for n in range(1, 4):\n    print(n)', expected: "1\\n2\\n3" },
+  { source: 'count = 1\nwhile count < 4:\n    print(count)\n    count = count + 1', expected: "1\\n2\\n3" },
+  { source: 'def double(number):\n    return number + number\nprint(double(4))', expected: "8" },
+  { source: 'def greet(name="Mira"):\n    print(name)\ngreet()', expected: "Mira" },
+  { source: 'double = lambda x: x * 2\nprint(double(4))', expected: "8" }
+];
+for (const [index, test] of runnerCases.entries()) {
+  const result = runSafePython(test.source, { exampleInput: test.exampleInput });
+  if (!result.ok || result.output !== test.expected) fail("Safe Python runner test " + (index + 1) + " failed: " + (result.error || result.output));
+}
