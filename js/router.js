@@ -16,10 +16,11 @@ function escapeHTML(value) {
   })[character]);
 }
 
-function validEnglishSession(session, deck) {
+function validEnglishSession(session, deck, progress) {
   return Boolean(session && Number.isInteger(session.currentCardIndex) &&
     session.currentCardIndex >= 0 && session.currentCardIndex < deck.length &&
-    ["all", "due"].includes(session.deckFilter));
+    ["all", "due"].includes(session.deckFilter) &&
+    (session.deckFilter !== "due" || !progress[String(session.currentCardIndex)] || !Number.isFinite(progress[String(session.currentCardIndex)].due) || progress[String(session.currentCardIndex)].due <= Date.now()));
 }
 
 async function loadDashboardData() {
@@ -80,7 +81,7 @@ async function renderDashboard(app) {
   const reviewed = Object.values(englishProgress).filter(item => item && Number(item.repetitions) > 0).length;
   const chessDone = chess.filter(item => chessCompleted.includes(item.id)).length;
   const pythonDone = python.filter(item => pythonCompleted.includes(item.id)).length;
-  const englishValid = english.length > 0 && validEnglishSession(englishSession, english);
+  const englishValid = english.length > 0 && validEnglishSession(englishSession, english, englishProgress);
   const chessValid = chess.some(item => item.id === chessSession);
   const pythonValid = python.some(item => item.id === pythonSession?.lessonId) && typeof pythonSession?.code === "string";
   const todayDue = english.filter((_, index) => !englishProgress[String(index)] || !Number.isFinite(englishProgress[String(index)].due) || englishProgress[String(index)].due <= Date.now()).length;
