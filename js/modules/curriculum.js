@@ -125,7 +125,8 @@ function renderChessLesson(app,module,unit,lesson,completed) {
 function runSafePython(source,lesson) {
  const lines=String(source).replace(/\r/g,"").split("\n");
  if(lines.length>300||lines.some(line=>/\b(import|exec|eval|open|__|os\.|sys\.|subprocess)\b/.test(line)))return {ok:false,error:"Эта учебная среда поддерживает только безопасные базовые конструкции Python."};
- const vars={},out=[];
+ const vars={},out=[],functions={};
+ const repr=x=>x instanceof Set?"{"+[...x].map(String).join(", ")+"}":Array.isArray(x)?(x.__tuple?"("+x.map(String).join(", ")+")":"["+x.map(y=>typeof y==="string"?"'"+y+"'":String(y)).join(", ")+"]"):(x&&typeof x==="object"?"{"+Object.entries(x).map(([k,v])=>"'"+k+"': "+(typeof v==="string"?"'"+v+"'":String(v))).join(", ")+"}":String(x));
  const value=raw=>{
   const s=raw.trim();
   if(/^(['"]).*\1$/.test(s))return s.slice(1,-1);
@@ -134,36 +135,47 @@ function runSafePython(source,lesson) {
   if(s==="float(input())")return Number(lesson.exampleInput??0);
   if(s==="True")return true;if(s==="False")return false;
   if(/^-?\d+(?:\.\d+)?$/.test(s))return Number(s);
-  let m=s.match(/^len\(([A-Za-z_]\w*)\)$/);
+  let m=s.match(/^([A-Za-z_]\w*)\s*([+*\-/])\s*([A-Za-z_]\w*|\d+(?:\.\d+)?)$/);
+  if(m){const a=Number(value(m[1])),b=Number(value(m[3]));if(!Number.isFinite(a)||!Number.isFinite(b))throw new Error("Для арифметики нужны числа.");return m[2]==="+"?a+b:m[2]==="-"?a-b:m[2]==="*"?a*b:a/b;}
+  m=s.match(/^len\(([A-Za-z_]\w*)\)$/);
   if(m&&vars[m[1]]&&typeof vars[m[1]]==="object")return Array.isArray(vars[m[1]])?vars[m[1]].length:vars[m[1]] instanceof Set?vars[m[1]].size:Object.keys(vars[m[1]]).length;
-  m=s.match(/^([A-Za-z_]\w*)\[(\d+)\]$/);
-  if(m&&Array.isArray(vars[m[1]]))return vars[m[1]][Number(m[2])];
-  m=s.match(/^([A-Za-z_]\w*)\[(["'])(.*?)\2\]$/);
-  if(m&&vars[m[1]]&&typeof vars[m[1]]==="object")return vars[m[1]][m[3]];
+  m=s.match(/^([A-Za-z_]\w*)\[(\d+)\]$/);if(m&&Array.isArray(vars[m[1]]))return vars[m[1]][Number(m[2])];
+  m=s.match(/^([A-Za-z_]\w*)\[(["'])(.*?)\2\]$/);if(m&&vars[m[1]]&&typeof vars[m[1]]==="object")return vars[m[1]][m[3]];
+  m=s.match(/^([A-Za-z_]\w*)\((.*)\)$/);if(m&&functions[m[1]])return callFunction(m[1],m[2]?m[2].split(",").map(x=>value(x)):[]);
   if(Object.prototype.hasOwnProperty.call(vars,s))return vars[s];
   if(s.startsWith("[")&&s.endsWith("]")){const body=s.slice(1,-1).trim();return body?body.split(",").map(part=>value(part)):[];}
-  if(s.startsWith("(")&&s.endsWith(")")){const body=s.slice(1,-1).trim(),tuple=body?body.split(",").map(part=>value(part)):[];tuple.__tuple=true;return tuple;}
   if(s.startsWith("(")&&s.endsWith(")")){const body=s.slice(1,-1).trim(),tuple=body?body.split(",").map(part=>value(part)):[];tuple.__tuple=true;return tuple;}
   if(s.startsWith("{")&&s.endsWith("}")){const body=s.slice(1,-1).trim();if(!body)return {};if(!body.includes(":"))return new Set(body.split(",").map(part=>value(part)));const obj={};for(const pair of body.split(",")){const p=pair.split(":");if(p.length!==2)throw new Error("Проверь пары ключ: значение.");obj[String(value(p[0]))]=value(p[1]);}return obj;}
   throw new Error("Не удалось разобрать выражение: "+s);
  };
- const repr=x=>Array.isArray(x)?(x.__tuple?"("+x.map(v=>String(v)).join(", ")+")":"["+x.map(v=>typeof v==="string"?"'"+v+"'":String(v)).join(", ")+"]"):(x&&typeof x==="object"?"{"+Object.entries(x).map(([k,v])=>"'"+k+"': "+(typeof v==="string"?"'"+v+"'":String(v))).join(", ")+"}":String(x));
  const printLine=line=>{const m=line.match(/^print\((.*)\)$/);if(!m)throw new Error("Поддерживается print() с одним значением.");out.push(repr(value(m[1])));if(out.length>200)throw new Error("Превышен лимит вывода.");};
+ function callFunction(name,args) {
+  const fn=functions[name];if(!fn)throw new Error("Функция "+name+" не определена.");
+  const saved={};const localNames=[];
+  fn.params.forEach((param,index)=>{const p=param.split("=")[0].trim();localNames.push(p);saved[p]=Object.prototype.hasOwnProperty.call(vars,p)?vars[p]:undefined;vars[p]=index<args.length?args[index]:param.includes("=")?value(param.split("=").slice(1).join("=")):undefined;});
+  let result;
+  for(const statement of fn.body){let m=statement.match(/^return\s+(.+)$/);if(m){result=value(m[1]);break;}m=statement.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);if(m){vars[m[1]]=value(m[2]);if(!localNames.includes(m[1])){localNames.push(m[1]);saved[m[1]]=Object.prototype.hasOwnProperty.call(vars,m[1])?undefined:undefined;}continue;}if(statement.startsWith("print(")){printLine(statement);continue;}throw new Error("В функции поддерживаются присваивание, print() и return.");}
+  localNames.forEach(key=>{if(saved[key]===undefined)delete vars[key];else vars[key]=saved[key];});
+  return result;
+ }
  try{
   for(let i=0;i<lines.length;i++){
    const line=lines[i];if(!line.trim()||line.trim().startsWith("#"))continue;
-   let m=line.match(/^([A-Za-z_]\w*),\s*([A-Za-z_]\w*)\s*=\s*(.+)$/);
+   let m=line.match(/^def\s+([A-Za-z_]\w*)\((.*)\):$/);
+   if(m){const body=[];let j=i+1;while(j<lines.length&&/^\s{4}/.test(lines[j])){body.push(lines[j].slice(4));j++;}if(!body.length)throw new Error("Добавь тело функции с отступом.");functions[m[1]]={params:m[2].trim()?m[2].split(",").map(x=>x.trim()):[],body};i=j-1;continue;}
+   m=line.match(/^([A-Za-z_]\w*)\s*=\s*lambda\s+([A-Za-z_]\w*)\s*:\s*(.+)$/);
+   if(m){functions[m[1]]={params:[m[2]],body:["return "+m[3]]};continue;}
+   m=line.match(/^([A-Za-z_]\w*),\s*([A-Za-z_]\w*)\s*=\s*(.+)$/);
    if(m){const tuple=value(m[3]);if(!Array.isArray(tuple)||tuple.length!==2)throw new Error("Для распаковки нужны ровно два значения.");vars[m[1]]=tuple[0];vars[m[2]]=tuple[1];continue;}
    m=line.match(/^([A-Za-z_]\w*)\[(["'])(.*?)\2\]\s*=\s*(.+)$/);
    if(m&&vars[m[1]]&&typeof vars[m[1]]==="object"){vars[m[1]][m[3]]=value(m[4]);continue;}
    m=line.match(/^([A-Za-z_]\w*)\.add\((.*)\)$/);if(m&&vars[m[1]] instanceof Set){vars[m[1]].add(value(m[2]));continue;}
-   m=line.match(/^([A-Za-z_]\w*)\.append\((.*)\)$/);
-   if(m&&Array.isArray(vars[m[1]])){vars[m[1]].push(value(m[2]));continue;}
-   m=line.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);
-   if(m){vars[m[1]]=value(m[2]);continue;}
+   m=line.match(/^([A-Za-z_]\w*)\.append\((.*)\)$/);if(m&&Array.isArray(vars[m[1]])){vars[m[1]].push(value(m[2]));continue;}
+   m=line.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);if(m){vars[m[1]]=value(m[2]);continue;}
    if(/^print\(/.test(line)){printLine(line);continue;}
+   m=line.match(/^([A-Za-z_]\w*)\((.*)\)$/);if(m&&functions[m[1]]){callFunction(m[1],m[2]?m[2].split(",").map(x=>value(x)):[]);continue;}
    m=line.match(/^for\s+([A-Za-z_]\w*)\s+in\s+range\((\d+),\s*(\d+)\):$/);
-   if(m){const body=lines[i+1];if(!body||! /^\s{4}print\(\w+\)$/.test(body))throw new Error("В учебном цикле добавь print(имя) с отступом в четыре пробела.");for(let n=Number(m[2]);n<Number(m[3]);n++){vars[m[1]]=n;out.push(String(n));}i++;continue;}
+   if(m){const body=lines[i+1];if(!body||!/^\s{4}print\(\w+\)$/.test(body))throw new Error("В учебном цикле добавь print(имя) с отступом в четыре пробела.");for(let n=Number(m[2]);n<Number(m[3]);n++){vars[m[1]]=n;out.push(String(n));}i++;continue;}
    m=line.match(/^if\s+([A-Za-z_]\w*)\s*(==|!=|<=|>=|<|>)\s*(-?\d+(?:\.\d+)?):$/);
    if(m){const yes=lines[i+1],no=lines[i+2],els=lines[i+3];if(!yes||!no||!els||!/^else:$/.test(no.trim()))throw new Error("Для if используй блоки if и else с отступами.");const a=Number(vars[m[1]]),b=Number(m[3]);const result={"==":a===b,"!=":a!==b,"<":a<b,">":a>b,"<=":a<=b,">=":a>=b}[m[2]];const selected=result?yes:els;if(!/^\s{4}print\(/.test(selected))throw new Error("Внутри if/else нужен print() с отступом.");printLine(selected.trim());i+=3;continue;}
    m=line.match(/^while\s+([A-Za-z_]\w*)\s*(<|<=|>|>=|==|!=)\s*(\d+):$/);
