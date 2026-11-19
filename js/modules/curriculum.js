@@ -48,7 +48,10 @@ function header(module, crumbs = []) {
 function footer(module) { return '</main><footer class="footer-inner">' + esc(MODULES[module].title) + ' · Прогресс сохраняется в этом браузере</footer>'; }
 function writeLast(module, unitId, lessonId) {
   writeStored(keys(module).last, { module, unitId, lessonId });
-  writeStored(keys(module).session, { unitId, lessonId });
+  const previous = readStored(keys(module).session, null);
+  const session = { unitId, lessonId };
+  if (module === "python" && previous?.lessonId === lessonId && typeof previous.draftCode === "string") session.draftCode = previous.draftCode;
+  writeStored(keys(module).session, session);
 }
 function validLesson(unit, lesson) {
   return lesson && lesson.unitId === unit.unitId && unit.lessonIds.includes(lesson.lessonId) && Number.isInteger(lesson.order) && lesson.order > 0 && typeof lesson.title === "string";
@@ -66,7 +69,18 @@ function renderModule(app, module, data, completed, search = "") {
   (last && data.units.some(u=>u.unitId===last.unitId && u.lessonIds.includes(last.lessonId)) ? '<a class="button button-secondary" href="'+urlFor(module,last.unitId,last.lessonId)+'">Продолжить последний урок →</a>' : '') +
   '<div class="curriculum-tools"><label class="curriculum-search"><span class="field-label">Поиск по юнитам</span><input class="form-field" id="curriculum-search" type="search" placeholder="Название или тема" value="'+esc(search)+'"></label></div>' +
   '<section class="unit-groups" id="unit-groups" aria-label="Учебные юниты">' + (filtered.length ? filtered.map(({unit,stats})=>'<article class="unit-card" data-level="'+esc(unit.level)+'"><a class="unit-card-link" href="'+urlFor(module,unit.unitId)+'"><div class="unit-card-top"><span class="eyebrow">'+esc(unit.level)+'</span><span class="unit-status status-'+stats.status+'">'+(stats.status==="completed"?"Завершён":stats.status==="in-progress"?"В процессе":"Не начат")+'</span></div><h2>'+esc(unit.title)+'</h2><p>'+esc(unit.description)+'</p><div class="subject-meta"><span>'+stats.done+' / '+stats.total+' уроков</span><span>'+unit.estimatedMinutes+' мин</span></div><div class="progress-track" data-progress="'+(stats.done/stats.total*100)+'"><div class="progress-fill"></div></div></a></article>').join("") : '<p class="empty-state">По этому запросу юнитов не найдено.</p>')+'</section>'+footer(module);
-  app.querySelector("#curriculum-search").addEventListener("input",event=>renderModule(app,module,data,completed,event.target.value));
+  const searchInput=app.querySelector("#curriculum-search");
+  searchInput.addEventListener("input",()=>{
+    const query=searchInput.value.trim().toLocaleLowerCase("ru");
+    let visible=0;
+    app.querySelectorAll(".unit-card").forEach(card=>{
+      const show=card.textContent.toLocaleLowerCase("ru").includes(query);
+      card.hidden=!show;if(show)visible++;
+    });
+    let empty=app.querySelector("#unit-search-empty");
+    if(!empty){empty=document.createElement("p");empty.id="unit-search-empty";empty.className="empty-state";empty.textContent="По этому запросу юнитов не найдено.";app.querySelector("#unit-groups").append(empty);}
+    empty.hidden=visible!==0;
+  });
   app.querySelectorAll("[data-progress]").forEach(node=>animateProgress(node,Number(node.dataset.progress)));
 }
 function renderUnit(app,module,data,unit,unitContent,completed) {
@@ -189,7 +203,7 @@ function renderPythonLesson(app,module,unit,lesson,completed) {
  let draft=readStored("mrd:python:session",null);let code=draft?.lessonId===lesson.lessonId?draft.draftCode:lesson.starterCode;
  const done=completed.includes(lesson.lessonId);
  const draw=()=>{app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="curriculum-lesson-focus"><p class="eyebrow">Python · '+lesson.estimatedMinutes+' мин</p><h1>'+esc(lesson.title)+'</h1><article class="lesson-card"><p>'+esc(lesson.theory)+'</p></article><section class="panel"><label class="field-label" for="python-code">Ваш код</label><textarea class="code-editor" id="python-code" spellcheck="false">'+esc(code)+'</textarea><div class="button-row"><button class="button" id="run-python">Запустить</button><button class="button button-secondary" id="show-hint">Подсказка</button></div><p class="code-note" id="python-hint" hidden>'+esc(lesson.hint)+'</p><div class="python-output"><div><p class="eyebrow">Ожидаемый вывод</p><pre>'+esc(lesson.expectedOutput)+'</pre></div><div><p class="eyebrow">Ваш вывод</p><pre id="actual-output">—</pre></div></div><p class="lesson-feedback status-line" role="status">'+(done?'Урок уже завершён.':'')+'</p></section></section>'+footer(module);
- const editor=app.querySelector("#python-code");editor.addEventListener("input",()=>{code=editor.value;writeStored("mrd:python:session",{lessonId:lesson.lessonId,draftCode:code});});
+ const editor=app.querySelector("#python-code");editor.addEventListener("input",()=>{code=editor.value;writeStored("mrd:python:session",{unitId:unit.unitId,lessonId:lesson.lessonId,draftCode:code});});
  app.querySelector("#show-hint").addEventListener("click",()=>{app.querySelector("#python-hint").hidden=false;});
  app.querySelector("#run-python").addEventListener("click",()=>{const result=runSafePython(editor.value,lesson);const output=app.querySelector("#actual-output"),status=app.querySelector(".lesson-feedback");output.textContent=result.ok?result.output:result.error;if(!result.ok){status.textContent=result.error;return;}if(result.output===lesson.expectedOutput){status.textContent="Вывод совпадает. Урок завершён.";if(!done){completed.push(lesson.lessonId);writeStored(keys(module).completed,completed);markComplete(module,unit,lesson.lessonId,completed,app);}}else status.textContent="Вывод отличается от ожидаемого. Проверьте строки и значения.";});
  };draw();
