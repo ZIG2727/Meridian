@@ -141,7 +141,7 @@
       "level": "Tactics",
       "title": "Двойной шах",
       "description": "Распознавать двойной шах и способы защиты.",
-      "order": 10,
+      "order": 9,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "ch-tactics-skewers"
@@ -158,7 +158,7 @@
       "level": "Tactics",
       "title": "Вскрытое нападение",
       "description": "Использовать ход одной фигуры для открытия атаки другой.",
-      "order": 11,
+      "order": 10,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "ch-tactics-double-check"
@@ -175,7 +175,7 @@
       "level": "Endgames",
       "title": "Король и пешка",
       "description": "Понимать роль короля, проходную пешку и оппозицию.",
-      "order": 12,
+      "order": 11,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "ch-basics-pawn"
@@ -192,7 +192,7 @@
       "level": "Endgames",
       "title": "Ладейные окончания",
       "description": "Понимать активность ладьи, отсечение короля и базовые принципы.",
-      "order": 13,
+      "order": 12,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "ch-endgames-king-pawn"
@@ -209,7 +209,7 @@
       "level": "Endgames",
       "title": "Основные маты",
       "description": "Узнавать мат ферзём, ладьёй и двумя ладьями.",
-      "order": 14,
+      "order": 13,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "ch-endgames-rook"

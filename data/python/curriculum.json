@@ -141,7 +141,7 @@
       "level": "Data Structures",
       "title": "Кортежи",
       "description": "Хранить упорядоченные неизменяемые наборы значений.",
-      "order": 10,
+      "order": 9,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "py-data-dicts"
@@ -158,7 +158,7 @@
       "level": "Data Structures",
       "title": "Множества",
       "description": "Хранить уникальные элементы и выполнять простые операции над множествами.",
-      "order": 11,
+      "order": 10,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "py-data-tuples"
@@ -175,7 +175,7 @@
       "level": "Functions",
       "title": "Функции",
       "description": "Создавать функции и вызывать их по имени.",
-      "order": 12,
+      "order": 11,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "py-data-sets"
@@ -192,7 +192,7 @@
       "level": "Functions",
       "title": "Аргументы и return",
       "description": "Передавать аргументы и возвращать результат функции.",
-      "order": 13,
+      "order": 12,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "py-functions-basics"
@@ -205,28 +205,11 @@
       ]
     },
     {
-      "unitId": "py-files-errors",
-      "level": "Files & Errors",
-      "title": "Файлы и ошибки",
-      "description": "Разбирать текстовые файлы как данные и распознавать частые ошибки.",
-      "order": 14,
-      "estimatedMinutes": 32,
-      "prerequisiteUnits": [
-        "py-functions-arguments"
-      ],
-      "lessonIds": [
-        "py-files-errors-01",
-        "py-files-errors-02",
-        "py-files-errors-03",
-        "py-files-errors-04"
-      ]
-    },
-    {
       "unitId": "py-functions-scope",
       "level": "Functions",
       "title": "Область видимости и lambda",
       "description": "Различать локальные имена и короткие анонимные функции.",
-      "order": 14,
+      "order": 13,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "py-functions-arguments"
@@ -236,6 +219,23 @@
         "py-functions-scope-02",
         "py-functions-scope-03",
         "py-functions-scope-04"
+      ]
+    },
+    {
+      "unitId": "py-files-errors",
+      "level": "Files & Errors",
+      "title": "Файлы и ошибки",
+      "description": "Разбирать текстовые файлы как данные и распознавать частые ошибки.",
+      "order": 14,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "py-functions-scope"
+      ],
+      "lessonIds": [
+        "py-files-errors-01",
+        "py-files-errors-02",
+        "py-files-errors-03",
+        "py-files-errors-04"
       ]
     },
     {

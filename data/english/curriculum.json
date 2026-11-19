@@ -90,7 +90,7 @@
       "level": "A2",
       "title": "Распорядок дня",
       "description": "Описывать повседневные действия и привычки.",
-      "order": 7,
+      "order": 6,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "en-a1-family"
@@ -107,7 +107,7 @@
       "level": "A2",
       "title": "Покупки",
       "description": "Спросить цену, размер и оплатить покупку.",
-      "order": 8,
+      "order": 7,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "en-a2-daily-routine"
@@ -124,7 +124,7 @@
       "level": "A2",
       "title": "Путешествия",
       "description": "Планировать поездку, транспорт и проживание.",
-      "order": 9,
+      "order": 8,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "en-a2-shopping"
@@ -137,28 +137,11 @@
       ]
     },
     {
-      "unitId": "en-b1-work-office",
-      "level": "B1",
-      "title": "Работа и офис",
-      "description": "Обсуждать рабочие задачи, встречи и обязанности.",
-      "order": 11,
-      "estimatedMinutes": 32,
-      "prerequisiteUnits": [
-        "en-a2-directions-weather"
-      ],
-      "lessonIds": [
-        "en-b1-work-office-01",
-        "en-b1-work-office-02",
-        "en-b1-work-office-03",
-        "en-b1-work-office-04"
-      ]
-    },
-    {
       "unitId": "en-a2-directions",
       "level": "A2",
       "title": "Направления",
       "description": "Объяснять маршрут и спрашивать дорогу.",
-      "order": 11,
+      "order": 9,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "en-a2-travel"
@@ -175,7 +158,7 @@
       "level": "A2",
       "title": "Погода",
       "description": "Описывать погоду, температуру и сезонные условия.",
-      "order": 12,
+      "order": 10,
       "estimatedMinutes": 32,
       "prerequisiteUnits": [
         "en-a2-directions"
@@ -185,6 +168,23 @@
         "en-a2-weather-02",
         "en-a2-weather-03",
         "en-a2-weather-04"
+      ]
+    },
+    {
+      "unitId": "en-b1-work-office",
+      "level": "B1",
+      "title": "Работа и офис",
+      "description": "Обсуждать рабочие задачи, встречи и обязанности.",
+      "order": 11,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "en-a2-weather"
+      ],
+      "lessonIds": [
+        "en-b1-work-office-01",
+        "en-b1-work-office-02",
+        "en-b1-work-office-03",
+        "en-b1-work-office-04"
       ]
     },
     {
