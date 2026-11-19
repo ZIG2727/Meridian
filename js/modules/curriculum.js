@@ -56,32 +56,30 @@ function writeLast(module, unitId, lessonId) {
 function validLesson(unit, lesson) {
   return lesson && lesson.unitId === unit.unitId && unit.lessonIds.includes(lesson.lessonId) && Number.isInteger(lesson.order) && lesson.order > 0 && typeof lesson.title === "string";
 }
-function renderModule(app, module, data, completed, search = "") {
-  const total = data.units.reduce((sum,u)=>sum+u.lessonIds.length,0);
-  const done = data.units.reduce((sum,u)=>sum+unitStats(u,completed).done,0);
-  const last = readStored(keys(module).last, null);
-  const searchText = search.trim().toLocaleLowerCase("ru");
-  const filtered = data.units.map(unit=>({unit,stats:unitStats(unit,completed)})).filter(({unit}) => {
-    if (!searchText) return true;
-    return (unit.title+" "+unit.description+" "+unit.level).toLocaleLowerCase("ru").includes(searchText);
-  });
-  app.innerHTML = header(module) + '<section class="curriculum-heading"><div><p class="eyebrow">' + esc(MODULES[module].subtitle) + '</p><h1>' + esc(MODULES[module].title) + '</h1><p>Учебная программа: тематические юниты и короткие занятия.</p></div><div class="curriculum-total"><strong>'+done+' / '+total+'</strong><span>уроков завершено</span></div></section>' +
-  (last && data.units.some(u=>u.unitId===last.unitId && u.lessonIds.includes(last.lessonId)) ? '<a class="button button-secondary" href="'+urlFor(module,last.unitId,last.lessonId)+'">Продолжить последний урок →</a>' : '') +
-  '<div class="curriculum-tools"><label class="curriculum-search"><span class="field-label">Поиск по юнитам</span><input class="form-field" id="curriculum-search" type="search" placeholder="Название или тема" value="'+esc(search)+'"></label></div>' +
-  '<section class="unit-groups" id="unit-groups" aria-label="Учебные юниты">' + (filtered.length ? filtered.map(({unit,stats})=>'<article class="unit-card" data-level="'+esc(unit.level)+'"><a class="unit-card-link" href="'+urlFor(module,unit.unitId)+'"><div class="unit-card-top"><span class="eyebrow">'+esc(unit.level)+'</span><span class="unit-status status-'+stats.status+'">'+(stats.status==="completed"?"Завершён":stats.status==="in-progress"?"В процессе":"Не начат")+'</span></div><h2>'+esc(unit.title)+'</h2><p>'+esc(unit.description)+'</p><div class="subject-meta"><span>'+stats.done+' / '+stats.total+' уроков</span><span>'+unit.estimatedMinutes+' мин</span></div><div class="progress-track" data-progress="'+(stats.done/stats.total*100)+'"><div class="progress-fill"></div></div></a></article>').join("") : '<p class="empty-state">По этому запросу юнитов не найдено.</p>')+'</section>'+footer(module);
-  const searchInput=app.querySelector("#curriculum-search");
-  searchInput.addEventListener("input",()=>{
-    const query=searchInput.value.trim().toLocaleLowerCase("ru");
-    let visible=0;
-    app.querySelectorAll(".unit-card").forEach(card=>{
-      const show=card.textContent.toLocaleLowerCase("ru").includes(query);
-      card.hidden=!show;if(show)visible++;
-    });
-    let empty=app.querySelector("#unit-search-empty");
-    if(!empty){empty=document.createElement("p");empty.id="unit-search-empty";empty.className="empty-state";empty.textContent="По этому запросу юнитов не найдено.";app.querySelector("#unit-groups").append(empty);}
-    empty.hidden=visible!==0;
-  });
-  app.querySelectorAll("[data-progress]").forEach(node=>animateProgress(node,Number(node.dataset.progress)));
+function renderModule(app,module,data,completed) {
+ const total=data.units.reduce((sum,u)=>sum+u.lessonIds.length,0),done=data.units.reduce((sum,u)=>sum+unitStats(u,completed).done,0);
+ const last=readStored(keys(module).last,null);
+ const groups=[...new Set(data.units.map(unit=>unit.level))];
+ const renderCard=unit=>{const stats=unitStats(unit,completed);return '<article class="unit-card" data-unit="'+esc(unit.unitId)+'"><a class="unit-card-link" href="'+urlFor(module,unit.unitId)+'"><div class="unit-card-top"><span class="eyebrow">'+esc(unit.level)+'</span><span class="unit-status status-'+stats.status+'">'+(stats.status==="completed"?"Завершён":stats.status==="in-progress"?"В процессе":"Не начат")+'</span></div><h3>'+esc(unit.title)+'</h3><p>'+esc(unit.description)+'</p><div class="subject-meta"><span>'+stats.done+' / '+stats.total+' уроков</span><span>'+unit.estimatedMinutes+' мин</span></div><div class="progress-track" data-progress="'+(stats.done/stats.total*100)+'"><div class="progress-fill"></div></div></a></article>';};
+ app.innerHTML=header(module)+'<section class="curriculum-heading"><div><p class="eyebrow">'+esc(MODULES[module].subtitle)+'</p><h1>'+esc(MODULES[module].title)+'</h1><p>Учебная программа: тематические юниты и короткие занятия.</p></div><div class="curriculum-total"><strong>'+done+' / '+total+'</strong><span>уроков завершено</span></div></section>'+
+ (last&&data.units.some(u=>u.unitId===last.unitId&&u.lessonIds.includes(last.lessonId))?'<a class="button button-secondary" href="'+urlFor(module,last.unitId,last.lessonId)+'">Продолжить последний урок →</a>':'')+
+ '<div class="curriculum-tools"><label class="curriculum-search"><span class="field-label">Поиск по урокам и темам</span><input class="form-field" id="curriculum-search" type="search" placeholder="Название урока или тег"></label></div>'+
+ '<section class="unit-groups" id="unit-groups" aria-label="Учебные юниты">'+groups.map(level=>'<section class="unit-level-group" data-level-group="'+esc(level)+'"><h2>'+esc(level)+'</h2><div class="unit-level-grid">'+data.units.filter(u=>u.level===level).map(renderCard).join("")+'</div></section>').join("")+'</section><p class="empty-state" id="unit-search-empty" hidden>По этому запросу уроков не найдено.</p>'+footer(module);
+ const searchInput=app.querySelector("#curriculum-search");let searchVersion=0;
+ searchInput.addEventListener("input",async()=>{
+  const query=searchInput.value.trim().toLocaleLowerCase("ru"),version=++searchVersion;
+  if(!query){app.querySelectorAll(".unit-card").forEach(card=>card.hidden=false);app.querySelectorAll("[data-level-group]").forEach(group=>group.hidden=false);app.querySelector("#unit-search-empty").hidden=true;return;}
+  const matches=await Promise.all(data.units.map(async unit=>{
+   try{const content=await unitData(module,unit.unitId);const text=unit.title+" "+unit.description+" "+unit.level+" "+content.lessons.map(lesson=>lesson.title+" "+(lesson.tags||[]).join(" ")).join(" ");return [unit.unitId,text.toLocaleLowerCase("ru").includes(query)];}
+   catch{return [unit.unitId,false];}
+  }));
+  if(version!==searchVersion)return;
+  const matchMap=new Map(matches);let visible=0;
+  app.querySelectorAll(".unit-card").forEach(card=>{const show=Boolean(matchMap.get(card.dataset.unit));card.hidden=!show;if(show)visible++;});
+  app.querySelectorAll("[data-level-group]").forEach(group=>{group.hidden=!group.querySelector(".unit-card:not([hidden])");});
+  app.querySelector("#unit-search-empty").hidden=visible!==0;
+ });
+ app.querySelectorAll("[data-progress]").forEach(node=>animateProgress(node,Number(node.dataset.progress)));
 }
 function renderUnit(app,module,data,unit,unitContent,completed) {
   const stats=unitStats(unit,completed);
