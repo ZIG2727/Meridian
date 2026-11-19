@@ -20,7 +20,9 @@ for (const module of modules) {
     if (unit.order !== index + 1) fail(module + ": units must have sequential order values");
     for (const prerequisite of unit.prerequisiteUnits || []) if (!unitMap.has(prerequisite)) fail(unit.unitId + ": missing prerequisite " + prerequisite);
   });
-  let moduleLessons = 0;\n  const moduleLessonIds = new Set();\n  const moduleCardIds = new Set();
+  let moduleLessons = 0;
+  const moduleLessonIds = new Set();
+  const moduleCardIds = new Set();
   for (const unit of manifest.units) {
     if (!Array.isArray(unit.lessonIds) || unit.lessonIds.length < 3 || unit.lessonIds.length > 4) fail(unit.unitId + ": expected 3–4 lesson IDs");
     const data = await readJSON("data/" + module + "/units/" + unit.unitId + ".json");
