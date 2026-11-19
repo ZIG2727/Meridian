@@ -1,0 +1,21 @@
+{
+  "module": "python",
+  "version": 3,
+  "units": [
+    {
+      "unitId": "py-basics-print",
+      "level": "Basics",
+      "title": "Вывод и комментарии",
+      "description": "Первые команды, вывод значений и пояснения в коде.",
+      "order": 1,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [],
+      "lessonIds": [
+        "py-basics-print-01",
+        "py-basics-print-02",
+        "py-basics-print-03",
+        "py-basics-print-04"
+      ]
+    }
+  ]
+}

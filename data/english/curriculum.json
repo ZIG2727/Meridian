@@ -1,0 +1,21 @@
+{
+  "module": "english",
+  "version": 3,
+  "units": [
+    {
+      "unitId": "en-a1-greetings",
+      "level": "A1",
+      "title": "Приветствия",
+      "description": "Поздороваться, попрощаться и выбрать вежливую форму.",
+      "order": 1,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [],
+      "lessonIds": [
+        "en-a1-greetings-01",
+        "en-a1-greetings-02",
+        "en-a1-greetings-03",
+        "en-a1-greetings-04"
+      ]
+    }
+  ]
+}

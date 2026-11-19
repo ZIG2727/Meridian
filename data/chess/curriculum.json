@@ -1,0 +1,21 @@
+{
+  "module": "chess",
+  "version": 3,
+  "units": [
+    {
+      "unitId": "ch-basics-board",
+      "level": "Basics",
+      "title": "Доска и нотация",
+      "description": "Координаты, расстановка фигур и запись ходов.",
+      "order": 1,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [],
+      "lessonIds": [
+        "ch-basics-board-01",
+        "ch-basics-board-02",
+        "ch-basics-board-03",
+        "ch-basics-board-04"
+      ]
+    }
+  ]
+}
