@@ -1,4 +1,4 @@
-import { loadJSON, readStored, writeStored, isStringArray } from "../storage.js";
+import { loadJSON, readStored, writeStored, removeStored, isStringArray } from "../storage.js";
 import { animateProgress, celebrate } from "../motion.js";
 
 const lessonsUrl = new URL("../../data/python-lessons.json", import.meta.url);
@@ -196,6 +196,9 @@ export async function renderPython(app) {
       }
       const wasCompleted = completed.includes(currentLesson.id);
       if (!wasCompleted) { completed.push(currentLesson.id); writeStored(COMPLETED_KEY, completed); }
+      const nextLesson = lessons[lessonIndex + 1];
+      if (nextLesson) writeStored(SESSION_KEY, { lessonId: nextLesson.id, code: nextLesson.starterCode });
+      else removeStored(SESSION_KEY);
       editor.classList.remove("is-correct"); void editor.offsetWidth; editor.classList.add("is-correct");
       window.setTimeout(() => editor.classList.remove("is-correct"), 600);
       status.className = "status-line feedback success"; status.textContent = "Вывод совпадает с ожидаемым.";

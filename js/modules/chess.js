@@ -1,4 +1,4 @@
-import { loadJSON, readStored, writeStored, isStringArray } from "../storage.js";
+import { loadJSON, readStored, writeStored, removeStored, isStringArray } from "../storage.js";
 import { animateProgress, celebrate } from "../motion.js";
 
 const lessonsUrl = new URL("../../data/chess-lessons.json", import.meta.url);
@@ -324,6 +324,9 @@ export async function renderChess(app) {
         writeStored(COMPLETED_KEY, completed);
         animateProgress(progressTrack, 100);
         const moduleComplete = lessons.every(item => completed.includes(item.id));
+        const nextLesson = lessons[lessonIndex + 1];
+        if (nextLesson) writeStored(SESSION_KEY, nextLesson.id);
+        else removeStored(SESSION_KEY);
         const message = moduleComplete ? "Раздел шахмат завершён." : "Урок завершён.";
         window.setTimeout(() => celebrate(status, message, 800), 400);
       } else {
