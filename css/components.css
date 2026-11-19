@@ -298,3 +298,10 @@
 .chess-square:focus-visible { outline: 3px solid #1f7567; outline-offset: -3px; }
 .python-output { margin-top: var(--space-4); padding: var(--space-3); border-radius: var(--radius-control); background: var(--color-surface-muted); }
 .python-output pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--font-mono); font-size: var(--text-sm); }
+
+.resume-panel { display: grid; grid-template-columns: minmax(180px, .7fr) repeat(3, minmax(0, 1fr)); gap: var(--space-3); align-items: stretch; margin-bottom: var(--space-6); padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-card); background: var(--color-surface); }
+.resume-panel h2 { margin: 0; font-size: var(--text-lg); }
+.resume-link { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); padding: var(--space-3); border-radius: var(--radius-control); background: var(--color-surface-muted); color: var(--color-ink); text-decoration: none; }
+.resume-link small { display: block; margin-top: 4px; color: var(--color-ink-soft); }
+.resume-link:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+@media (max-width: 760px) { .resume-panel { grid-template-columns: 1fr; } }
