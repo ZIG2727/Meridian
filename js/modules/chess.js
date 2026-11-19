@@ -56,6 +56,103 @@ function renderStaticBoard(container, position) {
   container.setAttribute("aria-label", "Статичная шахматная доска");
 }
 
+
+function getPieceTargets(square, piece, pieces) {
+  const file = "abcdefgh".indexOf(square[0]);
+  const rank = Number(square[1]);
+  const knight = [[1,2],[2,1],[2,-1],[1,-2],[-1,-2],[-2,-1],[-2,1],[-1,2]];
+  const targets = [];
+  const add = (df, dr) => {
+    const f = file + df, r = rank + dr;
+    if (f < 0 || f > 7 || r < 1 || r > 8) return false;
+    const target = "abcdefgh"[f] + r;
+    const occupant = pieces[target];
+    if (!occupant || (occupant === occupant.toUpperCase()) !== (piece === piece.toUpperCase())) targets.push(target);
+    return !occupant;
+  };
+  if (piece.toLowerCase() === "n") {
+    knight.forEach(([df, dr]) => add(df, dr));
+  } else if (["b", "r"].includes(piece.toLowerCase())) {
+    const directions = piece.toLowerCase() === "b"
+      ? [[1,1],[1,-1],[-1,1],[-1,-1]]
+      : [[1,0],[-1,0],[0,1],[0,-1]];
+    directions.forEach(([df, dr]) => {
+      let f = file + df, r = rank + dr;
+      while (f >= 0 && f < 8 && r >= 1 && r <= 8) {
+        const target = "abcdefgh"[f] + r;
+        const occupant = pieces[target];
+        if (!occupant) targets.push(target);
+        else {
+          if ((occupant === occupant.toUpperCase()) !== (piece === piece.toUpperCase())) targets.push(target);
+          break;
+        }
+        f += df; r += dr;
+      }
+    });
+  }
+  return targets;
+}
+
+function enablePieceHints(container, board, position, status) {
+  let selected = null;
+  const readPieces = () => board ? board.position() : parsePosition(position);
+  const clear = () => container.querySelectorAll(".is-move-target,.is-selected-piece").forEach(node =>
+    node.classList.remove("is-move-target", "is-selected-piece"));
+  const selectSquare = square => {
+    const pieces = readPieces();
+    const piece = pieces[square];
+    clear();
+    if (!piece || !["n", "b", "r"].includes(piece.toLowerCase())) {
+      selected = null;
+      status.textContent = "Выберите коня, слона или ладью.";
+      return;
+    }
+    selected = square;
+    const source = container.querySelector('[data-square="' + square + '"], [aria-label="' + square + '"]');
+    source?.classList.add("is-selected-piece");
+    const targets = getPieceTargets(square, piece, pieces);
+    targets.forEach(target => container.querySelector('[data-square="' + target + '"], [aria-label="' + target + '"]')?.classList.add("is-move-target"));
+    status.textContent = square + ": доступные по правилам фигуры поля подсвечены. Это подсказка движения, не проверка шаха.";
+  };
+  container.addEventListener("click", event => {
+    const squareNode = event.target.closest("[data-square], [aria-label]");
+    const square = squareNode?.dataset.square || squareNode?.getAttribute("aria-label");
+    if (!square || !/^[a-h][1-8]$/.test(square)) return;
+    if (selected && getPieceTargets(selected, readPieces()[selected], readPieces()).includes(square)) {
+      if (board) board.movePiece({ from: selected, to: square }, { animate: true });
+      else {
+        const pieces = readPieces(); pieces[square] = pieces[selected]; delete pieces[selected];
+        const fen = position;
+        renderStaticBoard(container, piecesToFen(pieces, fen));
+      }
+      selected = null; clear(); status.textContent = "Фигура перемещена на " + square + ".";
+      return;
+    }
+    selectSquare(square);
+  });
+  container.addEventListener("keydown", event => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    const square = event.target.dataset.square || event.target.getAttribute("aria-label");
+    if (square) { event.preventDefault(); selectSquare(square); }
+  });
+}
+
+function piecesToFen(pieces, sourceFen) {
+  const rows = [];
+  for (let rank = 8; rank >= 1; rank -= 1) {
+    let row = "", empty = 0;
+    for (const file of "abcdefgh") {
+      const piece = pieces[file + rank];
+      if (piece) { if (empty) row += empty; row += piece; empty = 0; }
+      else empty += 1;
+    }
+    if (empty) row += empty;
+    rows.push(row);
+  }
+  const parts = String(sourceFen || "start").split(" ");
+  return rows.join("/") + " " + (parts[1] || "w") + " " + (parts[2] || "-") + " " + (parts[3] || "-") + " " + (parts[4] || "0") + " " + (parts[5] || "1");
+}
+
 function ensureBoardLibrary() {
   if (window.MeridianChessboard) return Promise.resolve(true);
   if (boardLoadPromise) return boardLoadPromise;
@@ -121,7 +218,7 @@ export async function renderChess(app) {
       '<div class="module-layout"><article class="lesson-card"><p class="eyebrow">Правило</p><h2>' + escapeHTML(lesson.title) + '</h2><p>' + escapeHTML(lesson.text) + '</p></article>' +
       '<section class="panel"><p class="eyebrow">Позиция на доске</p><div id="chess-board" class="chess-board" aria-label="Шахматная позиция"></div>' +
       '<p class="board-caption" id="board-caption">' + escapeHTML(lesson.moveCaption || "Положение фигур для примера.") + '</p>' +
-      '<div class="button-row" style="margin-top:12px"><button class="button button-secondary" type="button" id="show-chess-move">Показать ход</button></div>' +
+      '<p class="code-note" id="piece-hint-status" role="status">Нажмите на коня, слона или ладью, чтобы увидеть возможные поля.</p><div class="button-row" style="margin-top:12px"><button class="button button-secondary" type="button" id="show-chess-move">Показать ход</button></div>' +
       '<p class="code-note" id="board-fallback" hidden>Используется статичное представление позиции: интерактивная доска недоступна.</p></section></div>' +
       '<section class="panel" style="margin-top:24px"><p class="eyebrow">Проверка</p><p class="quiz-question">' + escapeHTML(quiz.q) + '</p>' +
       '<div class="quiz-options">' + quiz.options.map((option, index) =>
@@ -146,6 +243,7 @@ export async function renderChess(app) {
       content.querySelector("#board-fallback").hidden = false;
     }
 
+    enablePieceHints(boardContainer, board, lesson.fen || lesson.position || "start", content.querySelector("#piece-hint-status"));
     content.querySelector("#chess-back").addEventListener("click", renderList);
     content.querySelector("#show-chess-move").addEventListener("click", () => {
       if (board) {
@@ -212,7 +310,7 @@ export async function renderChess(app) {
         writeStored(COMPLETED_KEY, completed);
         animateProgress(progressTrack, 100);
         const moduleComplete = lessons.every(item => completed.includes(item.id));
-        celebrate(status, moduleComplete ? "Раздел шахмат завершён." : "Урок завершён.", 800);
+        if (moduleComplete) celebrate(status, "Раздел шахмат завершён.", 800);
       } else {
         animateProgress(progressTrack, 100);
       }
