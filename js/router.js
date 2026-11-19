@@ -78,7 +78,7 @@ async function renderDashboard(app) {
   const englishSession = readStored("mrd:english:session", null);
   const chessSession = readStored("mrd:chess:session", null);
   const pythonSession = readStored("mrd:python:session", null);
-  const reviewed = Object.values(englishProgress).filter(item => item && Number(item.repetitions) > 0).length;
+  const reviewed = english.filter((_, index) => { const item = englishProgress[String(index)]; return item && Number.isFinite(item.ease) && Number.isFinite(item.interval) && Number.isFinite(item.due) && Number.isFinite(item.repetitions); }).length;
   const chessDone = chess.filter(item => chessCompleted.includes(item.id)).length;
   const pythonDone = python.filter(item => pythonCompleted.includes(item.id)).length;
   const englishValid = english.length > 0 && validEnglishSession(englishSession, english, englishProgress);
