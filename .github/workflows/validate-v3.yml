@@ -1,9 +1,9 @@
 name: Validate Meridian V3
 on:
   push:
-    branches: [v3-curriculum]
+    branches: [main, v3-curriculum, v3.1-visual-audit]
   pull_request:
-    branches: [v3-curriculum]
+    branches: [main, v3-curriculum, v3.1-visual-audit]
   workflow_dispatch:
 jobs:
   curriculum:
