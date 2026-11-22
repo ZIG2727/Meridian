@@ -85,6 +85,10 @@ try {
     await page.locator(".subject-card").first().waitFor();
     assert(await page.locator(".subject-card").count() === 3, "Dashboard must show all three subjects");
     await waitForImages();
+    await page.locator(".subject-card").last().scrollIntoViewIfNeeded();
+    await page.waitForTimeout(350);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(500);
     await checkNoOverflow("Dashboard " + size.name);
     await page.screenshot({ path: resolve(outputDir, "dashboard-" + size.name + ".png"), fullPage: true });
     console.log("Dashboard responsive check passed:", size.name);
@@ -109,6 +113,10 @@ try {
       assert(await page.locator(".module-hero").count() === 1, subject + ": module hero was not rendered");
       assert(await page.locator(".visual-gallery-card").count() === 2, subject + ": expected two gallery cards");
       await waitForImages();
+      await page.locator(".visual-gallery-card").last().scrollIntoViewIfNeeded();
+      await page.waitForTimeout(350);
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.waitForTimeout(500);
       await checkNoOverflow(subject + " " + size.name);
 
       const toggle = page.locator(".unit-group-toggle").first();
