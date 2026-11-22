@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { runSafePython, normalizeEnglishAnswer } from "../js/modules/curriculum.js";
+import { runSafePython, normalizeEnglishAnswer, getLegalChessMoves } from "../js/modules/curriculum.js";
 import { MODULE_VISUALS } from "../js/visuals.js";
 import { normalizeProfile, calculateProfileStats, mergeCompletedLessons } from "../js/profile.js";
 
@@ -176,6 +176,13 @@ for (const [index, test] of runnerCases.entries()) {
 
 if (normalizeEnglishAnswer("  HELLO   WORLD! ") !== "hello world" ||
     normalizeEnglishAnswer("I’m fine.") !== "i'm fine") fail("English answer normalization failed");
+
+const startPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+if (getLegalChessMoves(startPosition, "e2").sort().join(",") !== "e3,e4") fail("Chess legal pawn moves failed");
+const pinnedPosition = "k3r3/8/8/8/8/8/4R3/4K3 w - - 0 1";
+const pinnedMoves = getLegalChessMoves(pinnedPosition, "e2");
+if (!pinnedMoves.includes("e3") || pinnedMoves.includes("d2")) fail("Chess king-safety filter failed");
+
 const normalizedProfile = normalizeProfile({
   name: "  Meridian Learner  ",
   dailyGoal: 99,

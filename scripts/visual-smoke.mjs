@@ -133,6 +133,14 @@ try {
     }
   }
 
+  await page.goto(baseUrl + "/#/chess/ch-basics-board/ch-basics-board-01", { waitUntil: "domcontentloaded" });
+  await page.locator('[data-square="e2"]').waitFor();
+  await page.locator('[data-square="e2"]').click();
+  assert(await page.locator('[data-square="e4"]').evaluate(el => el.classList.contains("is-move-target")),
+    "Chess board should highlight the legal e2-e4 pawn move");
+  assert(!(await page.locator('[data-square="e5"]').evaluate(el => el.classList.contains("is-move-target"))),
+    "Chess board should not highlight an illegal pawn move");
+
   await page.goto(baseUrl + "/#/english/en-a1-greetings/en-a1-greetings-01", { waitUntil: "domcontentloaded" });
   await page.locator("#english-answer").waitFor();
   await page.locator("#english-answer").fill("  HELLO  ");
