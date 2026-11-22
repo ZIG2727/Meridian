@@ -66,3 +66,114 @@
 .curriculum-board .chess-square.is-selected-piece { outline:3px solid var(--color-focus); outline-offset:-3px; }
 .curriculum-board .chess-square.is-move-target { box-shadow:inset 0 0 0 4px rgba(31,117,103,.72); }
 .curriculum-board .chess-square:focus-visible { outline:3px solid var(--color-focus); outline-offset:-3px; }
+
+/* V3.1 — editorial module headers and spring accordions */
+.module-hero {
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(360px, 1.18fr);
+  gap: clamp(24px, 4vw, 54px);
+  align-items: stretch;
+  margin: 0 0 clamp(28px, 4vw, 48px);
+  padding: clamp(22px, 3.5vw, 38px);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+.module-hero[data-subject="english"] { --module-accent: var(--color-english); --module-wash: var(--color-english-wash); }
+.module-hero[data-subject="chess"] { --module-accent: var(--color-chess); --module-wash: var(--color-chess-wash); }
+.module-hero[data-subject="python"] { --module-accent: var(--color-python); --module-wash: var(--color-python-wash); }
+.module-hero-copy { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-width: 0; }
+.module-hero-copy .eyebrow { color: var(--module-accent); }
+.module-hero-kicker {
+  display: inline-flex;
+  margin: 0 0 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--module-wash);
+  color: var(--module-accent);
+  font-size: .75rem;
+  font-weight: 700;
+}
+.module-hero h1 {
+  margin: 0 0 10px;
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  letter-spacing: -.055em;
+}
+.module-hero-copy > p:not(.eyebrow) { max-width: 440px; margin: 0; color: var(--color-ink-soft); }
+.module-hero-stats { display: flex; align-items: baseline; gap: 10px; margin-top: 24px; }
+.module-hero-stats strong { color: var(--module-accent); font-size: 1.65rem; font-variant-numeric: tabular-nums; }
+.module-hero-stats span { color: var(--color-ink-soft); font-size: .84rem; }
+.module-hero-image {
+  position: relative;
+  min-height: 250px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--module-wash);
+}
+.module-hero-image img { width: 100%; height: 100%; min-height: 250px; object-fit: cover; transition: transform 900ms var(--ease-out); }
+.module-hero-image:hover img { transform: scale(1.035); }
+.module-hero-image span {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 6px 9px;
+  border-radius: 7px;
+  background: rgba(20, 29, 26, .72);
+  color: #fff;
+  font-size: .68rem;
+  backdrop-filter: blur(8px);
+}
+.unit-group-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-ink-soft);
+  text-align: left;
+  font: inherit;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  cursor: pointer;
+}
+.unit-group-chevron {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  color: var(--color-ink);
+  transition: transform 420ms var(--ease-spring), background 220ms var(--ease-out);
+}
+.unit-group-toggle:hover .unit-group-chevron { background: var(--color-surface-muted); }
+.unit-level-content {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 460ms var(--ease-glide), opacity 260ms var(--ease-out);
+  opacity: 1;
+}
+.unit-level-content > .unit-level-grid { min-height: 0; overflow: hidden; }
+.unit-level-group.is-collapsed .unit-level-content { grid-template-rows: 0fr; opacity: 0; }
+.unit-level-group.is-collapsed .unit-group-chevron { transform: rotate(-90deg); }
+.unit-card {
+  overflow: hidden;
+  transition: transform 380ms var(--ease-spring), box-shadow 260ms var(--ease-out), border-color 220ms var(--ease-out);
+}
+.unit-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: #b7c2b8; }
+.curriculum-lesson, .lesson-search-result {
+  transition: transform 300ms var(--ease-spring), border-color 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+.curriculum-lesson:hover, .lesson-search-result:hover { transform: translateX(3px); box-shadow: 0 5px 14px rgba(34,42,38,.07); }
+@media (max-width: 760px) {
+  .module-hero { grid-template-columns: 1fr; gap: 20px; padding: 20px; }
+  .module-hero-image, .module-hero-image img { min-height: 210px; max-height: 270px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .module-hero-image img, .unit-group-chevron, .unit-level-content, .unit-card, .curriculum-lesson, .lesson-search-result { transition: none; }
+  .unit-card:hover, .curriculum-lesson:hover, .lesson-search-result:hover { transform: none; box-shadow: none; }
+}
