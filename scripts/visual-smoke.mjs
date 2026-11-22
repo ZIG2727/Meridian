@@ -90,7 +90,10 @@ try {
     for (const size of sizes) {
       await page.setViewportSize({ width: size.width, height: size.height });
       await page.goto(baseUrl + "/#/" + subject, { waitUntil: "domcontentloaded" });
-      await page.locator(".module-hero").waitFor();
+      await page.waitForFunction(() => document.querySelector(".module-hero") || document.querySelector(".error-state"), null, { timeout: 20000 });
+      const routeError = await page.locator(".error-state").innerText().catch(() => "");
+      assert(!routeError, subject + " route rendered an error state: " + routeError);
+      assert(await page.locator(".module-hero").count() === 1, subject + ": module hero was not rendered");
       assert(await page.locator(".visual-gallery-card").count() === 2, subject + ": expected two gallery cards");
       await waitForImages();
       await checkNoOverflow(subject + " " + size.name);
