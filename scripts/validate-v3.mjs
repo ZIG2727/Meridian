@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { runSafePython } from "../js/modules/curriculum.js";
+import { MODULE_VISUALS } from "../js/visuals.js";
 
 const root = process.cwd();
 const modules = ["english", "chess", "python"];
@@ -169,3 +170,18 @@ for (const [index, test] of runnerCases.entries()) {
   const result = runSafePython(test.source, { exampleInput: test.exampleInput });
   if (!result.ok || result.output !== test.expected) fail("Safe Python runner test " + (index + 1) + " failed: " + (result.error || result.output));
 }
+
+
+const visualModules = Object.keys(MODULE_VISUALS).sort();
+if (visualModules.join(",") !== modules.slice().sort().join(",")) fail("Visual assets must exist for every learning module");
+for (const module of modules) {
+  const visual = MODULE_VISUALS[module];
+  if (!visual.src.startsWith("https://images.unsplash.com/") || !visual.alt || !visual.url.startsWith("https://unsplash.com/") ||
+      !Array.isArray(visual.gallery) || visual.gallery.length < 2) fail(module + ": missing hero image or supporting gallery");
+  for (const [index, item] of visual.gallery.entries()) {
+    if (!item.src.startsWith("https://images.unsplash.com/") || !item.alt || !item.label || !item.url.startsWith("https://unsplash.com/")) {
+      fail(module + ": invalid gallery image " + (index + 1));
+    }
+  }
+}
+console.log("Visual assets validated:", modules.length, "routes,", modules.reduce((sum, module) => sum + MODULE_VISUALS[module].gallery.length, 0), "gallery images");
