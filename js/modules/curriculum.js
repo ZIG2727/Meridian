@@ -167,7 +167,7 @@ function markComplete(module,unit,lessonId,completed) {
   return unit.lessonIds.every(id=>completed.includes(id));
 }
 function normalizeEnglishAnswer(value) {
- return String(value??"").trim().toLowerCase().replace(/[’‘]/g,"'").replace(/\\s+/g," ").replace(/[.!?,;:]+$/,"");
+ return String(value??"").trim().toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g," ").replace(/[.!?,;:]+$/,"");
 }
 function renderEnglishLesson(app,module,unit,lesson,completed) {
  const cards=lesson.content?.cards;
