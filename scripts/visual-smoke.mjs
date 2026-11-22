@@ -130,8 +130,31 @@ try {
     }
   }
 
+  await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
+  await page.locator("[data-profile-open]").waitFor();
+  await page.locator("[data-profile-open]").click();
+  await page.locator("#profile-dialog").waitFor({ state: "visible" });
+  await page.locator("#profile-name").fill("Meridian Test");
+  await page.locator("#profile-goal").selectOption("2");
+  await page.locator("#profile-dialog button[type=submit]").click();
+  assert((await page.locator(".profile-greeting h2").innerText()).includes("Meridian Test"),
+    "Profile name was not saved");
+  await page.evaluate(async () => {
+    const profile = await import("/js/profile.js");
+    profile.recordLessonCompletion("english", "en-browser-smoke-test");
+    profile.recordLessonCompletion("english", "en-browser-smoke-test");
+  });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.locator("[data-profile-open]").waitFor();
+  assert(await page.locator(".profile-metric strong").first().innerText() === "20",
+    "XP reward must be idempotent");
+  assert((await page.locator(".profile-goal-head strong").innerText()).trim() === "1 / 2",
+    "Daily goal should reflect the completed lesson");
+  assert((await page.locator(".profile-greeting h2").innerText()).includes("Meridian Test"),
+    "Profile settings did not persist after reload");
+
   assert(pageErrors.length === 0, "Browser runtime errors: " + pageErrors.join(" | "));
-  console.log("Responsive browser smoke tests passed: 12 page/viewport combinations.");
+  console.log("Responsive browser smoke tests and profile persistence checks passed.");
 } finally {
   await browser.close();
   await new Promise(resolveClose => server.close(resolveClose));
