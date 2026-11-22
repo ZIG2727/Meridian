@@ -456,7 +456,13 @@
 .profile-edit { flex: 0 0 auto; }
 .profile-metrics { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; align-self: stretch; }
 .profile-metric { display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: 12px 14px; border: 1px solid rgba(67, 91, 78, .1); border-radius: 14px; background: rgba(255,255,255,.68); }
-.profile-metric strong { color: #315c51; font-size: clamp(1.3rem, 2.5vw, 1.8rem); line-height: 1.1; letter-spacing: -.05em; }
+.profile-metric strong { color: #315c51; font-size: clamp(1.3rem, 2.5vw, 1.8rem); line-height: 1.1; letter-spacing: -.05em; animation: profile-stat-bump 420ms var(--ease-spring) both; }
+.profile-metric:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(42, 73, 59, .08); }
+@keyframes profile-stat-bump {
+  0% { transform: scale(1) translateY(0); }
+  42% { transform: scale(1.13) translateY(-3px); }
+  100% { transform: scale(1) translateY(0); }
+}
 .profile-metric strong small { font-size: .7rem; letter-spacing: 0; }
 .profile-metric span { margin-top: 5px; color: var(--color-ink-soft); font-size: .75rem; }
 .profile-activity { min-width: 0; }
@@ -503,7 +509,8 @@
   .profile-week-chart { gap: 6px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .profile-bar-track span { animation: none; }
+  .profile-bar-track span, .profile-metric strong { animation: none; }
+  .profile-metric:hover { transform: none; box-shadow: none; }
   .profile-goal-track span { transition: none; }
 }
 
