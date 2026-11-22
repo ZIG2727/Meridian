@@ -130,6 +130,20 @@ try {
     }
   }
 
+  await page.goto(baseUrl + "/#/english/en-a1-greetings/en-a1-greetings-01", { waitUntil: "domcontentloaded" });
+  await page.locator("#english-answer").waitFor();
+  await page.locator("#english-answer").fill("  HELLO  ");
+  await page.locator("#check-answer").click();
+  assert(await page.locator(".answer-feedback.is-correct").count() === 1,
+    "Typed English answer should ignore case and surrounding spaces");
+  await page.locator('[data-rating="good"]').click();
+  assert((await page.locator(".prompt-word").innerText()).trim() === "привет",
+    "English SRS should advance to the next card after rating");
+  await page.locator("#english-answer").fill("incorrect");
+  await page.locator("#check-answer").click();
+  assert(await page.locator(".answer-feedback.is-incorrect").count() === 1,
+    "Incorrect English answer should show corrective feedback");
+
   await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
   await page.locator("[data-profile-open]").waitFor();
   await page.locator("[data-profile-open]").click();

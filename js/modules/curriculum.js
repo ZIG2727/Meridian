@@ -166,7 +166,7 @@ function markComplete(module,unit,lessonId,completed) {
   if(!completed.includes(lessonId)){completed.push(lessonId);writeStored(keys(module).completed,completed);recordLessonCompletion(module,lessonId);}
   return unit.lessonIds.every(id=>completed.includes(id));
 }
-function normalizeEnglishAnswer(value) {
+export function normalizeEnglishAnswer(value) {
  return String(value??"").trim().toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g," ").replace(/[.!?,;:]+$/,"");
 }
 function renderEnglishLesson(app,module,unit,lesson,completed) {
