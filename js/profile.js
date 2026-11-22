@@ -126,9 +126,11 @@ export function renderProfilePanel(completedCount = 0, profileValue = readProfil
   }).join("");
   const goalMessage = stats.todayLessons >= stats.dailyGoal
     ? "Дневная цель выполнена — отличный темп!"
-    : "Ещё " + (stats.dailyGoal - stats.todayLessons) + " " + (stats.dailyGoal - stats.todayLessons === 1 ? "урок" : "урока") + " до цели";
+    : "Ещё " + (stats.dailyGoal - stats.todayLessons) + " " + (stats.dailyGoal - stats.todayLessons === 1 ? "урок" : stats.dailyGoal - stats.todayLessons < 5 ? "урока" : "уроков") + " до цели";
+  const lessonWord = value => value % 10 === 1 && value % 100 !== 11 ? "урок" :
+    value % 10 >= 2 && value % 10 <= 4 && (value % 100 < 12 || value % 100 > 14) ? "урока" : "уроков";
   const options = [1, 2, 3, 4, 5, 7, 10].map(value =>
-    '<option value="' + value + '"' + (profile.dailyGoal === value ? ' selected' : '') + '>' + value + (value === 1 ? ' урок в день' : ' урока в день') + '</option>'
+    '<option value="' + value + '"' + (profile.dailyGoal === value ? ' selected' : '') + '>' + value + ' ' + lessonWord(value) + ' в день</option>'
   ).join("");
   return '<section class="profile-panel" aria-label="Профиль и статистика">' +
     '<div class="profile-identity"><div class="profile-avatar" aria-hidden="true">' + initial + '</div><div class="profile-greeting"><p class="eyebrow">ТВОЁ ПРОСТРАНСТВО</p><h2>Привет, ' + escapeHTML(profile.name) + '!</h2><p>Каждое занятие приближает к цели.</p></div><button class="button button-secondary profile-edit" type="button" data-profile-open>Настроить профиль</button></div>' +
