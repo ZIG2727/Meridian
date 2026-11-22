@@ -205,9 +205,11 @@ function renderEnglishLesson(app,module,unit,lesson,completed) {
   return;
  }
  const saved=readSession(module);
+ const firstMistakeIndex=dueCards.findIndex(card=>mistakeIds.has(card.id));
  const savedCardIndex=saved?.lessonId===lesson.lessonId&&typeof saved.cardId==="string"
   ? dueCards.findIndex(card=>card.id===saved.cardId) : -1;
- let index=savedCardIndex>=0?savedCardIndex:
+ let index=firstMistakeIndex>=0?firstMistakeIndex:
+  savedCardIndex>=0?savedCardIndex:
   saved?.lessonId===lesson.lessonId&&Number.isInteger(saved.cardIndex)?Math.min(saved.cardIndex,dueCards.length-1):0;
  let checked=false,answerCorrect=false,userAnswer="";
  const draw=()=>{

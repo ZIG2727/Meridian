@@ -156,7 +156,7 @@ try {
   await page.locator(".english-mistakes-panel").waitFor();
   assert((await page.locator(".english-mistakes-count").innerText()).trim() === "1",
     "Incorrect answers should be added to the English review list");
-  await page.goto(baseUrl + "/#/english/en-a1-greetings/en-a1-greetings-01", { waitUntil: "domcontentloaded" });
+  await page.locator(".english-mistakes-list a").first().click();
   await page.locator("#english-answer").waitFor();
   assert((await page.locator(".prompt-word").innerText()).trim() === "привет",
     "Mistake review must include a card even while its SM-2 interval is in the future");
