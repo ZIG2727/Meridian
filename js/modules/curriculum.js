@@ -66,6 +66,8 @@ async function curriculum(module) {
   if (data.units.length !== 15) throw new Error("В программе должно быть ровно 15 юнитов.");
   const ids = new Set();
   const lessonIds = new Set();
+  const lessonPrefix = ({ english: "en", chess: "ch", python: "py" })[module];
+  if (!lessonPrefix) throw new Error("Неизвестный префикс уроков для предмета.");
   for (const unit of data.units) {
     if (!unit.unitId || ids.has(unit.unitId) || !Array.isArray(unit.lessonIds) || unit.lessonIds.length !== 4 ||
         typeof unit.title !== "string" || typeof unit.description !== "string" ||
@@ -74,7 +76,7 @@ async function curriculum(module) {
     }
     ids.add(unit.unitId);
     for (const lessonId of unit.lessonIds) {
-      if (typeof lessonId !== "string" || lessonIds.has(lessonId) || !lessonId.startsWith(module + "-")) {
+      if (typeof lessonId !== "string" || lessonIds.has(lessonId) || !lessonId.startsWith(lessonPrefix + "-")) {
         throw new Error("Повторяющийся или неверный ID урока: " + lessonId);
       }
       lessonIds.add(lessonId);
