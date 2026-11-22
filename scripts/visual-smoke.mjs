@@ -55,7 +55,7 @@ const waitForImages = async () => {
   });
   await page.waitForFunction(() => Array.from(document.querySelectorAll(".subject-media img, .module-hero-image img, .visual-gallery-card img"))
     .every(image => image.complete || image.closest(".subject-media, .module-hero-image, .visual-gallery-card")?.classList.contains("is-image-missing")),
-  null, { timeout: 6000 }).catch(() => {});
+  null, { timeout: 3500 }).catch(() => {});
   const broken = await page.locator(".subject-media img, .module-hero-image img, .visual-gallery-card img").evaluateAll(images =>
     images.filter(image => image.complete && image.naturalWidth === 0 &&
       !image.closest(".subject-media, .module-hero-image, .visual-gallery-card")?.classList.contains("is-image-missing")).length
@@ -86,9 +86,9 @@ try {
     assert(await page.locator(".subject-card").count() === 3, "Dashboard must show all three subjects");
     await waitForImages();
     await page.locator(".subject-card").last().scrollIntoViewIfNeeded();
-    await page.waitForTimeout(350);
+    await page.waitForTimeout(250);
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(450);
     await checkNoOverflow("Dashboard " + size.name);
     await page.screenshot({ path: resolve(outputDir, "dashboard-" + size.name + ".png"), fullPage: true });
     console.log("Dashboard responsive check passed:", size.name);
@@ -98,7 +98,7 @@ try {
     for (const size of sizes) {
       await page.setViewportSize({ width: size.width, height: size.height });
       await page.goto(baseUrl + "/#/" + subject, { waitUntil: "domcontentloaded" });
-      await page.waitForFunction(() => document.querySelector(".module-hero") || document.querySelector(".error-state"), null, { timeout: 20000 });
+      await page.waitForFunction(() => document.querySelector(".module-hero") || document.querySelector(".error-state"), null, { timeout: 10000 });
       const routeError = await page.locator(".error-state").innerText().catch(() => "");
       if (routeError) {
         const details = await page.evaluate(() => ({
