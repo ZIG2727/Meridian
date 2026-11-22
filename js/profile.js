@@ -26,7 +26,7 @@ export function normalizeProfile(value) {
   const activity = {};
   if (source.activity && typeof source.activity === "object" && !Array.isArray(source.activity)) {
     for (const [date, item] of Object.entries(source.activity)) {
-      if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(date) || !item || typeof item !== "object") continue;
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !item || typeof item !== "object") continue;
       activity[date] = {
         lessons: clampInteger(item.lessons, 0, 10000, 0),
         xp: clampInteger(item.xp, 0, 1000000, 0)
