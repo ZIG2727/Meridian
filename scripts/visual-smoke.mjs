@@ -46,6 +46,9 @@ const assert = (condition, message) => {
   if (!condition) throw new Error(message);
 };
 const waitForImages = async () => {
+  await page.locator(".subject-media img, .module-hero-image img, .visual-gallery-card img").evaluateAll(images => {
+    images.forEach(image => { image.loading = "eager"; });
+  });
   await page.waitForFunction(() => Array.from(document.querySelectorAll(".subject-media img, .module-hero-image img, .visual-gallery-card img"))
     .every(image => image.complete || image.closest(".subject-media, .module-hero-image, .visual-gallery-card")?.classList.contains("is-image-missing")),
   null, { timeout: 15000 });
