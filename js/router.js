@@ -3,6 +3,7 @@ import { renderEnglish } from "./modules/english.js";
 import { renderChess } from "./modules/chess.js";
 import { renderPython } from "./modules/python.js";
 import { animateProgress, bindMicroInteractions } from "./motion.js";
+import { MODULE_VISUALS } from "./visuals.js";
 
 const dataUrls = {
   english: new URL("../data/english/curriculum.json", import.meta.url),
@@ -21,12 +22,7 @@ async function loadDashboardData() {
 }
 function subjectCard(subject,title,description,count,total,percentage,continuation,error) {
   const paths={english:"../assets/icons/english.svg",chess:"../assets/icons/chess.svg",python:"../assets/icons/python.svg"};
-  const visuals={
-    english:{src:"https://images.unsplash.com/photo-1769794371055-54436b54577e?auto=format&fit=crop&w=1200&q=82",alt:"Рабочий стол с книгами, конспектами и материалами для изучения языков",credit:"Yen Vu",url:"https://unsplash.com/photos/desk-with-open-book-laptop-and-study-materials-HNjWq8WPyoY"},
-    chess:{src:"https://images.unsplash.com/photo-1727572337691-966f05cbf6fe?auto=format&fit=crop&w=1200&q=82",alt:"Шахматная доска с фигурами во время партии",credit:"Heriberto Murrieta",url:"https://unsplash.com/photos/a-close-up-of-a-chess-board-with-pieces-on-it-eHClqseTUWc"},
-    python:{src:"https://images.unsplash.com/photo-1778146476147-5f8d4bd03c79?auto=format&fit=crop&w=1200&q=82",alt:"Ноутбук с открытым редактором кода на рабочем столе",credit:"Bayu Syaits",url:"https://unsplash.com/photos/laptop-and-phone-on-a-desk-with-coding-software-open-oYzjGQ7LCVE"}
-  };
-  const visual=visuals[subject],iconUrl=new URL(paths[subject],import.meta.url).href;
+  const visual=MODULE_VISUALS[subject],iconUrl=new URL(paths[subject],import.meta.url).href;
   const progressText=error?"Данные недоступны":count+" / "+total+" уроков";
   const status=error?'<p class="status-line">Не удалось загрузить материалы. Откройте раздел позже.</p>':
     '<div class="subject-meta"><span>Прогресс</span><strong>'+progressText+'</strong></div><div class="progress-track" data-progress="'+percentage+'" style="--progress-color:var(--color-'+subject+')"><div class="progress-fill"></div></div>';
