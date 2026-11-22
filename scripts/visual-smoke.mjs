@@ -142,6 +142,8 @@ try {
     "Chess board should not highlight an illegal pawn move");
 
   await page.goto(baseUrl + "/#/english/en-a1-greetings/en-a1-greetings-01", { waitUntil: "domcontentloaded" });
+  await page.evaluate(() => { localStorage.clear(); sessionStorage.clear(); });
+  await page.reload({ waitUntil: "domcontentloaded" });
   await page.locator("#english-answer").waitFor();
   await page.locator("#english-answer").fill("  HELLO  ");
   await page.locator("#check-answer").click();
@@ -150,10 +152,10 @@ try {
   await page.screenshot({ path: resolve(outputDir, "english-answer-correct.png"), fullPage: true });
   await page.locator('[data-rating="good"]').click();
   assert((await page.locator(".prompt-word").innerText()).trim() === "привет",
-    "English SRS should advance to the next card after rating");
+    "English SRS should advance from the first card to the second card after rating");
   const sessionBeforeReload = await page.evaluate(() => JSON.parse(localStorage.getItem("mrd:v3:english:session") || "null"));
   assert(sessionBeforeReload?.cardId === "en-card-greetings-01-02",
-    "English session should save the next card ID: " + JSON.stringify(sessionBeforeReload));
+    "English session should save the second card ID in a clean browser state: " + JSON.stringify(sessionBeforeReload));
   await page.reload({ waitUntil: "domcontentloaded" });
   const resumedPrompt = (await page.locator(".prompt-word").innerText()).trim();
   const resumedState = await page.evaluate(() => ({
@@ -161,8 +163,8 @@ try {
     session: JSON.parse(localStorage.getItem("mrd:v3:english:session") || "null"),
     srs: JSON.parse(localStorage.getItem("mrd:v3:english:srs") || "{}")
   }));
-  assert(resumedPrompt === "привет",
-    "English session should resume the exact card after reload; prompt=" + resumedPrompt + "; state=" + JSON.stringify(resumedState));
+  assert(resumedPrompt === "привет" && resumedState.session?.cardId === sessionBeforeReload.cardId,
+    "English session should resume the exact saved card after reload; prompt=" + resumedPrompt + "; state=" + JSON.stringify(resumedState));
   await page.locator("#english-answer").fill("incorrect");
   await page.locator("#check-answer").click();
   assert(await page.locator(".answer-feedback.is-incorrect").count() === 1,
