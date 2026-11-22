@@ -1,6 +1,7 @@
 import { loadJSON, readStored, writeStored } from "../storage.js";
 import { animateProgress, celebrate } from "../motion.js";
 import { MODULE_VISUALS } from "../visuals.js";
+import { recordLessonCompletion } from "../profile.js";
 
 const MODULES = {
   english: { title: "Английский", subtitle: "RU → EN · интервальное повторение", color: "english" },
@@ -162,7 +163,7 @@ function renderUnit(app,module,data,unit,unitContent,completed) {
   animateProgress(app.querySelector("[data-progress]"),stats.done/stats.total*100);
 }
 function markComplete(module,unit,lessonId,completed) {
-  if(!completed.includes(lessonId)){completed.push(lessonId);writeStored(keys(module).completed,completed);}
+  if(!completed.includes(lessonId)){completed.push(lessonId);writeStored(keys(module).completed,completed);recordLessonCompletion(module,lessonId);}
   return unit.lessonIds.every(id=>completed.includes(id));
 }
 function renderEnglishLesson(app,module,unit,lesson,completed) {

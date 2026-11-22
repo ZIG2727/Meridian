@@ -4,6 +4,7 @@ import { renderChess } from "./modules/chess.js";
 import { renderPython } from "./modules/python.js";
 import { animateProgress, bindMicroInteractions } from "./motion.js";
 import { MODULE_VISUALS } from "./visuals.js";
+import { renderProfilePanel, bindProfilePanel, readProfile } from "./profile.js";
 
 const dataUrls = {
   english: new URL("../data/english/curriculum.json", import.meta.url),
@@ -66,7 +67,7 @@ function findResume(module,units,session) {
   return {label:"Продолжить "+(module==="english"?"английский":module==="chess"?"шахматы":"Python"),detail:unit.title+" · урок "+(lessonIndex+1),href:"#/"+module+"/"+unit.unitId+"/"+session.lessonId};
 }
 async function renderDashboard(app) {
-  app.innerHTML='<header class="site-header"><div class="header-inner"><a class="brand" href="#/" aria-label="Meridian — главная"><img src="'+new URL("../assets/icons/meridian.svg",import.meta.url).href+'" alt="Meridian"><span>Meridian</span></a><nav class="header-nav" aria-label="Разделы"><a class="button button-quiet" href="#/english">Английский</a><a class="button button-quiet" href="#/chess">Шахматы</a><a class="button button-quiet" href="#/python">Python</a></nav></div></header><main class="page"><section class="dashboard-intro"><p class="eyebrow">Учебное пространство</p><h1>Три предмета. Один маршрут.</h1><p>Выберите занятие или продолжите с того места, где остановились.</p></section><section class="subject-grid" aria-label="Учебные разделы"><div class="empty-state">Загружаем учебные маршруты…</div></section></main><footer class="footer-inner">Meridian · Прогресс хранится в этом браузере</footer>';
+  app.innerHTML='<header class="site-header"><div class="header-inner"><a class="brand" href="#/" aria-label="Meridian — главная"><img src="'+new URL("../assets/icons/meridian.svg",import.meta.url).href+'" alt="Meridian"><span>Meridian</span></a><nav class="header-nav" aria-label="Разделы"><a class="button button-quiet" href="#/english">Английский</a><a class="button button-quiet" href="#/chess">Шахматы</a><a class="button button-quiet" href="#/python">Python</a></nav></div></header><main class="page"><section class="dashboard-intro"><p class="eyebrow">Учебное пространство</p><h1>Три предмета. Один маршрут.</h1><p>Выберите занятие или продолжите с того места, где остановились.</p></section><section id="profile-overview" aria-label="Профиль и статистика"></section><section class="subject-grid" aria-label="Учебные разделы"><div class="empty-state">Загружаем учебные маршруты…</div></section></main><footer class="footer-inner">Meridian · Прогресс хранится в этом браузере</footer>';
   const data=await loadDashboardData(),grid=app.querySelector(".subject-grid");if(!grid)return;
   const english=data.english||[],chess=data.chess||[],python=data.python||[];
   const englishCompleted=readCompleted("english");
@@ -87,6 +88,9 @@ async function renderDashboard(app) {
     subjectCard("python","Python","15 юнитов · основы языка и безопасная практика.",pDone,pTotal,pTotal?pDone/pTotal*100:0,findResume("python",python,pythonSession),!data.python)
   ].join("");
   grid.innerHTML=resumeBlock+grid.innerHTML;
+  const profileRoot=app.querySelector("#profile-overview");
+  const refreshProfile=()=>{profileRoot.innerHTML=renderProfilePanel(eDone+cDone+pDone,readProfile());bindProfilePanel(profileRoot,refreshProfile);};
+  refreshProfile();
   grid.querySelectorAll("[data-progress]").forEach(track=>animateProgress(track,Number(track.dataset.progress)));
 }
 function showRouteError(app,error) {

@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { runSafePython } from "../js/modules/curriculum.js";
 import { MODULE_VISUALS } from "../js/visuals.js";
+import { normalizeProfile, calculateProfileStats } from "../js/profile.js";
 
 const root = process.cwd();
 const modules = ["english", "chess", "python"];
@@ -171,6 +172,27 @@ for (const [index, test] of runnerCases.entries()) {
   if (!result.ok || result.output !== test.expected) fail("Safe Python runner test " + (index + 1) + " failed: " + (result.error || result.output));
 }
 
+
+
+const normalizedProfile = normalizeProfile({
+  name: "  Meridian Learner  ",
+  dailyGoal: 99,
+  xp: -10,
+  completedLessonIds: ["en-1", "en-1", 3],
+  activity: { "2026-11-22": { lessons: 2, xp: 40 }, invalid: { lessons: 99 } }
+});
+if (normalizedProfile.name !== "Meridian Learner" || normalizedProfile.dailyGoal !== 10 ||
+    normalizedProfile.xp !== 0 || normalizedProfile.completedLessonIds.length !== 1 ||
+    Object.keys(normalizedProfile.activity).length !== 1) fail("Profile normalization failed");
+const profileStats = calculateProfileStats({
+  name: "Ученик", dailyGoal: 2, xp: 60, completedLessonIds: ["a", "b", "c"],
+  activity: { "2026-11-21": { lessons: 1, xp: 20 }, "2026-11-22": { lessons: 2, xp: 40 } }
+}, 3, new Date(2026, 10, 22, 12));
+if (profileStats.todayLessons !== 2 || profileStats.goalPercent !== 100 ||
+    profileStats.streak !== 2 || profileStats.weekLessons !== 3 || profileStats.xp !== 60) {
+  fail("Profile analytics calculation failed");
+}
+console.log("Profile and analytics validated");
 
 const visualModules = Object.keys(MODULE_VISUALS).sort();
 if (visualModules.join(",") !== modules.slice().sort().join(",")) fail("Visual assets must exist for every learning module");
