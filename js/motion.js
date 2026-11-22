@@ -26,6 +26,19 @@ const microBound = new WeakSet();
 export function bindMicroInteractions(root) {
   if (!root || microBound.has(root)) return;
   microBound.add(root);
+  root.addEventListener("error", event => {
+    const image = event.target;
+    if (!(image instanceof HTMLImageElement)) return;
+    const frame = image.closest(".subject-media, .module-hero-image, .visual-gallery-card");
+    if (!frame || frame.classList.contains("is-image-missing")) return;
+    frame.classList.add("is-image-missing");
+    const alt = image.alt;
+    image.remove();
+    const label = document.createElement("span");
+    label.className = "image-fallback-label";
+    label.textContent = alt || "Изображение временно недоступно";
+    frame.append(label);
+  }, true);
   root.addEventListener("pointerdown", event => {
     if (prefersReducedMotion()) return;
     const control = event.target.closest(".button, .rating-button, .quiz-option");

@@ -197,3 +197,7 @@
 @keyframes stat-spring { 0% { opacity: .6; transform: translateY(7px) scale(.94); } 72% { opacity: 1; transform: translateY(-2px) scale(1.035); } 100% { transform: translateY(0) scale(1); } }
 @media (max-width: 600px) { .visual-gallery { padding: 16px; } .visual-gallery-heading { align-items: flex-start; flex-direction: column; gap: 8px; } .visual-gallery-grid { grid-template-columns: 1fr; } .visual-gallery-card { aspect-ratio: 16 / 8; } }
 @media (prefers-reduced-motion: reduce) { .visual-gallery-card img, .module-hero-stats strong { animation: none; transition: none; } .visual-gallery-card:hover img { transform: none; filter: none; } }
+
+.module-hero-image.is-image-missing { justify-content: flex-start; }
+.module-hero-image.is-image-missing .image-fallback-label { padding: 22px; }
+.visual-gallery-card.is-image-missing { align-items: flex-end; }

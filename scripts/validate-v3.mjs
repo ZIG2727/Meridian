@@ -185,3 +185,13 @@ for (const module of modules) {
   }
 }
 console.log("Visual assets validated:", modules.length, "routes,", modules.reduce((sum, module) => sum + MODULE_VISUALS[module].gallery.length, 0), "gallery images");
+
+const motionSource = await readFile(resolve(root, "js/motion.js"), "utf8");
+const componentStyles = await readFile(resolve(root, "css/components.css"), "utf8");
+const curriculumStyles = await readFile(resolve(root, "css/curriculum.css"), "utf8");
+if (!motionSource.includes('image.closest(".subject-media, .module-hero-image, .visual-gallery-card")') ||
+    !motionSource.includes('label.className = "image-fallback-label"') ||
+    !componentStyles.includes(".is-image-missing") || !curriculumStyles.includes(".module-hero-image.is-image-missing")) {
+  fail("External image failure fallback is missing");
+}
+console.log("Image fallback behavior validated");

@@ -396,3 +396,27 @@
   .subject-card:hover, .button:hover, .button:active { transform: none; box-shadow: none; }
   .motion-ripple { display: none; }
 }
+
+/* External image failures stay graceful without replacing content with fake imagery. */
+.subject-media.is-image-missing,
+.module-hero-image.is-image-missing,
+.visual-gallery-card.is-image-missing {
+  display: flex;
+  align-items: flex-end;
+  background: radial-gradient(ellipse at 78% 18%, rgba(255,255,255,.68), transparent 38%), linear-gradient(135deg, var(--image-wash, #e7e9e3), #d8ded7);
+}
+.subject-media.is-image-missing::after,
+.module-hero-image.is-image-missing::after,
+.visual-gallery-card.is-image-missing::after { display: none; }
+.subject-media.is-image-missing .image-fallback-label,
+.module-hero-image.is-image-missing .image-fallback-label,
+.visual-gallery-card.is-image-missing .image-fallback-label { position: relative; z-index: 1; display: block; max-width: 34rem; padding: 16px 18px; color: var(--color-ink-soft); font-size: .78rem; font-weight: 600; }
+.subject-card[data-subject="english"] .subject-media.is-image-missing,
+.module-hero-image[data-subject="english"].is-image-missing,
+.visual-gallery[data-subject="english"] .visual-gallery-card.is-image-missing { --image-wash: var(--color-english-wash); }
+.subject-card[data-subject="chess"] .subject-media.is-image-missing,
+.module-hero-image[data-subject="chess"].is-image-missing,
+.visual-gallery[data-subject="chess"] .visual-gallery-card.is-image-missing { --image-wash: var(--color-chess-wash); }
+.subject-card[data-subject="python"] .subject-media.is-image-missing,
+.module-hero-image[data-subject="python"].is-image-missing,
+.visual-gallery[data-subject="python"] .visual-gallery-card.is-image-missing { --image-wash: var(--color-python-wash); }
