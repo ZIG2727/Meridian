@@ -151,9 +151,18 @@ try {
   await page.locator('[data-rating="good"]').click();
   assert((await page.locator(".prompt-word").innerText()).trim() === "привет",
     "English SRS should advance to the next card after rating");
+  const sessionBeforeReload = await page.evaluate(() => JSON.parse(localStorage.getItem("mrd:v3:english:session") || "null"));
+  assert(sessionBeforeReload?.cardId === "en-card-greetings-01-02",
+    "English session should save the next card ID: " + JSON.stringify(sessionBeforeReload));
   await page.reload({ waitUntil: "domcontentloaded" });
-  assert((await page.locator(".prompt-word").innerText()).trim() === "привет",
-    "English session should resume the exact card after reload");
+  const resumedPrompt = (await page.locator(".prompt-word").innerText()).trim();
+  const resumedState = await page.evaluate(() => ({
+    hash: location.hash,
+    session: JSON.parse(localStorage.getItem("mrd:v3:english:session") || "null"),
+    srs: JSON.parse(localStorage.getItem("mrd:v3:english:srs") || "{}")
+  }));
+  assert(resumedPrompt === "привет",
+    "English session should resume the exact card after reload; prompt=" + resumedPrompt + "; state=" + JSON.stringify(resumedState));
   await page.locator("#english-answer").fill("incorrect");
   await page.locator("#check-answer").click();
   assert(await page.locator(".answer-feedback.is-incorrect").count() === 1,
