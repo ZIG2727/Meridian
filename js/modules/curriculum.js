@@ -166,6 +166,9 @@ function markComplete(module,unit,lessonId,completed) {
   if(!completed.includes(lessonId)){completed.push(lessonId);writeStored(keys(module).completed,completed);recordLessonCompletion(module,lessonId);}
   return unit.lessonIds.every(id=>completed.includes(id));
 }
+function normalizeEnglishAnswer(value) {
+ return String(value??"").trim().toLowerCase().replace(/[’‘]/g,"'").replace(/\\s+/g," ").replace(/[.!?,;:]+$/,"");
+}
 function renderEnglishLesson(app,module,unit,lesson,completed) {
  const cards=lesson.content?.cards;
  if(!Array.isArray(cards)||cards.length<10||cards.some(c=>!c.id||!c.ru||!c.en||!c.example))throw new Error("В английском уроке отсутствуют карточки или обязательные поля.");
@@ -179,22 +182,36 @@ function renderEnglishLesson(app,module,unit,lesson,completed) {
  }
  const saved=readSession(module);
  let index=saved?.lessonId===lesson.lessonId&&Number.isInteger(saved.cardIndex)?Math.min(saved.cardIndex,dueCards.length-1):0;
- let revealed=false;
+ let checked=false,answerCorrect=false,userAnswer="";
  const draw=()=>{
   const card=dueCards[index],entry=srs[card.id];
   writeStored(keys(module).session,{unitId:unit.unitId,lessonId:lesson.lessonId,cardIndex:index});
+  const answerBlock=checked
+   ? '<div class="english-answer '+(answerCorrect?'is-correct':'is-incorrect')+'" aria-live="polite"><p class="answer-feedback '+(answerCorrect?'is-correct':'is-incorrect')+'">'+(answerCorrect?'Верно! Хорошо вспомнили.':'Не совсем. Правильный ответ:')+'</p><h2>'+esc(card.en)+'</h2><p>'+esc(card.example)+'</p></div><p class="field-label">Оцените, насколько легко вспомнили ответ</p><div class="rating-row">'+[['again','Снова'],['hard','Трудно'],['good','Хорошо'],['easy','Легко']].map(([v,l])=>'<button class="rating-button" data-rating="'+v+'">'+l+'</button>').join("")+'</div>'
+   : '<label class="field-label" for="english-answer">Ваш перевод на английском</label><input class="form-field english-answer-input" id="english-answer" type="text" inputmode="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Введите перевод" value="'+esc(userAnswer)+'"><div class="english-answer-actions"><button class="button" id="check-answer" type="button">Проверить</button><button class="button button-secondary" id="show-answer" type="button">Не знаю — показать ответ</button></div><p class="answer-hint" id="answer-hint" role="status"></p>';
   app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+
-  '<section class="curriculum-lesson-focus"><p class="eyebrow">К повторению · карточка '+(index+1)+' из '+dueCards.length+'</p><h1>'+esc(lesson.title)+'</h1><div class="study-card"><p class="eyebrow">Переведите на английский</p><h2 class="prompt-word">'+esc(card.ru)+'</h2>'+
-  (revealed?'<div class="english-answer"><h2>'+esc(card.en)+'</h2><p>'+esc(card.example)+'</p></div>':'<button class="button" id="reveal-answer">Показать ответ</button>')+
-  (revealed?'<p class="field-label">Насколько легко вспомнили?</p><div class="rating-row">'+[['again','Снова'],['hard','Трудно'],['good','Хорошо'],['easy','Легко']].map(([v,l])=>'<button class="rating-button" data-rating="'+v+'">'+l+'</button>').join("")+'</div>':'')+
-  '<p class="code-note">'+(entry?'Срок повторения наступил.':'Новая карточка.')+'</p></div><div class="button-row lesson-navigation"><a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">← К юниту</a></div></section>'+footer(module);
-  app.querySelector("#reveal-answer")?.addEventListener("click",()=>{revealed=true;draw();});
+  '<section class="curriculum-lesson-focus"><p class="eyebrow">Английский · карточка '+(index+1)+' из '+dueCards.length+'</p><h1>'+esc(lesson.title)+'</h1><div class="study-card english-study-card '+(checked?'is-revealed':'')+'"><p class="eyebrow">Переведите на английский</p><h2 class="prompt-word">'+esc(card.ru)+'</h2>'+answerBlock+
+  (checked?'<p class="code-note">'+(entry?'Срок повторения наступил.':'Новая карточка.')+'</p>':'')+
+  '</div><div class="button-row lesson-navigation"><a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">← К юниту</a></div></section>'+footer(module);
+  const input=app.querySelector("#english-answer");
+  const checkAnswer=()=>{
+   const value=input?.value||"";
+   if(!value.trim()){const hint=app.querySelector("#answer-hint");if(hint)hint.textContent="Сначала введите перевод или откройте ответ.";input?.focus();return;}
+   userAnswer=value;
+   answerCorrect=normalizeEnglishAnswer(value)===normalizeEnglishAnswer(card.en);
+   checked=true;
+   draw();
+  };
+  app.querySelector("#check-answer")?.addEventListener("click",checkAnswer);
+  input?.addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();checkAnswer();}});
+  app.querySelector("#show-answer")?.addEventListener("click",()=>{userAnswer="";answerCorrect=false;checked=true;draw();});
   app.querySelectorAll("[data-rating]").forEach(button=>button.addEventListener("click",()=>{
    const rating=button.dataset.rating,quality={again:1,hard:3,good:4,easy:5}[rating],old=srs[card.id]||{ease:2.5,interval:0,reps:0};
    const ease=Math.max(1.3,old.ease+0.1-(5-quality)*(0.08+(5-quality)*0.02));
-   const interval=quality<3?1:old.reps===0?1:old.reps===1?6:Math.max(1,Math.round(old.interval*ease));
-   srs[card.id]={ease:Number(ease.toFixed(2)),interval,due:Date.now()+interval*86400000,reps:quality<3?0:old.reps+1};
-   writeStored(keys("english").srs,srs);index++;revealed=false;
+   const reps=old.reps??old.repetitions??0;
+   const interval=quality<3?1:reps===0?1:reps===1?6:Math.max(1,Math.round(old.interval*ease));
+   srs[card.id]={ease:Number(ease.toFixed(2)),interval,due:Date.now()+interval*86400000,reps:quality<3?0:reps+1};
+   writeStored(keys("english").srs,srs);index++;checked=false;answerCorrect=false;userAnswer="";
    if(index>=dueCards.length){
     const wasCompleted=completed.includes(lesson.lessonId);
     const allReviewed=cards.every(item=>srs[item.id]&&Number.isFinite(srs[item.id].due));
@@ -211,6 +228,7 @@ function renderEnglishLesson(app,module,unit,lesson,completed) {
  };
  draw();
 }
+
 function fenBoard(fen) {
  const symbols={K:"♔",Q:"♕",R:"♖",B:"♗",N:"♘",P:"♙",k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟"};
  const ranks=fen.split(" ")[0].split("/");

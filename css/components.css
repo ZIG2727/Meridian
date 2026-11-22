@@ -506,3 +506,33 @@
   .profile-bar-track span { animation: none; }
   .profile-goal-track span { transition: none; }
 }
+
+/* V3.3 — active English translation practice */
+.english-study-card { perspective: 900px; }
+.english-answer-input { width: 100%; min-height: 48px; margin-top: 8px; font-size: 1.05rem; letter-spacing: .01em; }
+.english-answer-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 13px; }
+.answer-hint { min-height: 1.3em; margin: 9px 0 0; color: var(--color-ink-soft); font-size: .8rem; }
+.english-answer {
+  margin: 18px 0 14px;
+  padding: 17px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f5f8f4, #edf2ed);
+  transform-origin: center;
+  animation: english-answer-flip var(--dur-base) var(--ease-out) both;
+}
+.english-answer.is-correct { border-color: rgba(45, 107, 76, .28); background: linear-gradient(135deg, #edf6ef, #e3efe6); }
+.english-answer.is-incorrect { border-color: rgba(155, 69, 64, .2); background: linear-gradient(135deg, #faf1ee, #f5e9e5); }
+.english-answer h2 { margin: 0 0 7px; color: var(--color-ink); font-size: clamp(1.35rem, 3vw, 1.8rem); }
+.english-answer > p:last-child { margin: 0; color: var(--color-ink-soft); }
+.answer-feedback { margin: 0 0 7px; font-size: .82rem; font-weight: 750; }
+.answer-feedback.is-correct { color: var(--color-success); }
+.answer-feedback.is-incorrect { color: var(--color-error); }
+@keyframes english-answer-flip { from { opacity: 0; transform: rotateY(72deg) translateY(5px); } to { opacity: 1; transform: rotateY(0) translateY(0); } }
+@media (max-width: 520px) {
+  .english-answer-actions { flex-direction: column; }
+  .english-answer-actions .button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .english-answer { animation: none; }
+}
