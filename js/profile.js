@@ -66,6 +66,26 @@ export function saveProfile(value) {
   }
   return profile;
 }
+export function mergeCompletedLessons(profileValue, lessonIds) {
+  const profile = normalizeProfile(profileValue);
+  const known = new Set(profile.completedLessonIds);
+  let added = 0;
+  for (const id of Array.isArray(lessonIds) ? lessonIds : []) {
+    if (typeof id !== "string" || !id || known.has(id)) continue;
+    known.add(id);
+    profile.completedLessonIds.push(id);
+    added++;
+  }
+  profile.xp += added * 20;
+  return profile;
+}
+export function syncCompletedLessons(lessonIds) {
+  const profile = readProfile();
+  const merged = mergeCompletedLessons(profile, lessonIds);
+  if (merged.completedLessonIds.length !== profile.completedLessonIds.length) saveProfile(merged);
+  return merged;
+}
+
 export function recordLessonCompletion(module, lessonId, now = new Date()) {
   if (!["english", "chess", "python"].includes(module) || typeof lessonId !== "string" || !lessonId) return false;
   const profile = readProfile();

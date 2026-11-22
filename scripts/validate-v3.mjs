@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { runSafePython } from "../js/modules/curriculum.js";
 import { MODULE_VISUALS } from "../js/visuals.js";
-import { normalizeProfile, calculateProfileStats } from "../js/profile.js";
+import { normalizeProfile, calculateProfileStats, mergeCompletedLessons } from "../js/profile.js";
 
 const root = process.cwd();
 const modules = ["english", "chess", "python"];
@@ -192,6 +192,8 @@ if (profileStats.todayLessons !== 2 || profileStats.goalPercent !== 100 ||
     profileStats.streak !== 2 || profileStats.weekLessons !== 3 || profileStats.xp !== 60) {
   fail("Profile analytics calculation failed");
 }
+const migratedProfile = mergeCompletedLessons({ xp: 0, completedLessonIds: [] }, ["en-old-1", "ch-old-1", "en-old-1"]);
+if (migratedProfile.xp !== 40 || migratedProfile.completedLessonIds.length !== 2) fail("Legacy completion migration failed");
 console.log("Profile and analytics validated");
 
 const visualModules = Object.keys(MODULE_VISUALS).sort();

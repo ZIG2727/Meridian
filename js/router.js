@@ -4,7 +4,7 @@ import { renderChess } from "./modules/chess.js";
 import { renderPython } from "./modules/python.js";
 import { animateProgress, bindMicroInteractions } from "./motion.js";
 import { MODULE_VISUALS } from "./visuals.js";
-import { renderProfilePanel, bindProfilePanel, readProfile } from "./profile.js";
+import { renderProfilePanel, bindProfilePanel, readProfile, syncCompletedLessons } from "./profile.js";
 
 const dataUrls = {
   english: new URL("../data/english/curriculum.json", import.meta.url),
