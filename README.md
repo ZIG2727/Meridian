@@ -68,4 +68,6 @@ Python runner поддерживает учебные выражения и ко
 - Chess — Heriberto Murrieta: https://unsplash.com/photos/a-close-up-of-a-chess-board-with-pieces-on-it-eHClqseTUWc
 - Python — Bayu Syaits: https://unsplash.com/photos/laptop-and-phone-on-a-desk-with-coding-software-open-oYzjGQ7LCVE
 
-Все три источника отмечены как доступные бесплатно по Unsplash License на страницах фотографий.
+Все три источника отмечены как доступные бесплатно по Unsplash License на страницах фотографий. Изображения имеют описательный alt-текст, загружаются отложенно на главной и не участвуют в логике уроков.
+
+Пружинящая кривая применяется к небольшим интерактивным откликам; раскрытие групп использует CSS Grid, а не измерение высоты через JavaScript. Эффекты отключаются при включённом системном режиме уменьшения движения.
