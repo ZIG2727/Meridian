@@ -20,3 +20,17 @@ jobs:
           done
       - name: Validate curriculum data
         run: node scripts/validate-v3.mjs
+      - name: Install browser test runtime
+        run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - name: Run responsive browser smoke tests
+        run: node scripts/visual-smoke.mjs
+      - name: Upload responsive screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: meridian-responsive-smoke
+          path: artifacts/visual-smoke/
+          if-no-files-found: ignore
+          retention-days: 7
