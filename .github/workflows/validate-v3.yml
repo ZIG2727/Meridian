@@ -3,8 +3,11 @@ on:
   push:
     branches: [main, v3-curriculum]
   pull_request:
-    branches: [main, v3-curriculum, v3.1-visual-audit]
+    branches: [main]
   workflow_dispatch:
+concurrency:
+  group: meridian-validation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   curriculum:
     runs-on: ubuntu-latest
