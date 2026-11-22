@@ -40,7 +40,11 @@ const baseUrl = "http://127.0.0.1:" + address.port;
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage();
 const pageErrors = [];
+const consoleErrors = [];
+const failedRequests = [];
 page.on("pageerror", error => pageErrors.push(error.message));
+page.on("console", message => { if (message.type() === "error") consoleErrors.push(message.text()); });
+page.on("requestfailed", request => failedRequests.push(request.url() + " :: " + (request.failure()?.errorText || "failed")));
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -92,7 +96,16 @@ try {
       await page.goto(baseUrl + "/#/" + subject, { waitUntil: "domcontentloaded" });
       await page.waitForFunction(() => document.querySelector(".module-hero") || document.querySelector(".error-state"), null, { timeout: 20000 });
       const routeError = await page.locator(".error-state").innerText().catch(() => "");
-      assert(!routeError, subject + " route rendered an error state: " + routeError);
+      if (routeError) {
+        const details = await page.evaluate(() => ({
+          href: location.href,
+          appText: document.querySelector("#app")?.innerText,
+          appMarkup: document.querySelector("#app")?.innerHTML.slice(0, 2400)
+        }));
+        throw new Error(subject + " route rendered an error state: " + JSON.stringify({
+          routeError, details, pageErrors, consoleErrors, failedRequests: failedRequests.slice(-12)
+        }));
+      }
       assert(await page.locator(".module-hero").count() === 1, subject + ": module hero was not rendered");
       assert(await page.locator(".visual-gallery-card").count() === 2, subject + ": expected two gallery cards");
       await waitForImages();
