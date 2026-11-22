@@ -123,6 +123,9 @@ try {
         await toggle.click();
         const after = await toggle.getAttribute("aria-expanded");
         assert(before !== after, subject + ": unit group toggle did not change state");
+        await toggle.click();
+        assert(await toggle.getAttribute("aria-expanded") === before, subject + ": unit group did not reopen");
+        await page.waitForTimeout(500);
       }
 
       await page.screenshot({ path: resolve(outputDir, subject + "-" + size.name + ".png"), fullPage: true });
@@ -136,6 +139,7 @@ try {
   await page.locator("#check-answer").click();
   assert(await page.locator(".answer-feedback.is-correct").count() === 1,
     "Typed English answer should ignore case and surrounding spaces");
+  await page.screenshot({ path: resolve(outputDir, "english-answer-correct.png"), fullPage: true });
   await page.locator('[data-rating="good"]').click();
   assert((await page.locator(".prompt-word").innerText()).trim() === "привет",
     "English SRS should advance to the next card after rating");
@@ -143,6 +147,7 @@ try {
   await page.locator("#check-answer").click();
   assert(await page.locator(".answer-feedback.is-incorrect").count() === 1,
     "Incorrect English answer should show corrective feedback");
+  await page.screenshot({ path: resolve(outputDir, "english-answer-incorrect.png"), fullPage: true });
 
   await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
   await page.locator("[data-profile-open]").waitFor();
