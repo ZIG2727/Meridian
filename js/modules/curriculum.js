@@ -204,11 +204,14 @@ function renderEnglishLesson(app,module,unit,lesson,completed) {
   return;
  }
  const saved=readSession(module);
- let index=saved?.lessonId===lesson.lessonId&&Number.isInteger(saved.cardIndex)?Math.min(saved.cardIndex,dueCards.length-1):0;
+ const savedCardIndex=saved?.lessonId===lesson.lessonId&&typeof saved.cardId==="string"
+  ? dueCards.findIndex(card=>card.id===saved.cardId) : -1;
+ let index=savedCardIndex>=0?savedCardIndex:
+  saved?.lessonId===lesson.lessonId&&Number.isInteger(saved.cardIndex)?Math.min(saved.cardIndex,dueCards.length-1):0;
  let checked=false,answerCorrect=false,userAnswer="";
  const draw=()=>{
   const card=dueCards[index],entry=srs[card.id];
-  writeStored(keys(module).session,{unitId:unit.unitId,lessonId:lesson.lessonId,cardIndex:index});
+  writeStored(keys(module).session,{unitId:unit.unitId,lessonId:lesson.lessonId,cardId:card.id,cardIndex:index});
   const answerBlock=checked
    ? '<div class="english-answer '+(answerCorrect?'is-correct':'is-incorrect')+'" aria-live="polite"><p class="answer-feedback '+(answerCorrect?'is-correct':'is-incorrect')+'">'+(answerCorrect?'Верно! Хорошо вспомнили.':'Не совсем. Правильный ответ:')+'</p><h2>'+esc(card.en)+'</h2><p>'+esc(card.example)+'</p></div><p class="field-label">Оцените, насколько легко вспомнили ответ</p><div class="rating-row">'+[['again','Снова'],['hard','Трудно'],['good','Хорошо'],['easy','Легко']].map(([v,l])=>'<button class="rating-button" data-rating="'+v+'">'+l+'</button>').join("")+'</div>'
    : '<label class="field-label" for="english-answer">Ваш перевод на английском</label><input class="form-field english-answer-input" id="english-answer" type="text" inputmode="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Введите перевод" value="'+esc(userAnswer)+'"><div class="english-answer-actions"><button class="button" id="check-answer" type="button">Проверить</button><button class="button button-secondary" id="show-answer" type="button">Не знаю — показать ответ</button></div><p class="answer-hint" id="answer-hint" role="status"></p>';

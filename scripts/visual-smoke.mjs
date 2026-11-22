@@ -143,6 +143,9 @@ try {
   await page.locator('[data-rating="good"]').click();
   assert((await page.locator(".prompt-word").innerText()).trim() === "привет",
     "English SRS should advance to the next card after rating");
+  await page.reload({ waitUntil: "domcontentloaded" });
+  assert((await page.locator(".prompt-word").innerText()).trim() === "привет",
+    "English session should resume the exact card after reload");
   await page.locator("#english-answer").fill("incorrect");
   await page.locator("#check-answer").click();
   assert(await page.locator(".answer-feedback.is-incorrect").count() === 1,
