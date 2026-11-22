@@ -345,26 +345,53 @@ function nextLessonNavigation(module,unit,lesson) {
  return '<a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">Вернуться к юниту</a>';
 }
 function renderChessLesson(app,module,unit,lesson,completed) {
- const cells=fenBoard(lesson.fen);if(!cells||!Array.isArray(lesson.quiz)||!lesson.quiz.length)throw new Error("Неверная шахматная позиция или тест.");
- const q=lesson.quiz[0],turn=lesson.fen.split(" ")[1];let choice=null,answered=completed.includes(lesson.lessonId);
- const board=cells.map((piece,index)=>{const square=squareName(index),shade=(Math.floor(index/8)+index%8)%2?"dark":"light";return '<button type="button" class="chess-square '+shade+'" data-square="'+square+'" data-index="'+index+'" aria-pressed="false" aria-label="'+(piece?esc(piece)+" на ":"Пустое поле ")+square+'">'+esc(piece)+'</button>';}).join("");
- app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="curriculum-lesson-focus"><p class="eyebrow">Шахматы · '+lesson.order+' из '+unit.lessonIds.length+'</p><h1>'+esc(lesson.title)+'</h1><article class="lesson-card"><p>'+esc(lesson.text)+'</p></article><section class="panel"><p class="eyebrow">Позиция из FEN</p><div class="chess-board curriculum-board" role="group" aria-label="Шахматная позиция">'+board+'</div><p class="code-note">Нажмите на фигуру стороны, чей ход указан в FEN, чтобы увидеть возможные поля. Подсказки учитывают безопасность короля. Рокировка и взятие на проходе пока не включены.</p><p class="status-line" id="board-feedback" aria-live="polite"></p></section><section class="panel"><p class="eyebrow">Проверка</p><p class="quiz-question">'+esc(q.q)+'</p><div class="quiz-options">'+q.options.map((o,i)=>'<button class="quiz-option" data-choice="'+i+'" aria-pressed="false">'+esc(o)+'</button>').join("")+'</div><button class="button" id="check-answer" '+(answered?'disabled':'')+'>Проверить</button><p class="lesson-feedback status-line" role="status">'+(answered?'Урок уже завершён.':'')+'</p><div id="lesson-next">'+(answered?nextLessonNavigation(module,unit,lesson):'')+'</div></section><div class="button-row lesson-navigation"><a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">← К юниту</a></div></section>'+footer(module);
- let selected=-1,targets=[];
- const squares=[...app.querySelectorAll("[data-square]")],boardFeedback=app.querySelector("#board-feedback");
- const clearSelection=()=>squares.forEach(button=>{button.classList.remove("is-selected-piece","is-move-target");button.setAttribute("aria-pressed","false");});
- squares.forEach(button=>button.addEventListener("click",()=>{
-  const index=Number(button.dataset.index);
-  if(selected>=0&&targets.includes(index)){boardFeedback.textContent="Поле "+squareName(index)+" является допустимым ходом. Позиция на доске не меняется.";return;}
-  const piece=cells[index];
-  if(!piece||isWhitePiece(piece)!==(turn==="w")){selected=-1;targets=[];clearSelection();boardFeedback.textContent="Выберите фигуру стороны, чей ход указан в FEN.";return;}
-  selected=index;targets=legalMoves(cells,index,turn);clearSelection();
-  button.classList.add("is-selected-piece");button.setAttribute("aria-pressed","true");
-  for(const target of targets)squares[target].classList.add("is-move-target");
-  boardFeedback.textContent=targets.length?"Фигура "+squareName(index)+": возможные поля — "+targets.map(squareName).join(", ")+".":"У этой фигуры нет доступных полей в показанной геометрии.";
- }));
+ const initialCells=fenBoard(lesson.fen);
+ if(!initialCells||!Array.isArray(lesson.quiz)||!lesson.quiz.length)throw new Error("Неверная шахматная позиция или тест.");
+ let cells=initialCells.slice(),turn=lesson.fen.split(" ")[1],selected=-1,targets=[],gameOver=false;
+ const initialTurn=turn,q=lesson.quiz[0];let choice=null,answered=completed.includes(lesson.lessonId);
+ const boardRootMarkup=()=>cells.map((piece,index)=>{
+  const square=squareName(index),shade=(Math.floor(index/8)+index%8)%2?"dark":"light";
+  return '<button type="button" class="chess-square '+shade+'" data-square="'+square+'" data-index="'+index+'" aria-pressed="false" aria-label="'+(piece?esc(piece)+" на ":"Пустое поле ")+square+'">'+esc(piece)+'</button>';
+ }).join("");
+ app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+
+ '<section class="curriculum-lesson-focus"><p class="eyebrow">Шахматы · '+lesson.order+' из '+unit.lessonIds.length+'</p><h1>'+esc(lesson.title)+'</h1><article class="lesson-card"><p>'+esc(lesson.text)+'</p></article><section class="panel"><p class="eyebrow">Интерактивная позиция · FEN</p><div class="chess-board curriculum-board" role="group" aria-label="Интерактивная шахматная доска">'+boardRootMarkup()+'</div><div class="chess-board-toolbar"><strong id="chess-turn-status" aria-live="polite">Ход '+(turn==="w"?"белых":"чёрных")+'</strong><button type="button" class="button button-secondary" id="reset-chess-board">Сбросить позицию</button></div><p class="code-note">Выберите фигуру, затем подсвеченное поле. Проверка учитывает безопасность короля. Пешка автоматически превращается в ферзя. Рокировка и взятие на проходе пока не поддерживаются.</p><p class="status-line" id="board-feedback" aria-live="polite">Выберите фигуру стороны, чей ход указан в FEN.</p></section><section class="panel"><p class="eyebrow">Проверка</p><p class="quiz-question">'+esc(q.q)+'</p><div class="quiz-options">'+q.options.map((o,i)=>'<button class="quiz-option" data-choice="'+i+'" aria-pressed="false">'+esc(o)+'</button>').join("")+'</div><button class="button" id="check-answer" '+(answered?'disabled':'')+'>Проверить</button><p class="lesson-feedback status-line" role="status">'+(answered?'Урок уже завершён.':'')+'</p><div id="lesson-next">'+(answered?nextLessonNavigation(module,unit,lesson):'')+'</div></section><div class="button-row lesson-navigation"><a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">← К юниту</a></div></section>'+footer(module);
+ const board=app.querySelector(".curriculum-board"),feedback=app.querySelector("#board-feedback"),turnStatus=app.querySelector("#chess-turn-status");
+ const clearSelection=()=>{selected=-1;targets=[];};
+ const refreshBoard=()=>{
+  board.innerHTML=boardRootMarkup();
+  board.querySelectorAll("[data-square]").forEach(button=>button.addEventListener("click",()=>{
+   if(gameOver){feedback.textContent="Позиция завершена. Сбросьте её, чтобы начать заново.";return;}
+   const index=Number(button.dataset.index);
+   if(selected>=0&&targets.includes(index)){
+    const piece=cells[selected],from=squareName(selected),to=squareName(index);
+    cells[index]=piece==="♙"&&Math.floor(index/8)===0?"♕":piece==="♟"&&Math.floor(index/8)===7?"♛":piece;
+    cells[selected]="";clearSelection();turn=turn==="w"?"b":"w";refreshBoard();
+    turnStatus.textContent="Ход "+(turn==="w"?"белых":"чёрных");
+    const check=isKingInCheck(cells,turn),hasMove=hasLegalMove(cells,turn);
+    if(!hasMove){gameOver=true;feedback.textContent=check?"Мат. Позиция завершена.":"Пат. Позиция завершена.";}
+    else feedback.textContent=(check?"Шах! ":"")+"Ход "+(turn==="w"?"белых":"чёрных")+". Выполнен ход "+from+"–"+to+".";
+    return;
+   }
+   const piece=cells[index];
+   if(!piece||isWhitePiece(piece)!==(turn==="w")){
+    clearSelection();refreshBoard();feedback.textContent="Выберите фигуру стороны, чей ход указан в FEN.";return;
+   }
+   selected=index;targets=legalMoves(cells,index,turn);refreshBoard();
+   const active=board.querySelector('[data-index="'+index+'"]');
+   active?.classList.add("is-selected-piece");active?.setAttribute("aria-pressed","true");
+   for(const target of targets)board.querySelector('[data-index="'+target+'"]')?.classList.add("is-move-target");
+   feedback.textContent=targets.length?"Легальные поля для "+squareName(index)+": "+targets.map(squareName).join(", ")+".":"У фигуры нет легальных ходов.";
+  }));
+ };
+ refreshBoard();
+ app.querySelector("#reset-chess-board").addEventListener("click",()=>{
+  cells=initialCells.slice();turn=initialTurn;gameOver=false;clearSelection();refreshBoard();
+  turnStatus.textContent="Ход "+(turn==="w"?"белых":"чёрных");feedback.textContent="Позиция восстановлена.";
+ });
  app.querySelectorAll("[data-choice]").forEach(btn=>btn.addEventListener("click",()=>{if(answered)return;choice=Number(btn.dataset.choice);app.querySelectorAll("[data-choice]").forEach(x=>x.setAttribute("aria-pressed",String(x===btn)));}));
  app.querySelector("#check-answer").addEventListener("click",()=>{const status=app.querySelector(".lesson-feedback");if(choice===null){status.textContent="Сначала выберите вариант.";return;}if(choice!==q.answer){status.textContent="Пока неверно. Вернитесь к объяснению и попробуйте ещё раз.";return;}answered=true;const unitFinished=markComplete(module,unit,lesson.lessonId,completed);status.textContent=q.explanation||"Верно. Урок завершён.";if(unitFinished)celebrate(status,"Юнит завершён",800);app.querySelector("#lesson-next").innerHTML=nextLessonNavigation(module,unit,lesson);app.querySelector("#check-answer").disabled=true;});
 }
+
 export function runSafePython(source,lesson) {
  const lines=String(source).replace(/\r/g,"").split("\n");
  if(lines.length>300||lines.some(line=>/\b(import|exec|eval|open|__|os\.|sys\.|subprocess)\b/.test(line)))return {ok:false,error:"Эта учебная среда поддерживает только безопасные базовые конструкции Python."};

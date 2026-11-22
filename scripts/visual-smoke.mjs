@@ -140,6 +140,15 @@ try {
     "Chess board should highlight the legal e2-e4 pawn move");
   assert(!(await page.locator('[data-square="e5"]').evaluate(el => el.classList.contains("is-move-target"))),
     "Chess board should not highlight an illegal pawn move");
+  await page.locator('[data-square="e4"]').click();
+  assert((await page.locator('[data-square="e4"]').innerText()).trim() === "♙" &&
+    (await page.locator('[data-square="e2"]').innerText()).trim() === "",
+    "Chess board should apply the selected legal move");
+  assert((await page.locator("#chess-turn-status").innerText()).includes("чёрных"),
+    "Chess board should switch the side to move");
+  await page.locator("#reset-chess-board").click();
+  assert((await page.locator('[data-square="e2"]').innerText()).trim() === "♙",
+    "Chess board reset should restore the original FEN position");
 
   await page.goto(baseUrl + "/#/english/en-a1-greetings/en-a1-greetings-01", { waitUntil: "domcontentloaded" });
   await page.evaluate(() => { localStorage.clear(); sessionStorage.clear(); });
