@@ -1,0 +1,465 @@
+{
+  "unitId": "en-b1-past-events",
+  "lessons": [
+    {
+      "lessonId": "en-b1-past-events-01",
+      "unitId": "en-b1-past-events",
+      "order": 1,
+      "title": "Путешествия и впечатления",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "past"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-past-1-1",
+            "en": "go abroad",
+            "ru": "ездить за границу",
+            "example": "We went abroad for the first time last year.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-1-2",
+            "en": "visit",
+            "ru": "посещать",
+            "example": "We visited three museums.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-1-3",
+            "en": "explore",
+            "ru": "исследовать",
+            "example": "We explored the old town on foot.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-1-4",
+            "en": "discover",
+            "ru": "обнаружить",
+            "example": "I discovered a quiet café.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-1-5",
+            "en": "experience",
+            "ru": "опыт, переживание",
+            "example": "It was an unforgettable experience.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-1-6",
+            "en": "memorable",
+            "ru": "незабываемый",
+            "example": "The concert was memorable.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-1-7",
+            "en": "journey",
+            "ru": "поездка",
+            "example": "The journey took five hours.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-1-8",
+            "en": "sightseeing",
+            "ru": "осмотр достопримечательностей",
+            "example": "We went sightseeing in the morning.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-1-9",
+            "en": "take photos",
+            "ru": "фотографировать",
+            "example": "I took photos of the mountains.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-1-10",
+            "en": "souvenir",
+            "ru": "сувенир",
+            "example": "I bought a small souvenir.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-past-events-02",
+      "unitId": "en-b1-past-events",
+      "order": 2,
+      "title": "События и действия",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "past"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-past-2-1",
+            "en": "happen",
+            "ru": "случаться",
+            "example": "What happened yesterday?",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-2-2",
+            "en": "take place",
+            "ru": "происходить",
+            "example": "The festival took place in June.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-2-3",
+            "en": "attend",
+            "ru": "посещать",
+            "example": "I attended a short workshop.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-2-4",
+            "en": "join",
+            "ru": "присоединяться",
+            "example": "My friends joined us later.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-2-5",
+            "en": "invite",
+            "ru": "приглашать",
+            "example": "They invited us to dinner.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-2-6",
+            "en": "celebrate",
+            "ru": "праздновать",
+            "example": "We celebrated her birthday.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-2-7",
+            "en": "prepare",
+            "ru": "готовить",
+            "example": "We prepared everything in advance.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-2-8",
+            "en": "organise",
+            "ru": "организовывать",
+            "example": "They organised a school event.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-2-9",
+            "en": "cancel",
+            "ru": "отменять",
+            "example": "The match was cancelled.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-2-10",
+            "en": "miss",
+            "ru": "пропустить",
+            "example": "I missed the first part.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-past-events-03",
+      "unitId": "en-b1-past-events",
+      "order": 3,
+      "title": "Результаты и чувства",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "past"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-past-3-1",
+            "en": "enjoy",
+            "ru": "наслаждаться",
+            "example": "I really enjoyed the trip.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-3-2",
+            "en": "be pleased",
+            "ru": "быть довольным",
+            "example": "We were pleased with the result.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-3-3",
+            "en": "be surprised",
+            "ru": "удивиться",
+            "example": "I was surprised by the news.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-3-4",
+            "en": "be disappointed",
+            "ru": "быть разочарованным",
+            "example": "She was disappointed with the weather.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-3-5",
+            "en": "succeed",
+            "ru": "добиться успеха",
+            "example": "The team succeeded in the final round.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-3-6",
+            "en": "fail",
+            "ru": "потерпеть неудачу",
+            "example": "The first attempt failed.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-3-7",
+            "en": "improve",
+            "ru": "улучшить",
+            "example": "My English improved last year.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-3-8",
+            "en": "learn a lesson",
+            "ru": "извлечь урок",
+            "example": "We learned a lesson from the mistake.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-3-9",
+            "en": "fortunately",
+            "ru": "к счастью",
+            "example": "Fortunately, nobody was late.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-3-10",
+            "en": "unfortunately",
+            "ru": "к сожалению",
+            "example": "Unfortunately, it started raining.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-past-events-04",
+      "unitId": "en-b1-past-events",
+      "order": 4,
+      "title": "Временные связки",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "past"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-past-4-1",
+            "en": "at first",
+            "ru": "сначала",
+            "example": "At first, I didn't understand the task.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-4-2",
+            "en": "then",
+            "ru": "затем",
+            "example": "Then we went to the station.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-4-3",
+            "en": "after that",
+            "ru": "после этого",
+            "example": "After that, we had lunch.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-4-4",
+            "en": "finally",
+            "ru": "наконец",
+            "example": "Finally, everyone arrived.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-4-5",
+            "en": "while",
+            "ru": "пока",
+            "example": "I listened to music while I waited.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-4-6",
+            "en": "during",
+            "ru": "во время",
+            "example": "It rained during the match.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-4-7",
+            "en": "before",
+            "ru": "до того как",
+            "example": "We checked the tickets before leaving.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-4-8",
+            "en": "after",
+            "ru": "после того как",
+            "example": "After we arrived, we called home.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-4-9",
+            "en": "the next day",
+            "ru": "на следующий день",
+            "example": "The next day, we visited the castle.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          },
+          {
+            "id": "en-card-past-4-10",
+            "en": "a few years ago",
+            "ru": "несколько лет назад",
+            "example": "I started learning English a few years ago.",
+            "tags": [
+              "b1",
+              "past"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,259 @@
+{
+  "module": "chess",
+  "version": 3,
+  "units": [
+    {
+      "unitId": "ch-basics-board",
+      "level": "Basics",
+      "title": "Доска и нотация",
+      "description": "Координаты, расстановка фигур и запись ходов.",
+      "order": 1,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [],
+      "lessonIds": [
+        "ch-basics-board-01",
+        "ch-basics-board-02",
+        "ch-basics-board-03",
+        "ch-basics-board-04"
+      ]
+    },
+    {
+      "unitId": "ch-basics-pawn",
+      "level": "Basics",
+      "title": "Пешка",
+      "description": "Ход, взятие, превращение и взятие на проходе.",
+      "order": 2,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-board"
+      ],
+      "lessonIds": [
+        "ch-basics-pawn-01",
+        "ch-basics-pawn-02",
+        "ch-basics-pawn-03",
+        "ch-basics-pawn-04"
+      ]
+    },
+    {
+      "unitId": "ch-basics-knight",
+      "level": "Basics",
+      "title": "Конь",
+      "description": "Г-образный ход, прыжок через фигуры и центр.",
+      "order": 3,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-board"
+      ],
+      "lessonIds": [
+        "ch-basics-knight-01",
+        "ch-basics-knight-02",
+        "ch-basics-knight-03",
+        "ch-basics-knight-04"
+      ]
+    },
+    {
+      "unitId": "ch-basics-bishop",
+      "level": "Basics",
+      "title": "Слон",
+      "description": "Диагональное движение и активность слонов.",
+      "order": 4,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-board"
+      ],
+      "lessonIds": [
+        "ch-basics-bishop-01",
+        "ch-basics-bishop-02",
+        "ch-basics-bishop-03",
+        "ch-basics-bishop-04"
+      ]
+    },
+    {
+      "unitId": "ch-basics-rook",
+      "level": "Basics",
+      "title": "Ладья",
+      "description": "Линейные ходы и открытые линии.",
+      "order": 5,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-board"
+      ],
+      "lessonIds": [
+        "ch-basics-rook-01",
+        "ch-basics-rook-02",
+        "ch-basics-rook-03",
+        "ch-basics-rook-04"
+      ]
+    },
+    {
+      "unitId": "ch-tactics-forks",
+      "level": "Tactics",
+      "title": "Вилки",
+      "description": "Двойное нападение одной фигурой.",
+      "order": 6,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-knight"
+      ],
+      "lessonIds": [
+        "ch-tactics-forks-01",
+        "ch-tactics-forks-02",
+        "ch-tactics-forks-03",
+        "ch-tactics-forks-04"
+      ]
+    },
+    {
+      "unitId": "ch-tactics-pins",
+      "level": "Tactics",
+      "title": "Связки",
+      "description": "Находить абсолютные и относительные связки.",
+      "order": 7,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-tactics-forks"
+      ],
+      "lessonIds": [
+        "ch-tactics-pins-01",
+        "ch-tactics-pins-02",
+        "ch-tactics-pins-03",
+        "ch-tactics-pins-04"
+      ]
+    },
+    {
+      "unitId": "ch-tactics-skewers",
+      "level": "Tactics",
+      "title": "Сквозные нападения",
+      "description": "Находить сквозные удары по линиям.",
+      "order": 8,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-tactics-pins"
+      ],
+      "lessonIds": [
+        "ch-tactics-skewers-01",
+        "ch-tactics-skewers-02",
+        "ch-tactics-skewers-03",
+        "ch-tactics-skewers-04"
+      ]
+    },
+    {
+      "unitId": "ch-tactics-discovered",
+      "level": "Tactics",
+      "title": "Вскрытое нападение",
+      "description": "Использовать ход одной фигуры для открытия атаки другой.",
+      "order": 9,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-tactics-skewers"
+      ],
+      "lessonIds": [
+        "ch-tactics-discovered-01",
+        "ch-tactics-discovered-02",
+        "ch-tactics-discovered-03",
+        "ch-tactics-discovered-04"
+      ]
+    },
+    {
+      "unitId": "ch-tactics-double-check",
+      "level": "Tactics",
+      "title": "Двойной шах",
+      "description": "Распознавать двойной шах и способы защиты.",
+      "order": 10,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-tactics-discovered"
+      ],
+      "lessonIds": [
+        "ch-tactics-double-check-01",
+        "ch-tactics-double-check-02",
+        "ch-tactics-double-check-03",
+        "ch-tactics-double-check-04"
+      ]
+    },
+    {
+      "unitId": "ch-endgames-king-pawn",
+      "level": "Endgames",
+      "title": "Король и пешка",
+      "description": "Понимать роль короля, проходную пешку и оппозицию.",
+      "order": 11,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-pawn"
+      ],
+      "lessonIds": [
+        "ch-endgames-king-pawn-01",
+        "ch-endgames-king-pawn-02",
+        "ch-endgames-king-pawn-03",
+        "ch-endgames-king-pawn-04"
+      ]
+    },
+    {
+      "unitId": "ch-endgames-rook",
+      "level": "Endgames",
+      "title": "Ладейные окончания",
+      "description": "Понимать активность ладьи, отсечение короля и базовые принципы.",
+      "order": 12,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-endgames-king-pawn"
+      ],
+      "lessonIds": [
+        "ch-endgames-rook-01",
+        "ch-endgames-rook-02",
+        "ch-endgames-rook-03",
+        "ch-endgames-rook-04"
+      ]
+    },
+    {
+      "unitId": "ch-endgames-basic-mates",
+      "level": "Endgames",
+      "title": "Основные маты",
+      "description": "Узнавать мат ферзём, ладьёй и двумя ладьями.",
+      "order": 13,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-endgames-rook"
+      ],
+      "lessonIds": [
+        "ch-endgames-basic-mates-01",
+        "ch-endgames-basic-mates-02",
+        "ch-endgames-basic-mates-03",
+        "ch-endgames-basic-mates-04"
+      ]
+    },
+    {
+      "unitId": "ch-openings-principles",
+      "level": "Openings",
+      "title": "Принципы дебюта",
+      "description": "Развивать фигуры, бороться за центр и обеспечить короля.",
+      "order": 14,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-basics-rook"
+      ],
+      "lessonIds": [
+        "ch-openings-principles-01",
+        "ch-openings-principles-02",
+        "ch-openings-principles-03",
+        "ch-openings-principles-04"
+      ]
+    },
+    {
+      "unitId": "ch-openings-systems",
+      "level": "Openings",
+      "title": "Дебютные системы",
+      "description": "Знакомиться с идеями итальянской партии, сицилианской защиты и системы Лондона.",
+      "order": 15,
+      "estimatedMinutes": 32,
+      "prerequisiteUnits": [
+        "ch-openings-principles"
+      ],
+      "lessonIds": [
+        "ch-openings-systems-01",
+        "ch-openings-systems-02",
+        "ch-openings-systems-03",
+        "ch-openings-systems-04"
+      ]
+    }
+  ]
+}

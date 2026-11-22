@@ -1,0 +1,65 @@
+{
+  "unitId": "py-files-errors",
+  "lessons": [
+    {
+      "lessonId": "py-files-errors-01",
+      "unitId": "py-files-errors",
+      "order": 1,
+      "title": "SyntaxError",
+      "estimatedMinutes": 8,
+      "tags": [
+        "files-errors",
+        "errors"
+      ],
+      "theory": "SyntaxError возникает, когда Python не может разобрать запись программы: например, пропущено двоеточие или закрывающая скобка.",
+      "starterCode": "print(\"SyntaxError\")",
+      "expectedOutput": "SyntaxError",
+      "hint": "Проверь двоеточия, скобки и кавычки."
+    },
+    {
+      "lessonId": "py-files-errors-02",
+      "unitId": "py-files-errors",
+      "order": 2,
+      "title": "NameError",
+      "estimatedMinutes": 8,
+      "tags": [
+        "files-errors",
+        "errors"
+      ],
+      "theory": "NameError появляется, когда программа обращается к имени, которое ещё не определено или написано с ошибкой.",
+      "starterCode": "print(\"NameError\")",
+      "expectedOutput": "NameError",
+      "hint": "Сверь имя переменной в месте создания и использования."
+    },
+    {
+      "lessonId": "py-files-errors-03",
+      "unitId": "py-files-errors",
+      "order": 3,
+      "title": "TypeError",
+      "estimatedMinutes": 8,
+      "tags": [
+        "files-errors",
+        "errors"
+      ],
+      "theory": "TypeError возникает, когда операция неприменима к типу данных. Например, нельзя без преобразования складывать строку и число.",
+      "starterCode": "print(\"TypeError\")",
+      "expectedOutput": "TypeError",
+      "hint": "Проверь типы значений перед операцией."
+    },
+    {
+      "lessonId": "py-files-errors-04",
+      "unitId": "py-files-errors",
+      "order": 4,
+      "title": "Обработка ошибки: try и except",
+      "estimatedMinutes": 8,
+      "tags": [
+        "files-errors",
+        "errors"
+      ],
+      "theory": "Блок try содержит действие, которое может завершиться ошибкой. Если возникает ожидаемый тип ошибки, except перехватывает его и выполняет запасной блок. В Meridian пример ограничен безопасной проверкой преобразования строки в число.",
+      "starterCode": "raw = \"not a number\"\ntry:\n    print(int(raw))\nexcept ValueError:\n    print(\"Enter a whole number\")",
+      "expectedOutput": "Enter a whole number",
+      "hint": "int(raw) не может превратить текст в целое число. Добавь except ValueError и выведи сообщение."
+    }
+  ]
+}

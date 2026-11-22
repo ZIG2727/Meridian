@@ -1,0 +1,465 @@
+{
+  "unitId": "en-a1-food-drink",
+  "lessons": [
+    {
+      "lessonId": "en-a1-food-drink-01",
+      "unitId": "en-a1-food-drink",
+      "order": 1,
+      "title": "Продукты",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "food"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-food-1-1",
+            "ru": "хлеб",
+            "en": "bread",
+            "example": "Could you buy some bread?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-1-2",
+            "ru": "сыр",
+            "en": "cheese",
+            "example": "Would you like cheese on your sandwich?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-1-3",
+            "ru": "рис",
+            "en": "rice",
+            "example": "We usually serve rice with vegetables.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-1-4",
+            "ru": "макароны",
+            "en": "pasta",
+            "example": "I'm making pasta for dinner.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-1-5",
+            "ru": "яйцо",
+            "en": "egg",
+            "example": "I usually have an egg for breakfast.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-1-6",
+            "ru": "яблоко",
+            "en": "apple",
+            "example": "Would you like an apple?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-1-7",
+            "ru": "банан",
+            "en": "banana",
+            "example": "She puts a banana in her lunchbox.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-1-8",
+            "ru": "овощи",
+            "en": "vegetables",
+            "example": "Try to eat different vegetables.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-1-9",
+            "ru": "фрукты",
+            "en": "fruit",
+            "example": "Fresh fruit is on the table.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-1-10",
+            "ru": "мясо",
+            "en": "meat",
+            "example": "He doesn't eat meat.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-food-drink-02",
+      "unitId": "en-a1-food-drink",
+      "order": 2,
+      "title": "Напитки и заказ",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "food"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-food-2-1",
+            "ru": "вода",
+            "en": "water",
+            "example": "Could I have a glass of water?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-2-2",
+            "ru": "чай",
+            "en": "tea",
+            "example": "Would you like tea or coffee?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-2-3",
+            "ru": "кофе",
+            "en": "coffee",
+            "example": "I drink coffee without sugar.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-2-4",
+            "ru": "сок",
+            "en": "juice",
+            "example": "Orange juice comes with breakfast.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-2-5",
+            "ru": "молоко",
+            "en": "milk",
+            "example": "Do we have any milk left?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-2-6",
+            "ru": "меню",
+            "en": "menu",
+            "example": "Could we see the menu, please?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-2-7",
+            "ru": "я бы хотел(а)...",
+            "en": "I'd like...",
+            "example": "I'd like a bowl of soup.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-2-8",
+            "ru": "можно мне...?",
+            "en": "Can I have...?",
+            "example": "Can I have the bill, please?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-2-9",
+            "ru": "счёт",
+            "en": "bill",
+            "example": "Could we have the bill?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-2-10",
+            "ru": "столик на двоих",
+            "en": "table for two",
+            "example": "A table for two, please.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-food-drink-03",
+      "unitId": "en-a1-food-drink",
+      "order": 3,
+      "title": "Вкус",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "food"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-food-3-1",
+            "ru": "сладкий",
+            "en": "sweet",
+            "example": "This tea is too sweet for me.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-3-2",
+            "ru": "солёный",
+            "en": "salty",
+            "example": "The soup is a little salty.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-3-3",
+            "ru": "кислый",
+            "en": "sour",
+            "example": "Lemons taste sour.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-3-4",
+            "ru": "горький",
+            "en": "bitter",
+            "example": "Dark chocolate can taste bitter.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-3-5",
+            "ru": "острый",
+            "en": "spicy",
+            "example": "Is this curry very spicy?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-3-6",
+            "ru": "свежий",
+            "en": "fresh",
+            "example": "The salad tastes fresh.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-3-7",
+            "ru": "вкусный",
+            "en": "delicious",
+            "example": "That homemade cake was delicious.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-3-8",
+            "ru": "вкусный",
+            "en": "tasty",
+            "example": "This is a tasty vegetable soup.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-3-9",
+            "ru": "голодный",
+            "en": "hungry",
+            "example": "I'm hungry after the walk.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-3-10",
+            "ru": "испытывающий жажду",
+            "en": "thirsty",
+            "example": "Are you thirsty?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-food-drink-04",
+      "unitId": "en-a1-food-drink",
+      "order": 4,
+      "title": "Количество",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "food"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-food-4-1",
+            "ru": "кусок",
+            "en": "a piece of",
+            "example": "Would you like a piece of cake?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-4-2",
+            "ru": "ломтик",
+            "en": "a slice of",
+            "example": "I'll have a slice of bread.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-4-3",
+            "ru": "бутылка",
+            "en": "a bottle of",
+            "example": "We need a bottle of water.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-4-4",
+            "ru": "чашка",
+            "en": "a cup of",
+            "example": "She made me a cup of tea.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-4-5",
+            "ru": "миска",
+            "en": "a bowl of",
+            "example": "He ordered a bowl of noodles.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-4-6",
+            "ru": "немного, несколько",
+            "en": "some",
+            "example": "We need some tomatoes.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-4-7",
+            "ru": "сколько-нибудь",
+            "en": "any",
+            "example": "Do you have any oranges?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-4-8",
+            "ru": "много (неисчисляемое)",
+            "en": "much",
+            "example": "How much milk is left?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-4-9",
+            "ru": "много (исчисляемое)",
+            "en": "many",
+            "example": "How many apples do we need?",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          },
+          {
+            "id": "en-card-food-4-10",
+            "ru": "достаточно",
+            "en": "enough",
+            "example": "There isn't enough bread.",
+            "tags": [
+              "a1",
+              "food"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

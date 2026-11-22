@@ -1,0 +1,465 @@
+{
+  "unitId": "en-b1-health",
+  "lessons": [
+    {
+      "lessonId": "en-b1-health-01",
+      "unitId": "en-b1-health",
+      "order": 1,
+      "title": "Самочувствие",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "health"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-health-1-1",
+            "en": "feel well",
+            "ru": "хорошо себя чувствовать",
+            "example": "I feel well today.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-1-2",
+            "en": "feel unwell",
+            "ru": "плохо себя чувствовать",
+            "example": "I felt unwell after lunch.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-1-3",
+            "en": "tired",
+            "ru": "уставший",
+            "example": "I'm tired after a long day.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-1-4",
+            "en": "exhausted",
+            "ru": "измученный",
+            "example": "She was exhausted after the journey.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-1-5",
+            "en": "dizzy",
+            "ru": "испытывающий головокружение",
+            "example": "I felt dizzy when I stood up.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-1-6",
+            "en": "sore throat",
+            "ru": "боль в горле",
+            "example": "He has a sore throat.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-1-7",
+            "en": "headache",
+            "ru": "головная боль",
+            "example": "I've got a headache.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-1-8",
+            "en": "stomach ache",
+            "ru": "боль в животе",
+            "example": "She has a stomach ache.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-1-9",
+            "en": "cough",
+            "ru": "кашель",
+            "example": "His cough is getting better.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-1-10",
+            "en": "fever",
+            "ru": "жар, температура",
+            "example": "A fever can be a sign of infection.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-health-02",
+      "unitId": "en-b1-health",
+      "order": 2,
+      "title": "У врача",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "health"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-health-2-1",
+            "en": "appointment",
+            "ru": "приём по записи",
+            "example": "I have a doctor's appointment tomorrow.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-2-2",
+            "en": "doctor",
+            "ru": "врач",
+            "example": "The doctor asked a few questions.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-2-3",
+            "en": "nurse",
+            "ru": "медсестра",
+            "example": "The nurse checked my temperature.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-2-4",
+            "en": "patient",
+            "ru": "пациент",
+            "example": "The patient is waiting outside.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-2-5",
+            "en": "symptom",
+            "ru": "симптом",
+            "example": "Tell the doctor about every symptom.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-2-6",
+            "en": "medical history",
+            "ru": "история болезни",
+            "example": "The form asks about your medical history.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-2-7",
+            "en": "examine",
+            "ru": "осматривать",
+            "example": "The doctor will examine your arm.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-2-8",
+            "en": "prescription",
+            "ru": "рецепт",
+            "example": "The doctor wrote a prescription.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-2-9",
+            "en": "treatment",
+            "ru": "лечение",
+            "example": "The treatment may take a few days.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-2-10",
+            "en": "recover",
+            "ru": "выздоравливать",
+            "example": "It can take time to recover.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-health-03",
+      "unitId": "en-b1-health",
+      "order": 3,
+      "title": "Полезные привычки",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "health"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-health-3-1",
+            "en": "balanced diet",
+            "ru": "сбалансированное питание",
+            "example": "A balanced diet includes different foods.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-3-2",
+            "en": "regular exercise",
+            "ru": "регулярные упражнения",
+            "example": "Regular exercise supports good health.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-3-3",
+            "en": "sleep",
+            "ru": "сон",
+            "example": "Enough sleep helps you concentrate.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-3-4",
+            "en": "stay hydrated",
+            "ru": "пить достаточно воды",
+            "example": "Remember to stay hydrated.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-3-5",
+            "en": "fresh air",
+            "ru": "свежий воздух",
+            "example": "A walk gives you some fresh air.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-3-6",
+            "en": "take a break",
+            "ru": "делать перерыв",
+            "example": "Take a break after studying.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-3-7",
+            "en": "healthy habit",
+            "ru": "полезная привычка",
+            "example": "Reading before bed is a healthy habit.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-3-8",
+            "en": "mental health",
+            "ru": "психическое здоровье",
+            "example": "Mental health is important at every age.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-3-9",
+            "en": "stress",
+            "ru": "стресс",
+            "example": "Too much stress can affect sleep.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-3-10",
+            "en": "relaxation",
+            "ru": "расслабление",
+            "example": "Quiet music helps with relaxation.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-health-04",
+      "unitId": "en-b1-health",
+      "order": 4,
+      "title": "Восстановление",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "health"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-health-4-1",
+            "en": "medicine",
+            "ru": "лекарство",
+            "example": "Ask a pharmacist about the medicine.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-4-2",
+            "en": "pain",
+            "ru": "боль",
+            "example": "The pain went away after resting.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-4-3",
+            "en": "rest",
+            "ru": "отдых",
+            "example": "You need some rest.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-4-4",
+            "en": "bandage",
+            "ru": "бинт",
+            "example": "The nurse put a bandage on the cut.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-4-5",
+            "en": "appointment",
+            "ru": "запись на приём",
+            "example": "Please keep your appointment card.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-4-6",
+            "en": "allergy",
+            "ru": "аллергия",
+            "example": "Tell the doctor about any allergy.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-4-7",
+            "en": "side effect",
+            "ru": "побочный эффект",
+            "example": "Ask about possible side effects.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-4-8",
+            "en": "improve",
+            "ru": "улучшаться",
+            "example": "Her condition began to improve.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-4-9",
+            "en": "worse",
+            "ru": "хуже",
+            "example": "The cough became worse at night.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          },
+          {
+            "id": "en-card-health-4-10",
+            "en": "advice",
+            "ru": "совет",
+            "example": "The doctor gave useful advice.",
+            "tags": [
+              "b1",
+              "health"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

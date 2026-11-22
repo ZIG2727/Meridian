@@ -1,0 +1,465 @@
+{
+  "unitId": "en-a1-numbers-time",
+  "lessons": [
+    {
+      "lessonId": "en-a1-numbers-time-01",
+      "unitId": "en-a1-numbers-time",
+      "order": 1,
+      "title": "Числа",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "time"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-numbers-time-1-1",
+            "ru": "ноль",
+            "en": "zero",
+            "example": "The score is zero to one.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-1-2",
+            "ru": "один",
+            "en": "one",
+            "example": "I need one ticket.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-1-3",
+            "ru": "двенадцать",
+            "en": "twelve",
+            "example": "The meeting starts at twelve.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-1-4",
+            "ru": "двадцать",
+            "en": "twenty",
+            "example": "The walk takes twenty minutes.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-1-5",
+            "ru": "тридцать",
+            "en": "thirty",
+            "example": "The shop closes in thirty minutes.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-1-6",
+            "ru": "сорок",
+            "en": "forty",
+            "example": "The room has forty chairs.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-1-7",
+            "ru": "пятьдесят",
+            "en": "fifty",
+            "example": "Fifty people joined the event.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-1-8",
+            "ru": "сто",
+            "en": "hundred",
+            "example": "The book costs one hundred rubles.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-1-9",
+            "ru": "число, номер",
+            "en": "number",
+            "example": "What's your house number?",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-1-10",
+            "ru": "сколько?",
+            "en": "How many?",
+            "example": "How many tickets do we need?",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-numbers-time-02",
+      "unitId": "en-a1-numbers-time",
+      "order": 2,
+      "title": "Дни недели",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "time"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-numbers-time-2-1",
+            "ru": "понедельник",
+            "en": "Monday",
+            "example": "The library is closed on Monday.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-2-2",
+            "ru": "вторник",
+            "en": "Tuesday",
+            "example": "I have music lessons on Tuesday.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-2-3",
+            "ru": "среда",
+            "en": "Wednesday",
+            "example": "Let's meet on Wednesday.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-2-4",
+            "ru": "четверг",
+            "en": "Thursday",
+            "example": "The test is on Thursday.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-2-5",
+            "ru": "пятница",
+            "en": "Friday",
+            "example": "We finish early on Friday.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-2-6",
+            "ru": "суббота",
+            "en": "Saturday",
+            "example": "I play football on Saturday.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-2-7",
+            "ru": "воскресенье",
+            "en": "Sunday",
+            "example": "We visit our grandparents on Sunday.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-2-8",
+            "ru": "будний день",
+            "en": "weekday",
+            "example": "I get up early on weekdays.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-2-9",
+            "ru": "выходные",
+            "en": "weekend",
+            "example": "What are your plans for the weekend?",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-2-10",
+            "ru": "каждый день",
+            "en": "every day",
+            "example": "I read every day.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-numbers-time-03",
+      "unitId": "en-a1-numbers-time",
+      "order": 3,
+      "title": "Время",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "time"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-numbers-time-3-1",
+            "ru": "который час?",
+            "en": "What time is it?",
+            "example": "Excuse me, what time is it?",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-3-2",
+            "ru": "ровно",
+            "en": "o'clock",
+            "example": "It's six o'clock.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-3-3",
+            "ru": "половина после",
+            "en": "half past",
+            "example": "It's half past eight.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-3-4",
+            "ru": "четверть после",
+            "en": "quarter past",
+            "example": "It's quarter past nine.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-3-5",
+            "ru": "без четверти",
+            "en": "quarter to",
+            "example": "It's quarter to seven.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-3-6",
+            "ru": "утром",
+            "en": "in the morning",
+            "example": "I run in the morning.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-3-7",
+            "ru": "днём",
+            "en": "in the afternoon",
+            "example": "The lesson is in the afternoon.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-3-8",
+            "ru": "вечером",
+            "en": "in the evening",
+            "example": "We watch a film in the evening.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-3-9",
+            "ru": "в полдень",
+            "en": "at noon",
+            "example": "Let's have lunch at noon.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-3-10",
+            "ru": "в полночь",
+            "en": "at midnight",
+            "example": "The train arrives at midnight.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-numbers-time-04",
+      "unitId": "en-a1-numbers-time",
+      "order": 4,
+      "title": "Даты и расписание",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "time"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-numbers-time-4-1",
+            "ru": "сегодня",
+            "en": "today",
+            "example": "I have two classes today.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-4-2",
+            "ru": "завтра",
+            "en": "tomorrow",
+            "example": "The weather may change tomorrow.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-4-3",
+            "ru": "вчера",
+            "en": "yesterday",
+            "example": "I called her yesterday.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-4-4",
+            "ru": "дата",
+            "en": "date",
+            "example": "What's the date today?",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-4-5",
+            "ru": "месяц",
+            "en": "month",
+            "example": "Which month do you like most?",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-4-6",
+            "ru": "январь",
+            "en": "January",
+            "example": "The course starts in January.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-4-7",
+            "ru": "апрель",
+            "en": "April",
+            "example": "Our holiday begins in April.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-4-8",
+            "ru": "расписание",
+            "en": "schedule",
+            "example": "Check the bus schedule online.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-4-9",
+            "ru": "встреча по записи",
+            "en": "appointment",
+            "example": "I have a dentist appointment at three.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          },
+          {
+            "id": "en-card-numbers-time-4-10",
+            "ru": "вовремя",
+            "en": "on time",
+            "example": "The train arrived on time.",
+            "tags": [
+              "a1",
+              "time"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

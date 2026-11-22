@@ -1,0 +1,65 @@
+{
+  "unitId": "py-basics-print",
+  "lessons": [
+    {
+      "lessonId": "py-basics-print-01",
+      "unitId": "py-basics-print",
+      "order": 1,
+      "title": "Первая команда print",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "print"
+      ],
+      "theory": "print() выводит значение в консоль. Текст заключают в кавычки, скобки содержат то, что нужно показать.",
+      "starterCode": "print(\"Hello, world!\")",
+      "expectedOutput": "Hello, world!",
+      "hint": "Передай в print() строку целиком, сохранив кавычки."
+    },
+    {
+      "lessonId": "py-basics-print-02",
+      "unitId": "py-basics-print",
+      "order": 2,
+      "title": "Несколько строк",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "print"
+      ],
+      "theory": "Каждый вызов print() обычно начинает новую строку. Порядок команд определяет порядок результата.",
+      "starterCode": "print(\"First\")\nprint(\"Second\")",
+      "expectedOutput": "First\nSecond",
+      "hint": "Добавь второй вызов print() на отдельной строке."
+    },
+    {
+      "lessonId": "py-basics-print-03",
+      "unitId": "py-basics-print",
+      "order": 3,
+      "title": "Вывод чисел",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "print"
+      ],
+      "theory": "Числа передают в print() без кавычек. Число в кавычках становится строкой.",
+      "starterCode": "print(24)\nprint(3.5)",
+      "expectedOutput": "24\n3.5",
+      "hint": "Убери кавычки вокруг числовых значений."
+    },
+    {
+      "lessonId": "py-basics-print-04",
+      "unitId": "py-basics-print",
+      "order": 4,
+      "title": "Комментарии",
+      "estimatedMinutes": 8,
+      "tags": [
+        "basics",
+        "print"
+      ],
+      "theory": "Текст после # — комментарий, он не выполняется. Комментарии поясняют назначение кода.",
+      "starterCode": "# Start\nprint(\"Ready\")",
+      "expectedOutput": "Ready",
+      "hint": "Оставь пояснение после #, а print() — на отдельной строке."
+    }
+  ]
+}

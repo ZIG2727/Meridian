@@ -1,0 +1,465 @@
+{
+  "unitId": "en-a1-greetings",
+  "lessons": [
+    {
+      "lessonId": "en-a1-greetings-01",
+      "unitId": "en-a1-greetings",
+      "order": 1,
+      "title": "Hello и Goodbye",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "greetings"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-greetings-01-01",
+            "ru": "здравствуйте",
+            "en": "hello",
+            "example": "Hello, Anna! Good to see you.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-01-02",
+            "ru": "привет",
+            "en": "hi",
+            "example": "Hi, Sam. How are you?",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-01-03",
+            "ru": "доброе утро",
+            "en": "good morning",
+            "example": "Good morning, everyone.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-01-04",
+            "ru": "добрый день",
+            "en": "good afternoon",
+            "example": "Good afternoon, Mr Brown.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-01-05",
+            "ru": "добрый вечер",
+            "en": "good evening",
+            "example": "Good evening. Welcome in.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-01-06",
+            "ru": "до свидания",
+            "en": "goodbye",
+            "example": "Goodbye! See you tomorrow.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-01-07",
+            "ru": "до скорого",
+            "en": "see you later",
+            "example": "See you later after class.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-01-08",
+            "ru": "береги себя",
+            "en": "take care",
+            "example": "Take care on your way home.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-01-09",
+            "ru": "хорошего дня",
+            "en": "have a nice day",
+            "example": "Have a nice day at work.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-01-10",
+            "ru": "как дела?",
+            "en": "how are you?",
+            "example": "Hi, Kate. How are you?",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-greetings-02",
+      "unitId": "en-a1-greetings",
+      "order": 2,
+      "title": "Ответы на приветствие",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "greetings"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-greetings-02-01",
+            "ru": "у меня всё хорошо",
+            "en": "I'm fine",
+            "example": "I'm fine, thanks. And you?",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-02-02",
+            "ru": "довольно хорошо",
+            "en": "pretty good",
+            "example": "Pretty good, thanks for asking.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-02-03",
+            "ru": "неплохо",
+            "en": "not bad",
+            "example": "Not bad. Just a little tired.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-02-04",
+            "ru": "у меня отлично",
+            "en": "I'm great",
+            "example": "I'm great today!",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-02-05",
+            "ru": "а ты?",
+            "en": "and you?",
+            "example": "I'm well, and you?",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-02-06",
+            "ru": "рад тебя видеть",
+            "en": "nice to see you",
+            "example": "Nice to see you again.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-02-07",
+            "ru": "давно не виделись",
+            "en": "long time no see",
+            "example": "Long time no see! How have you been?",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-02-08",
+            "ru": "что нового?",
+            "en": "what's new?",
+            "example": "What's new with you?",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-02-09",
+            "ru": "как обычно",
+            "en": "same as usual",
+            "example": "Same as usual, thanks.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-02-10",
+            "ru": "до скорого",
+            "en": "see you soon",
+            "example": "See you soon after class.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-greetings-03",
+      "unitId": "en-a1-greetings",
+      "order": 3,
+      "title": "Вежливые слова",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "greetings"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-greetings-03-01",
+            "ru": "пожалуйста (просьба)",
+            "en": "please",
+            "example": "Could you wait here, please?",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-03-02",
+            "ru": "спасибо",
+            "en": "thank you",
+            "example": "Thank you for your help.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-03-03",
+            "ru": "большое спасибо",
+            "en": "thanks a lot",
+            "example": "Thanks a lot for the message.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-03-04",
+            "ru": "не за что",
+            "en": "you're welcome",
+            "example": "You're welcome. Happy to help.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-03-05",
+            "ru": "извините (обращение)",
+            "en": "excuse me",
+            "example": "Excuse me, is this seat free?",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-03-06",
+            "ru": "простите",
+            "en": "sorry",
+            "example": "Sorry, I'm a few minutes late.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-03-07",
+            "ru": "без проблем",
+            "en": "no problem",
+            "example": "No problem. Take your time.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-03-08",
+            "ru": "ничего страшного",
+            "en": "that's okay",
+            "example": "That's okay. It happens.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-03-09",
+            "ru": "простите?",
+            "en": "pardon?",
+            "example": "Pardon? Could you repeat that?",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-03-10",
+            "ru": "после вас",
+            "en": "after you",
+            "example": "After you. The door is open.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-a1-greetings-04",
+      "unitId": "en-a1-greetings",
+      "order": 4,
+      "title": "Прощание и пожелания",
+      "estimatedMinutes": 8,
+      "tags": [
+        "a1",
+        "greetings"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-greetings-04-01",
+            "ru": "до завтра",
+            "en": "see you tomorrow",
+            "example": "See you tomorrow at school.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-04-02",
+            "ru": "ещё увидимся",
+            "en": "see you around",
+            "example": "See you around the neighbourhood.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-04-03",
+            "ru": "хороших выходных",
+            "en": "have a good weekend",
+            "example": "Have a good weekend, everyone.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-04-04",
+            "ru": "спокойной ночи",
+            "en": "good night",
+            "example": "Good night. Sleep well.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-04-05",
+            "ru": "я ухожу",
+            "en": "I'm off",
+            "example": "I'm off now. The bus is coming.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-04-06",
+            "ru": "мне пора",
+            "en": "got to go",
+            "example": "I've got to go. It's getting late.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-04-07",
+            "ru": "будь на связи",
+            "en": "keep in touch",
+            "example": "Keep in touch while you're away.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-04-08",
+            "ru": "всего хорошего",
+            "en": "all the best",
+            "example": "All the best with your new job.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-04-09",
+            "ru": "прощайте",
+            "en": "farewell",
+            "example": "The guide said farewell to the group.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          },
+          {
+            "id": "en-card-greetings-04-10",
+            "ru": "до новых встреч",
+            "en": "until next time",
+            "example": "Until next time. Have a safe journey.",
+            "tags": [
+              "greetings",
+              "a1"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

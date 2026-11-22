@@ -1,0 +1,465 @@
+{
+  "unitId": "en-b1-work-office",
+  "lessons": [
+    {
+      "lessonId": "en-b1-work-office-01",
+      "unitId": "en-b1-work-office",
+      "order": 1,
+      "title": "Рабочие роли",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "work"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-work-1-1",
+            "en": "colleague",
+            "ru": "коллега",
+            "example": "My colleague works in the next office.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-1-2",
+            "en": "manager",
+            "ru": "руководитель",
+            "example": "The manager organised the meeting.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-1-3",
+            "en": "employee",
+            "ru": "сотрудник",
+            "example": "Every employee has an email account.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-1-4",
+            "en": "employer",
+            "ru": "работодатель",
+            "example": "The employer offers flexible hours.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-1-5",
+            "en": "team",
+            "ru": "команда",
+            "example": "Our team is working on a new project.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-1-6",
+            "en": "department",
+            "ru": "отдел",
+            "example": "She works in the sales department.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-1-7",
+            "en": "office",
+            "ru": "офис",
+            "example": "The office is near the station.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-1-8",
+            "en": "workplace",
+            "ru": "рабочее место",
+            "example": "A safe workplace matters.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-1-9",
+            "en": "client",
+            "ru": "клиент",
+            "example": "The client called this morning.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-1-10",
+            "en": "customer service",
+            "ru": "служба поддержки",
+            "example": "Contact customer service for help.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-work-office-02",
+      "unitId": "en-b1-work-office",
+      "order": 2,
+      "title": "Задачи и проекты",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "work"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-work-2-1",
+            "en": "task",
+            "ru": "задача",
+            "example": "I finished the most urgent task.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-2-2",
+            "en": "project",
+            "ru": "проект",
+            "example": "The project starts next month.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-2-3",
+            "en": "deadline",
+            "ru": "срок сдачи",
+            "example": "We have a tight deadline.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-2-4",
+            "en": "priority",
+            "ru": "приоритет",
+            "example": "Safety is our top priority.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-2-5",
+            "en": "report",
+            "ru": "отчёт",
+            "example": "Please send me the weekly report.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-2-6",
+            "en": "document",
+            "ru": "документ",
+            "example": "Save the document before closing it.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-2-7",
+            "en": "schedule",
+            "ru": "расписание",
+            "example": "The schedule has changed.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-2-8",
+            "en": "responsibility",
+            "ru": "ответственность",
+            "example": "It's my responsibility to check the figures.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-2-9",
+            "en": "progress",
+            "ru": "прогресс",
+            "example": "We discussed the project's progress.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-2-10",
+            "en": "solution",
+            "ru": "решение",
+            "example": "The team found a practical solution.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-work-office-03",
+      "unitId": "en-b1-work-office",
+      "order": 3,
+      "title": "Встречи и общение",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "work"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-work-3-1",
+            "en": "meeting",
+            "ru": "встреча",
+            "example": "The meeting begins at ten.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-3-2",
+            "en": "agenda",
+            "ru": "повестка",
+            "example": "The agenda has three main points.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-3-3",
+            "en": "discuss",
+            "ru": "обсуждать",
+            "example": "Let's discuss the budget.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-3-4",
+            "en": "suggest",
+            "ru": "предлагать",
+            "example": "Can I suggest another approach?",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-3-5",
+            "en": "agree",
+            "ru": "соглашаться",
+            "example": "I agree with your suggestion.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-3-6",
+            "en": "disagree",
+            "ru": "не соглашаться",
+            "example": "I disagree with the final point.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-3-7",
+            "en": "feedback",
+            "ru": "обратная связь",
+            "example": "Thanks for your useful feedback.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-3-8",
+            "en": "explain",
+            "ru": "объяснять",
+            "example": "Could you explain the process?",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-3-9",
+            "en": "update",
+            "ru": "обновление",
+            "example": "I'll send you an update tomorrow.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-3-10",
+            "en": "take notes",
+            "ru": "делать заметки",
+            "example": "Please take notes during the call.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "lessonId": "en-b1-work-office-04",
+      "unitId": "en-b1-work-office",
+      "order": 4,
+      "title": "Условия работы",
+      "estimatedMinutes": 10,
+      "tags": [
+        "b1",
+        "work"
+      ],
+      "content": {
+        "cards": [
+          {
+            "id": "en-card-work-4-1",
+            "en": "full-time",
+            "ru": "полный рабочий день",
+            "example": "She works full-time at the hospital.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-4-2",
+            "en": "part-time",
+            "ru": "неполный рабочий день",
+            "example": "He has a part-time job.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-4-3",
+            "en": "remote",
+            "ru": "удалённый",
+            "example": "Our company offers remote work.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-4-4",
+            "en": "flexible hours",
+            "ru": "гибкий график",
+            "example": "Flexible hours help me plan my day.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-4-5",
+            "en": "salary",
+            "ru": "зарплата",
+            "example": "The salary is paid monthly.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-4-6",
+            "en": "experience",
+            "ru": "опыт",
+            "example": "She has experience in design.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-4-7",
+            "en": "apply for",
+            "ru": "подавать заявку",
+            "example": "I'd like to apply for the position.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-4-8",
+            "en": "job interview",
+            "ru": "собеседование",
+            "example": "His job interview is on Friday.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-4-9",
+            "en": "promotion",
+            "ru": "повышение",
+            "example": "She received a promotion last year.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          },
+          {
+            "id": "en-card-work-4-10",
+            "en": "annual leave",
+            "ru": "ежегодный отпуск",
+            "example": "I have two weeks of annual leave.",
+            "tags": [
+              "b1",
+              "work"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

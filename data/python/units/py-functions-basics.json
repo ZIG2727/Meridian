@@ -1,0 +1,65 @@
+{
+  "unitId": "py-functions-basics",
+  "lessons": [
+    {
+      "lessonId": "py-functions-basics-01",
+      "unitId": "py-functions-basics",
+      "order": 1,
+      "title": "Объявление функции",
+      "estimatedMinutes": 10,
+      "tags": [
+        "functions",
+        "basics"
+      ],
+      "theory": "def создаёт функцию — именованный блок кода. Тело функции записывают с отступом, а запуск происходит при вызове имени.",
+      "starterCode": "def greet():\n    print(\"Hello\")\ngreet()",
+      "expectedOutput": "Hello",
+      "hint": "Определи greet() и вызови её после блока."
+    },
+    {
+      "lessonId": "py-functions-basics-02",
+      "unitId": "py-functions-basics",
+      "order": 2,
+      "title": "Параметр функции",
+      "estimatedMinutes": 10,
+      "tags": [
+        "functions",
+        "basics"
+      ],
+      "theory": "Параметр — имя для значения, которое передают функции при вызове. Внутри тела можно использовать это имя.",
+      "starterCode": "def greet(name):\n    print(name)\ngreet(\"Mira\")",
+      "expectedOutput": "Mira",
+      "hint": "Добавь параметр name и передай строку Mira."
+    },
+    {
+      "lessonId": "py-functions-basics-03",
+      "unitId": "py-functions-basics",
+      "order": 3,
+      "title": "Возврат значения",
+      "estimatedMinutes": 10,
+      "tags": [
+        "functions",
+        "basics"
+      ],
+      "theory": "return завершает функцию и возвращает результат вызывающему коду. print() показывает значение, а return передаёт его дальше.",
+      "starterCode": "def double(number):\n    return number + number\nprint(double(4))",
+      "expectedOutput": "8",
+      "hint": "Функция должна вернуть удвоенное число."
+    },
+    {
+      "lessonId": "py-functions-basics-04",
+      "unitId": "py-functions-basics",
+      "order": 4,
+      "title": "Повторный вызов функции",
+      "estimatedMinutes": 10,
+      "tags": [
+        "functions",
+        "basics"
+      ],
+      "theory": "Определённую функцию можно вызывать несколько раз. Каждый вызов выполняет её тело заново, поэтому не нужно копировать одинаковые строки программы.",
+      "starterCode": "def greet():\n    print(\"Ready\")\ngreet()\ngreet()",
+      "expectedOutput": "Ready\nReady",
+      "hint": "После определения greet() вызови её два раза."
+    }
+  ]
+}
