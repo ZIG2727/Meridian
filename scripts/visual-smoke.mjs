@@ -48,12 +48,14 @@ const assert = (condition, message) => {
 const waitForImages = async () => {
   await page.waitForFunction(() => Array.from(document.querySelectorAll(".subject-media img, .module-hero-image img, .visual-gallery-card img"))
     .every(image => image.complete || image.closest(".subject-media, .module-hero-image, .visual-gallery-card")?.classList.contains("is-image-missing")),
-  { timeout: 15000 }).catch(() => {});
+  null, { timeout: 15000 });
   const broken = await page.locator(".subject-media img, .module-hero-image img, .visual-gallery-card img").evaluateAll(images =>
     images.filter(image => image.complete && image.naturalWidth === 0 &&
       !image.closest(".subject-media, .module-hero-image, .visual-gallery-card")?.classList.contains("is-image-missing")).length
   );
   assert(broken === 0, "Broken image without fallback detected");
+  const pending = await page.locator(".subject-media img, .module-hero-image img, .visual-gallery-card img").evaluateAll(images => images.filter(image => !image.complete).length);
+  assert(pending === 0, "Images did not settle before screenshot: " + pending);
 };
 const checkNoOverflow = async label => {
   const dimensions = await page.evaluate(() => ({
