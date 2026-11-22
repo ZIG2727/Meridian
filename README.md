@@ -57,3 +57,15 @@ Python runner поддерживает учебные выражения и ко
 4. После публикации откройте https://zig2727.github.io/Meridian/.
 
 Проект статический и не требует Node.js или шага сборки для публикации. Изменения V3 находятся в ветке `v3-curriculum`; они попадут на основной сайт после принятия этой ветки в `main`.
+
+
+## Визуальные материалы V3.1
+
+В интерфейсе используются фотографии Unsplash для обложек трёх учебных направлений. Изображения загружаются с CDN Unsplash и ведут на исходные страницы авторов; если внешний ресурс недоступен, учебная функциональность остаётся доступной. Анимации интерфейса используют spring-переходы, ripple-отклик и раскрывающиеся группы юнитов с поддержкой `prefers-reduced-motion`.
+
+Фотографии:
+- English — Yen Vu: https://unsplash.com/photos/desk-with-open-book-laptop-and-study-materials-HNjWq8WPyoY
+- Chess — Heriberto Murrieta: https://unsplash.com/photos/a-close-up-of-a-chess-board-with-pieces-on-it-eHClqseTUWc
+- Python — Bayu Syaits: https://unsplash.com/photos/laptop-and-phone-on-a-desk-with-coding-software-open-oYzjGQ7LCVE
+
+Все три источника отмечены как доступные бесплатно по Unsplash License на страницах фотографий.
