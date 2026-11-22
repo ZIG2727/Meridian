@@ -60,6 +60,25 @@ function readSRS() {
  return legacy&&typeof legacy==="object"?legacy:{};
 }
 
+const ENGLISH_MISTAKES_KEY = "mrd:v3:english:mistakes";
+function readEnglishMistakes() {
+ const values=readStored(ENGLISH_MISTAKES_KEY,[],Array.isArray);
+ return values.filter(item=>item&&typeof item.id==="string"&&typeof item.ru==="string"&&
+  typeof item.en==="string"&&typeof item.example==="string"&&typeof item.unitId==="string"&&typeof item.lessonId==="string");
+}
+function writeEnglishMistakes(values) { writeStored(ENGLISH_MISTAKES_KEY,values.slice(-200)); }
+function rememberEnglishMistake(card,unit,lesson) {
+ const mistakes=readEnglishMistakes(),existing=mistakes.find(item=>item.id===card.id);
+ if(existing){existing.attempts=(Number(existing.attempts)||1)+1;existing.lastWrongAt=Date.now();}
+ else mistakes.push({id:card.id,ru:card.ru,en:card.en,example:card.example,unitId:unit.unitId,
+  unitTitle:unit.title,lessonId:lesson.lessonId,lessonTitle:lesson.title,attempts:1,lastWrongAt:Date.now()});
+ writeEnglishMistakes(mistakes);
+}
+function clearEnglishMistake(cardId) {
+ const mistakes=readEnglishMistakes(),next=mistakes.filter(item=>item.id!==cardId);
+ if(next.length!==mistakes.length)writeEnglishMistakes(next);
+}
+
 async function curriculum(module) {
   const url = new URL(module + "/curriculum.json", ROOT);
   const data = await loadJSON(url);
@@ -127,8 +146,12 @@ function renderModule(app,module,data,completed) {
  const groups=[...new Set(data.units.map(unit=>unit.level))];
  const renderCard=unit=>{const stats=unitStats(unit,completed);return '<article class="unit-card" data-unit="'+esc(unit.unitId)+'"><a class="unit-card-link" href="'+urlFor(module,unit.unitId)+'"><div class="unit-card-top"><span class="eyebrow">'+esc(unit.level)+'</span><span class="unit-status status-'+stats.status+'">'+(stats.status==="completed"?"Завершён":stats.status==="in-progress"?"В процессе":"Не начат")+'</span></div><h3>'+esc(unit.title)+'</h3><p>'+esc(unit.description)+'</p><div class="subject-meta"><span>'+stats.done+' / '+stats.total+' уроков</span><span>'+unit.estimatedMinutes+' мин</span></div><div class="progress-track" data-progress="'+(stats.done/stats.total*100)+'"><div class="progress-fill"></div></div></a></article>';};
  const visual=MODULE_VISUALS[module];
+ const mistakes=module==="english"?readEnglishMistakes():[];
+ const mistakePanel=mistakes.length
+  ? '<section class="english-mistakes-panel"><div class="english-mistakes-heading"><div><p class="eyebrow">ПОВТОРЕНИЕ</p><h2>Сложные карточки</h2><p>Вернись к словам, которые пока не получилось вспомнить.</p></div><span class="english-mistakes-count">'+mistakes.length+'</span></div><div class="english-mistakes-list">'+mistakes.slice(0,3).map(item=>'<a href="'+urlFor("english",item.unitId,item.lessonId)+'"><span><strong>'+esc(item.ru)+'</strong><small>'+esc(item.lessonTitle)+' · '+(item.attempts||1)+' попыток</small></span><span aria-hidden="true">→</span></a>').join("")+'</div></section>'
+  : "";
  app.innerHTML=header(module)+'<section class="module-hero" data-subject="'+module+'"><div class="module-hero-copy"><p class="eyebrow">'+esc(MODULES[module].subtitle)+'</p><span class="module-hero-kicker">'+esc(visual.kicker)+'</span><h1>'+esc(MODULES[module].title)+'</h1><p>Учебная программа: тематические юниты и короткие занятия.</p><div class="module-hero-stats"><strong>'+done+' / '+total+'</strong><span>уроков завершено</span></div></div><a class="module-hero-image" data-subject="'+module+'" href="'+visual.url+'" target="_blank" rel="noopener noreferrer" aria-label="Открыть фотографию: '+esc(visual.alt)+'"><img src="'+visual.src+'" alt="'+esc(visual.alt)+'" loading="eager" decoding="async"><span>Фото: '+visual.credit+' / Unsplash</span></a></section>'+
- '<section class="visual-gallery" data-subject="'+module+'" aria-label="Дополнительные визуальные материалы"><div class="visual-gallery-heading"><div><p class="eyebrow">Визуальные заметки</p><h2>Погружение в предмет</h2></div><a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Лицензия Unsplash ↗</a></div><div class="visual-gallery-grid">'+visual.gallery.map(item=>'<a class="visual-gallery-card" href="'+item.url+'" target="_blank" rel="noopener noreferrer"><img src="'+item.src+'" alt="'+esc(item.alt)+'" loading="lazy" decoding="async"><span>'+esc(item.label)+'</span></a>').join("")+'</div></section>'+
+ '<section class="visual-gallery" data-subject="'+module+'" aria-label="Дополнительные визуальные материалы"><div class="visual-gallery-heading"><div><p class="eyebrow">Визуальные заметки</p><h2>Погружение в предмет</h2></div><a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Лицензия Unsplash ↗</a></div><div class="visual-gallery-grid">'+visual.gallery.map(item=>'<a class="visual-gallery-card" href="'+item.url+'" target="_blank" rel="noopener noreferrer"><img src="'+item.src+'" alt="'+esc(item.alt)+'" loading="lazy" decoding="async"><span>'+esc(item.label)+'</span></a>').join("")+'</div></section>'+mistakePanel+
  (resume?'<a class="button button-secondary" href="'+urlFor(module,resume.unitId,resume.lessonId)+'">Продолжить последний урок →</a>':'')+
  '<div class="curriculum-tools"><label class="curriculum-search"><span class="field-label">Поиск по урокам и темам</span><input class="form-field" id="curriculum-search" type="search" placeholder="Название урока или тег"></label></div>'+
  '<section class="unit-groups" id="unit-groups" aria-label="Учебные юниты">'+groups.map(level=>'<section class="unit-level-group" data-level-group="'+esc(level)+'"><h2><button class="unit-group-toggle" type="button" aria-expanded="true"><span>'+esc(level)+'</span><span class="unit-group-chevron" aria-hidden="true">⌄</span></button></h2><div class="unit-level-content"><div class="unit-level-grid">'+data.units.filter(u=>u.level===level).map(renderCard).join("")+'</div></div></section>').join("")+'</section><section class="lesson-search-results" id="lesson-search-results" aria-label="Найденные уроки" hidden></section><p class="empty-state" id="unit-search-empty" hidden>По этому запросу уроков не найдено.</p>'+footer(module);
@@ -199,12 +222,13 @@ function renderEnglishLesson(app,module,unit,lesson,completed) {
    if(!value.trim()){const hint=app.querySelector("#answer-hint");if(hint)hint.textContent="Сначала введите перевод или откройте ответ.";input?.focus();return;}
    userAnswer=value;
    answerCorrect=normalizeEnglishAnswer(value)===normalizeEnglishAnswer(card.en);
+   if(answerCorrect)clearEnglishMistake(card.id);else rememberEnglishMistake(card,unit,lesson);
    checked=true;
    draw();
   };
   app.querySelector("#check-answer")?.addEventListener("click",checkAnswer);
   input?.addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();checkAnswer();}});
-  app.querySelector("#show-answer")?.addEventListener("click",()=>{userAnswer="";answerCorrect=false;checked=true;draw();});
+  app.querySelector("#show-answer")?.addEventListener("click",()=>{userAnswer="";answerCorrect=false;rememberEnglishMistake(card,unit,lesson);checked=true;draw();});
   app.querySelectorAll("[data-rating]").forEach(button=>button.addEventListener("click",()=>{
    const rating=button.dataset.rating,quality={again:1,hard:3,good:4,easy:5}[rating],old=srs[card.id]||{ease:2.5,interval:0,reps:0};
    const ease=Math.max(1.3,old.ease+0.1-(5-quality)*(0.08+(5-quality)*0.02));
