@@ -54,15 +54,13 @@ const waitForImages = async () => {
     images.forEach(image => { image.loading = "eager"; });
   });
   await page.waitForFunction(() => Array.from(document.querySelectorAll(".subject-media img, .module-hero-image img, .visual-gallery-card img"))
-    .every(image => image.complete || image.closest(".subject-media, .module-hero-image, .visual-gallery-card")?.classList.contains("is-image-missing")),
-  null, { timeout: 3500 }).catch(() => {});
-  const broken = await page.locator(".subject-media img, .module-hero-image img, .visual-gallery-card img").evaluateAll(images =>
-    images.filter(image => image.complete && image.naturalWidth === 0 &&
+    .every(image => image.naturalWidth > 0 || image.closest(".subject-media, .module-hero-image, .visual-gallery-card")?.classList.contains("is-image-missing")),
+  null, { timeout: 8000 });
+  const unresolved = await page.locator(".subject-media img, .module-hero-image img, .visual-gallery-card img").evaluateAll(images =>
+    images.filter(image => image.naturalWidth === 0 &&
       !image.closest(".subject-media, .module-hero-image, .visual-gallery-card")?.classList.contains("is-image-missing")).length
   );
-  assert(broken === 0, "Broken image without fallback detected");
-  const pending = await page.locator(".subject-media img, .module-hero-image img, .visual-gallery-card img").evaluateAll(images => images.filter(image => !image.complete).length);
-  if (pending) console.log("External images still loading at screenshot time:", pending);
+  assert(unresolved === 0, "Image neither loaded nor reached its fallback state");
 };
 const checkNoOverflow = async label => {
   const dimensions = await page.evaluate(() => ({
