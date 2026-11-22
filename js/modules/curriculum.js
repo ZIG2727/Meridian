@@ -196,7 +196,8 @@ function renderEnglishLesson(app,module,unit,lesson,completed) {
  const cards=lesson.content?.cards;
  if(!Array.isArray(cards)||cards.length<10||cards.some(c=>!c.id||!c.ru||!c.en||!c.example))throw new Error("В английском уроке отсутствуют карточки или обязательные поля.");
  const srs=readSRS();
- const dueCards=cards.filter(card=>!srs[card.id]||!Number.isFinite(srs[card.id].due)||srs[card.id].due<=Date.now());
+ const mistakeIds=new Set(readEnglishMistakes().map(item=>item.id));
+ const dueCards=cards.filter(card=>mistakeIds.has(card.id)||!srs[card.id]||!Number.isFinite(srs[card.id].due)||srs[card.id].due<=Date.now());
  if(!dueCards.length){
   const allReviewed=cards.every(card=>srs[card.id]&&Number.isFinite(srs[card.id].due));if(allReviewed&&!completed.includes(lesson.lessonId))markComplete(module,unit,lesson.lessonId,completed);
   const navigation=allReviewed?nextLessonNavigation(module,unit,lesson):'';
