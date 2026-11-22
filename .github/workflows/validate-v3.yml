@@ -1,7 +1,7 @@
 name: Validate Meridian V3
 on:
   push:
-    branches: [main, v3-curriculum, v3.1-visual-audit]
+    branches: [main, v3-curriculum]
   pull_request:
     branches: [main, v3-curriculum, v3.1-visual-audit]
   workflow_dispatch:
@@ -23,7 +23,7 @@ jobs:
       - name: Install browser test runtime
         run: |
           npm install --no-save --package-lock=false playwright
-          npx playwright install --with-deps chromium
+          npx playwright install chromium
       - name: Check browser test script syntax
         run: node --check scripts/visual-smoke.mjs
       - name: Run responsive browser smoke tests
