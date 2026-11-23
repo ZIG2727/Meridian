@@ -156,12 +156,23 @@ try {
     "Python editor should highlight built-in functions");
   assert(await page.locator(".python-highlight .python-string").count() > 0,
     "Python editor should highlight strings");
+  await page.locator("#python-code").fill("if True:");
+  await page.locator("#python-code").press("End");
+  await page.locator("#python-code").press("Enter");
+  assert((await page.locator("#python-code").inputValue()) === "if True:\\n    ",
+    "Python editor should add an indented line after a colon");
+
   await page.locator("#python-code").fill('print("Meridian")');
   await page.locator("#python-code").press("Control+Enter");
   assert((await page.locator("#actual-output").innerText()).trim() === "Meridian",
     "Python editor keyboard shortcut should execute code");
   assert((await page.locator("#python-run-state").innerText()).includes("ВЫВОД ОТЛИЧАЕТСЯ"),
     "Python editor should explain output mismatch");
+
+  await page.locator("#python-code").fill('print("ok")\\nunknown_call()');
+  await page.locator("#run-python").click();
+  assert((await page.locator("#python-diagnostic").innerText()).includes("Строка 2:"),
+    "Python editor should report the source line for a runtime error");
   await page.locator("#reset-python").click();
   await page.locator("#run-python").click();
   assert((await page.locator("#actual-output").innerText()).trim() === "Hello, world!",
