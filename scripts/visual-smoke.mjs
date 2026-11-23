@@ -150,6 +150,30 @@ try {
   assert((await page.locator('[data-square="e2"]').innerText()).trim() === "♙",
     "Chess board reset should restore the original FEN position");
 
+  await page.goto(baseUrl + "/#/python/py-basics-print/py-basics-print-01", { waitUntil: "domcontentloaded" });
+  await page.locator("#python-code").waitFor();
+  assert(await page.locator(".python-highlight .python-builtin").count() > 0,
+    "Python editor should highlight built-in functions");
+  assert(await page.locator(".python-highlight .python-string").count() > 0,
+    "Python editor should highlight strings");
+  await page.locator("#python-code").fill('print("Meridian")');
+  await page.locator("#python-code").press("Control+Enter");
+  assert((await page.locator("#actual-output").innerText()).trim() === "Meridian",
+    "Python editor keyboard shortcut should execute code");
+  assert((await page.locator("#python-run-state").innerText()).includes("ВЫВОД ОТЛИЧАЕТСЯ"),
+    "Python editor should explain output mismatch");
+  await page.locator("#reset-python").click();
+  await page.locator("#run-python").click();
+  assert((await page.locator("#actual-output").innerText()).trim() === "Hello, world!",
+    "Python editor should run the starter solution");
+  assert((await page.locator("#python-run-state").innerText()).includes("ВЫПОЛНЕНО"),
+    "Python exercise should show successful completion");
+  await page.locator("#python-code").fill('print("Draft survives reload")');
+  await page.reload({ waitUntil: "domcontentloaded" });
+  assert((await page.locator("#python-code").inputValue()) === 'print("Draft survives reload")',
+    "Python editor draft should persist after reload");
+  await page.screenshot({ path: resolve(outputDir, "python-lab-editor.png"), fullPage: true });
+
   await page.goto(baseUrl + "/#/english/en-a1-greetings/en-a1-greetings-01", { waitUntil: "domcontentloaded" });
   await page.evaluate(() => { localStorage.clear(); sessionStorage.clear(); });
   await page.reload({ waitUntil: "domcontentloaded" });
