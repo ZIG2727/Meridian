@@ -150,7 +150,7 @@ console.log("V3 curriculum validation passed:", JSON.stringify(totals));
 const highlightedPython = highlightPythonCode('def greet(name):\n    # comment\n    print("hello", 42)');
 const suggestions = getPythonSuggestions("pri", 3);
 if (!suggestions.some(item => item.label === "print") || getPythonSuggestions("print", 5).length !== 0 ||
-    getPythonSuggestions("x = pri", 6)[0]?.label !== "print") fail("Python autocomplete prefix matching failed");
+    getPythonSuggestions("x = pri", 7)[0]?.label !== "print") fail("Python autocomplete prefix matching failed");
 const repeatedHighlight = highlightPythonCode('print("again")');
 if (!repeatedHighlight.includes('class="python-builtin">print</span>') ||
     !highlightPythonCode('print("third")').includes('class="python-builtin">print</span>')) fail("Python syntax highlighting must reset between editor updates");
