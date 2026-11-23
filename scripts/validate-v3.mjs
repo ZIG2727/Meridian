@@ -147,7 +147,7 @@ const html = await readFile(resolve(root, "index.html"), "utf8");
 if (/\bonclick\s*=/i.test(html)) fail("Inline onclick found");
 console.log("V3 curriculum validation passed:", JSON.stringify(totals));
 
-const highlightedPython = highlightPythonCode('def greet(name):\\n    # comment\\n    print("hello", 42)');
+const highlightedPython = highlightPythonCode('def greet(name):\n    # comment\n    print("hello", 42)');
 if (!highlightedPython.includes('class="python-keyword">def</span>') ||
     !highlightedPython.includes('class="python-comment"># comment</span>') ||
     !highlightedPython.includes('class="python-builtin">print</span>') ||
@@ -155,7 +155,7 @@ if (!highlightedPython.includes('class="python-keyword">def</span>') ||
     !highlightedPython.includes('class="python-number">42</span>')) fail("Python syntax highlighting tokens missing");
 const escapedPython = highlightPythonCode('<img src=x onerror=alert(1)>');
 if (escapedPython.includes("<img") || !escapedPython.includes("&lt;img")) fail("Python editor highlight must escape HTML");
-const lineDiagnostic = runSafePython('print("ok")\\nunknown_call()', {});
+const lineDiagnostic = runSafePython('print("ok")\nunknown_call()', {});
 if (lineDiagnostic.ok || !lineDiagnostic.error.startsWith("Строка 2:")) fail("Python error diagnostics must include source line number");
 
 const runnerCases = [
