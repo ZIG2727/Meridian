@@ -321,3 +321,17 @@
 .python-suggestion:hover,.python-suggestion.is-active { border-color:#8eaf9c; background:#eaf2ec; }
 .python-suggestion:focus-visible { outline:2px solid var(--color-python); outline-offset:2px; }
 @media(prefers-reduced-motion:reduce) { .python-suggestion { transition:none; } }
+
+
+.python-trace { margin-top:16px; padding:18px; border:1px solid var(--color-border); border-radius:14px; background:var(--color-surface); }
+.python-trace[hidden] { display:none; }
+.python-trace-heading,.python-trace-controls { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.python-trace-heading h2 { margin:3px 0 0; font-size:1.05rem; }
+.python-trace-heading>span,.python-trace-position { color:var(--color-ink-soft); font-size:.78rem; font-variant-numeric:tabular-nums; }
+.python-trace-line { margin:16px 0 10px; color:var(--color-python); font:600 .84rem var(--font-mono); }
+.python-trace-vars { display:flex; flex-wrap:wrap; gap:8px; min-height:34px; }
+.python-trace-variable { padding:7px 10px; border:1px solid var(--color-border); border-radius:8px; background:var(--color-surface-muted); font:600 .78rem var(--font-mono); }
+.python-trace-controls { margin-top:16px; }
+.python-trace-controls button:disabled { opacity:.45; cursor:not-allowed; }
+@media(max-width:520px) { .python-trace { padding:13px; } .python-trace-controls .button { padding:8px 10px; font-size:.78rem; } }
+@media(prefers-reduced-motion:reduce) { .python-trace * { scroll-behavior:auto; } }
