@@ -152,6 +152,11 @@ try {
 
   await page.goto(baseUrl + "/#/python/py-basics-print/py-basics-print-01", { waitUntil: "domcontentloaded" });
   await page.locator("#python-code").waitFor();
+  await page.locator("#python-code").fill("pri");
+  await page.locator(".python-suggestion").filter({ hasText: "print" }).click();
+  assert((await page.locator("#python-code").inputValue()) === "print",
+    "Python autocomplete should insert the selected completion");
+  await page.locator("#python-code").fill('print("Hello, world!")');
   assert(await page.locator(".python-highlight .python-builtin").count() > 0,
     "Python editor should highlight built-in functions");
   assert(await page.locator(".python-highlight .python-string").count() > 0,
