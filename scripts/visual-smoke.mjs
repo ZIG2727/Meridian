@@ -156,7 +156,7 @@ try {
   await page.locator(".python-suggestion").filter({ hasText: "print" }).click();
   assert((await page.locator("#python-code").inputValue()) === "print",
     "Python autocomplete should insert the selected completion");
-  await page.locator("#python-code").fill("for i in range(1, 4):\\n    doubled = i * 2\\n    print(doubled)");
+  await page.locator("#python-code").fill("for i in range(1, 4):\n    doubled = i * 2\n    print(doubled)");
   await page.locator("#run-python").click();
   assert(!(await page.locator("#python-trace").isHidden()), "Python loop visualizer should appear for supported range loops");
   await page.locator("#python-trace-next").click();
@@ -169,7 +169,7 @@ try {
   await page.locator("#python-code").fill("if True:");
   await page.locator("#python-code").press("End");
   await page.locator("#python-code").press("Enter");
-  assert((await page.locator("#python-code").inputValue()) === "if True:\\n    ",
+  assert((await page.locator("#python-code").inputValue()) === "if True:\n    ",
     "Python editor should add an indented line after a colon");
 
   await page.locator("#python-code").fill('print("Meridian")');
@@ -179,7 +179,7 @@ try {
   assert((await page.locator("#python-run-state").innerText()).includes("ВЫВОД ОТЛИЧАЕТСЯ"),
     "Python editor should explain output mismatch");
 
-  await page.locator("#python-code").fill('print("ok")\\nunknown_call()');
+  await page.locator("#python-code").fill('print("ok")\nunknown_call()');
   await page.locator("#run-python").click();
   assert((await page.locator("#python-diagnostic").innerText()).includes("Строка 2:"),
     "Python editor should report the source line for a runtime error");
