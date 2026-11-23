@@ -178,6 +178,24 @@ try {
   assert((await page.locator("#python-trace-source").textContent()).trim() === "result = i + 10" &&
     (await page.locator("#python-line-numbers span.is-traced").textContent()) === "5",
     "Python trace should highlight the executed else assignment");
+  await page.locator("#python-code").fill("count = 1\nwhile count < 4:\n    print(count)\n    count = count + 1");
+  await page.locator("#run-python").click();
+  assert((await page.locator("#actual-output").innerText()).trim() === "1\n2\n3",
+    "Safe Python runner should execute a bounded while loop");
+  assert((await page.locator("#python-trace-position").textContent()).trim() === "1 / 10",
+    "Python while trace should include condition checks, body steps and the final false condition");
+  assert((await page.locator("#python-trace-line").textContent()).includes("Проверка условия · итерация 1"),
+    "Python while trace should label the first condition check");
+  await page.locator("#python-trace-next").click();
+  assert((await page.locator("#python-trace-source").textContent()).trim() === "print(count)" &&
+    (await page.locator("#python-line-numbers span.is-traced").textContent()) === "3",
+    "Python while trace should highlight the print statement");
+  for (let step = 0; step < 8; step++) await page.locator("#python-trace-next").click();
+  assert((await page.locator("#python-trace-position").textContent()).trim() === "10 / 10" &&
+    (await page.locator("#python-trace-line").textContent()).includes("Цикл завершён") &&
+    (await page.locator("#python-trace-explanation").textContent()).includes("Условие ложно") &&
+    (await page.locator("#python-line-numbers span.is-traced").textContent()) === "2",
+    "Python while trace should show and highlight the final condition that ends the loop");
   await page.locator("#python-code").fill('print("Hello, world!")');
   assert(await page.locator(".python-highlight .python-builtin").count() > 0,
     "Python editor should highlight built-in functions");
