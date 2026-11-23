@@ -3,7 +3,7 @@ import { animateProgress, celebrate } from "../motion.js";
 import { MODULE_VISUALS } from "../visuals.js";
 import { recordLessonCompletion } from "../profile.js";
 import { parseChessPosition, getLegalChessMoves, applyChessMove, getChessPositionStatus, isWhiteChessPiece, chessPositionToFen } from "../chess-engine.js";
-import { highlightPythonCode } from "../python-editor.js";
+import { highlightPythonCode, getPythonSuggestions } from "../python-editor.js";
 export { getLegalChessMoves, getChessPositionStatus };
 
 const MODULES = {
@@ -492,14 +492,31 @@ function renderPythonLesson(app,module,unit,lesson,completed) {
   '<section class="curriculum-lesson-focus python-lesson"><div class="python-lesson-heading"><div><p class="eyebrow">PYTHON LAB · '+lesson.estimatedMinutes+' МИН</p><h1>'+esc(lesson.title)+'</h1></div><span class="python-level-pill">Практика</span></div>'+
   '<article class="lesson-card python-theory-card"><span class="python-theory-icon" aria-hidden="true">⌘</span><div><p class="eyebrow">КРАТКАЯ ТЕОРИЯ</p><p>'+esc(lesson.theory)+'</p></div></article>'+
   '<section class="python-workbench panel"><div class="python-workbench-top"><div><p class="eyebrow">РЕДАКТОР КОДА</p><h2>Твоя программа</h2></div><div class="python-editor-tools"><span class="python-language-badge"><span></span> Python 3</span><button type="button" class="button button-quiet" id="reset-python">Сбросить</button></div></div>'+
-  '<div class="python-editor-shell"><div class="python-line-numbers" id="python-line-numbers" aria-hidden="true"></div><div class="python-editor-stack"><pre class="python-highlight" id="python-highlight" aria-hidden="true"></pre><textarea class="code-editor python-code-input" id="python-code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Редактор Python" aria-describedby="python-editor-help"></textarea></div></div>'+
+  '<div class="python-editor-shell"><div class="python-line-numbers" id="python-line-numbers" aria-hidden="true"></div><div class="python-editor-stack"><pre class="python-highlight" id="python-highlight" aria-hidden="true"></pre><textarea class="code-editor python-code-input" id="python-code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Редактор Python" aria-describedby="python-editor-help"></textarea></div></div><div class="python-autocomplete" id="python-autocomplete" role="listbox" aria-label="Подсказки Python" hidden></div>'+
   '<div class="python-editor-footer"><span id="python-cursor-position">Строка 1 · Столбец 1</span><span id="python-editor-help">Tab — отступ · Ctrl + Enter — запуск</span></div>'+
   '<div class="python-action-row"><button class="button python-run-button" id="run-python"><span aria-hidden="true">▶</span> Запустить код</button><button class="button button-secondary" id="show-hint">Показать подсказку</button><span class="python-run-shortcut">Быстрый запуск <kbd>Ctrl ↵</kbd></span></div>'+
   '<div class="python-hint-card" id="python-hint" hidden><span aria-hidden="true">✦</span><p>'+esc(lesson.hint)+'</p></div>'+
   '<section class="python-console" aria-label="Результат выполнения"><div class="python-console-heading"><div><span class="python-console-dot"></span><strong>Консоль</strong></div><span id="python-run-state">ОЖИДАЕТ ЗАПУСКА</span></div><div class="python-console-body"><div class="python-output-column"><p>ВЫВОД ПРОГРАММЫ</p><pre id="actual-output">Нажми «Запустить код», чтобы увидеть результат.</pre></div><div class="python-expected-column"><p>ОЖИДАЕМЫЙ РЕЗУЛЬТАТ</p><pre>'+esc(lesson.expectedOutput)+'</pre></div></div><div class="python-diagnostic" id="python-diagnostic" role="status">'+(done?'✓ Этот урок уже завершён.':'Здесь появятся подсказки и объяснения ошибок.')+'</div></section>'+
   '<div class="python-completion" id="lesson-next">'+(done?nextLessonNavigation(module,unit,lesson):'')+'</div></section>'+
   '<div class="button-row lesson-navigation"><a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">← К юниту</a></div></section>'+footer(module);
-  const editor=app.querySelector("#python-code"),highlight=app.querySelector("#python-highlight"),numbers=app.querySelector("#python-line-numbers"),cursor=app.querySelector("#python-cursor-position");
+  const editor=app.querySelector("#python-code"),highlight=app.querySelector("#python-highlight"),numbers=app.querySelector("#python-line-numbers"),cursor=app.querySelector("#python-cursor-position"),suggestionBox=app.querySelector("#python-autocomplete");
+  let suggestions=[],selectedSuggestion=0;
+  const hideSuggestions=()=>{suggestions=[];suggestionBox.hidden=true;suggestionBox.replaceChildren();};
+  const renderSuggestions=()=>{
+   suggestionBox.replaceChildren();
+   suggestions.forEach((item,index)=>{
+    const button=document.createElement("button");button.type="button";button.className="python-suggestion"+(index===selectedSuggestion?" is-active":"");button.setAttribute("role","option");button.setAttribute("aria-selected",String(index===selectedSuggestion));
+    const label=document.createElement("span"),detail=document.createElement("small");label.textContent=item.label;detail.textContent=item.detail;button.append(label,detail);
+    button.addEventListener("mousedown",event=>event.preventDefault());button.addEventListener("click",()=>acceptSuggestion(index));suggestionBox.append(button);
+   });
+   suggestionBox.hidden=!suggestions.length;
+  };
+  const updateSuggestions=()=>{suggestions=getPythonSuggestions(editor.value,editor.selectionStart);selectedSuggestion=0;renderSuggestions();};
+  const acceptSuggestion=index=>{
+   const item=suggestions[index];if(!item)return;
+   const before=editor.value.slice(0,editor.selectionStart),match=before.match(/[A-Za-z_]\\w*$/);if(!match)return hideSuggestions();
+   const start=editor.selectionStart-match[0].length;editor.setRangeText(item.label,start,editor.selectionStart,"end");hideSuggestions();paint();editor.focus();
+  };
   const save=()=>writeStored(keys(module).session,{unitId:unit.unitId,lessonId:lesson.lessonId,draftCode:code});
   const paint=()=>{
    code=editor.value;highlight.innerHTML=highlightPythonCode(code)+"\n";numbers.innerHTML=Array.from({length:lineCount()},(_,i)=>'<span>'+(i+1)+'</span>').join("");
@@ -507,17 +524,21 @@ function renderPythonLesson(app,module,unit,lesson,completed) {
    const before=editor.value.slice(0,editor.selectionStart).split("\n"),line=before.length,column=before[before.length-1].length+1;
    cursor.textContent="Строка "+line+" · Столбец "+column;save();
   };
-  editor.value=code;paint();editor.addEventListener("input",paint);editor.addEventListener("click",paint);editor.addEventListener("keyup",paint);
+  editor.value=code;paint();editor.addEventListener("input",()=>{paint();updateSuggestions();});editor.addEventListener("click",()=>{paint();updateSuggestions();});editor.addEventListener("keyup",()=>{paint();updateSuggestions();});
   editor.addEventListener("scroll",()=>{highlight.scrollTop=editor.scrollTop;highlight.scrollLeft=editor.scrollLeft;numbers.scrollTop=editor.scrollTop;});
   editor.addEventListener("keydown",event=>{
-   if((event.ctrlKey||event.metaKey)&&event.key==="Enter"){event.preventDefault();app.querySelector("#run-python").click();return;}
-   if(event.key==="Tab"){event.preventDefault();const start=editor.selectionStart,end=editor.selectionEnd;editor.setRangeText("    ",start,end,"end");paint();return;}
+   if(suggestions.length&&event.key==="ArrowDown"){event.preventDefault();selectedSuggestion=(selectedSuggestion+1)%suggestions.length;renderSuggestions();return;}
+   if(suggestions.length&&event.key==="ArrowUp"){event.preventDefault();selectedSuggestion=(selectedSuggestion-1+suggestions.length)%suggestions.length;renderSuggestions();return;}
+   if(suggestions.length&&(event.key==="Tab"||event.key==="Enter")){event.preventDefault();acceptSuggestion(selectedSuggestion);return;}
+   if(event.key==="Escape"&&suggestions.length){event.preventDefault();hideSuggestions();return;}
+   if((event.ctrlKey||event.metaKey)&&event.key==="Enter"){event.preventDefault();hideSuggestions();app.querySelector("#run-python").click();return;}
+   if(event.key==="Tab"){event.preventDefault();const start=editor.selectionStart,end=editor.selectionEnd;editor.setRangeText("    ",start,end,"end");paint();updateSuggestions();return;}
    if(event.key==="Enter"){
     const start=editor.selectionStart,lineStart=editor.value.lastIndexOf("\n",start-1)+1;
     const indent=(editor.value.slice(lineStart,start).match(/^\s*/)||[""])[0];
     const before=editor.value.slice(lineStart,start);
     const extra=/:\s*$/.test(before)?"    ":"";
-    event.preventDefault();editor.setRangeText("\n"+indent+extra,start,editor.selectionEnd,"end");paint();return;
+    event.preventDefault();editor.setRangeText("\n"+indent+extra,start,editor.selectionEnd,"end");paint();updateSuggestions();return;
    }
   });
   app.querySelector("#show-hint").addEventListener("click",()=>{const hint=app.querySelector("#python-hint");hint.hidden=!hint.hidden;});
