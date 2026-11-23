@@ -201,3 +201,38 @@
 .module-hero-image.is-image-missing { justify-content: flex-start; }
 .module-hero-image.is-image-missing .image-fallback-label { padding: 22px; }
 .visual-gallery-card.is-image-missing { align-items: flex-end; }
+
+
+/* V3.4 — chess practice, promotion and move history */
+.chess-practice-panel { display:grid; gap:16px; }
+.chess-practice-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+.chess-practice-heading .code-note { margin:0; max-width:500px; }
+.chess-turn-pill { flex:0 0 auto; padding:7px 11px; border:1px solid var(--color-border); border-radius:999px; background:var(--color-surface-muted); color:var(--color-ink-soft); font-size:.78rem; font-weight:700; }
+.curriculum-board { display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); aspect-ratio:1; overflow:hidden; border:5px solid var(--color-surface); border-radius:12px; box-shadow:0 12px 34px rgba(20,30,25,.16); }
+.curriculum-board .chess-square { display:grid; place-items:center; min-width:0; min-height:0; font-size:clamp(1.35rem,5.2vw,2.55rem); line-height:1; }
+.curriculum-board .chess-square.light { background:#e9e4d6; color:#24312d; }
+.curriculum-board .chess-square.dark { background:#76917f; color:#17231e; }
+.curriculum-board .chess-square.is-selected-piece { position:relative; z-index:1; outline:3px solid var(--color-focus); outline-offset:-4px; background:#d7c47c; }
+.curriculum-board .chess-square.is-move-target { box-shadow:inset 0 0 0 4px rgba(31,117,103,.85),inset 0 0 0 999px rgba(31,117,103,.12); }
+.chess-board-toolbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+.chess-position-fen { min-width:0; color:var(--color-ink-soft); font-size:.7rem; overflow-wrap:anywhere; }
+.chess-promotion-picker { display:grid; gap:10px; padding:14px; border:1px solid var(--color-focus); border-radius:12px; background:var(--color-surface-muted); animation:page-enter var(--dur-fast) var(--ease-out) both; }
+.chess-promotion-picker[hidden] { display:none; }
+.chess-promotion-picker > strong { font-size:.9rem; }
+.chess-promotion-options { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+.chess-promotion-options button { min-height:42px; border:1px solid var(--color-border); border-radius:9px; background:var(--color-surface); color:var(--color-ink); font:inherit; cursor:pointer; }
+.chess-promotion-options button:hover,.chess-promotion-options button:focus-visible { border-color:var(--color-focus); background:var(--color-surface); }
+.chess-history-panel { padding-top:14px; border-top:1px solid var(--color-border); }
+.chess-history-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.chess-history-heading h2 { margin:0; font-size:1rem; }
+.chess-history-heading span { color:var(--color-ink-soft); font-size:.75rem; }
+.chess-move-history { display:grid; gap:4px; max-height:190px; overflow:auto; margin:10px 0 0; padding:0; list-style:none; }
+.chess-move-history li { display:grid; grid-template-columns:34px minmax(0,1fr) minmax(0,1fr); gap:10px; padding:7px 9px; border-radius:7px; background:var(--color-surface-muted); font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:.8rem; }
+.chess-move-history .chess-move-number,.chess-history-empty { color:var(--color-ink-soft); }
+@media(max-width:600px) {
+ .chess-practice-heading { flex-direction:column; }
+ .chess-turn-pill { align-self:flex-start; }
+ .curriculum-board { border-width:3px; }
+ .chess-move-history li { gap:6px; }
+}
+@media(prefers-reduced-motion:reduce) { .chess-promotion-picker { animation:none; } }
