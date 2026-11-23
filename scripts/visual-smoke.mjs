@@ -161,6 +161,8 @@ try {
   assert(!(await page.locator("#python-trace").isHidden()), "Python loop visualizer should appear for supported range loops");
   await page.locator("#python-trace-next").click();
   assert((await page.locator("#python-trace-position").textContent()).trim() === "2 / 6", "Python trace should advance one deterministic step");
+  assert((await page.locator("#python-trace-source").textContent()).trim() === "print(doubled)", "Python trace should show the exact active source statement");
+  assert(await page.locator("#python-line-numbers span.is-traced").textContent() === "3", "Python trace should highlight the matching editor line number");
   await page.locator("#python-code").fill('print("Hello, world!")');
   assert(await page.locator(".python-highlight .python-builtin").count() > 0,
     "Python editor should highlight built-in functions");
