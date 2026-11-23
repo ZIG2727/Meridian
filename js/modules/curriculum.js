@@ -516,7 +516,7 @@ function renderPythonLesson(app,module,unit,lesson,completed) {
     const start=editor.selectionStart,lineStart=editor.value.lastIndexOf("\n",start-1)+1;
     const indent=(editor.value.slice(lineStart,start).match(/^\s*/)||[""])[0];
     const before=editor.value.slice(lineStart,start);
-    const extra=/:\\s*$/.test(before)?"    ":"";
+    const extra=/:\s*$/.test(before)?"    ":"";
     event.preventDefault();editor.setRangeText("\n"+indent+extra,start,editor.selectionEnd,"end");paint();return;
    }
   });
