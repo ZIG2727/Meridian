@@ -139,7 +139,8 @@ if (totals.cards < 500) fail("English course needs at least 500 cards; got " + t
 const curriculumSource = await readFile(resolve(root, "js/modules/curriculum.js"), "utf8");
 if (!curriculumSource.includes("mrd:v3:")) fail("V3 storage namespace missing");
 if (/\beval\s*\(/.test(curriculumSource) || /new\s+Function\s*\(/.test(curriculumSource)) fail("Unsafe dynamic execution found");
-if (!curriculumSource.includes("pseudoLegalMoves") || !curriculumSource.includes("data-square")) fail("Interactive chess move hints missing");
+const chessEngineSource = await readFile(resolve(root, "js/chess-engine.js"), "utf8");
+if (!chessEngineSource.includes("pseudoMoves") || !chessEngineSource.includes("applyChessMove") || !curriculumSource.includes("data-square")) fail("Interactive chess move engine missing");
 if (!curriculumSource.includes("firstOutputDifference")) fail("Python output difference feedback missing");
 const html = await readFile(resolve(root, "index.html"), "utf8");
 if (/\bonclick\s*=/i.test(html)) fail("Inline onclick found");
