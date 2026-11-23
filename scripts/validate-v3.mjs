@@ -152,6 +152,7 @@ const loopTrace = tracePythonRange(`for i in range(1, 4):
     doubled = i * 2
     print(doubled)`);
 if (loopTrace.length !== 6 || loopTrace[0].variables.i !== 1 || loopTrace[0].variables.doubled !== 2 || loopTrace[1].output !== "2" || loopTrace[5].output !== "6" || tracePythonRange("while True:").length !== 0) fail("Python range-loop trace failed");
+const suggestions = getPythonSuggestions("pri", 3);
 if (!suggestions.some(item => item.label === "print") || getPythonSuggestions("print", 5).length !== 0 ||
     getPythonSuggestions("x = pri", 7)[0]?.label !== "print") fail("Python autocomplete prefix matching failed");
 const repeatedHighlight = highlightPythonCode('print("again")');
