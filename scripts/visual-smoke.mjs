@@ -165,6 +165,19 @@ try {
   assert((await page.locator("#python-trace-line").textContent()).includes("Итерация 1"), "Python trace should identify the current loop iteration");
   assert((await page.locator("#python-trace-explanation").textContent()).trim() === "Команда print(doubled) выводит значение 2.", "Python trace should explain the effect of the active statement");
   assert(await page.locator("#python-line-numbers span.is-traced").textContent() === "3", "Python trace should highlight the matching editor line number");
+  await page.locator("#python-code").fill("for i in range(1, 4):\n    if i > 1:\n        result = i * 2\n    else:\n        result = i + 10\n    print(result)");
+  await page.locator("#run-python").click();
+  assert((await page.locator("#actual-output").innerText()).trim() === "11\n4\n6",
+    "Safe Python execution should evaluate both if and else branches inside a loop");
+  assert((await page.locator("#python-trace-position").textContent()).trim() === "1 / 10",
+    "Python conditional trace should include each condition and executed branch");
+  await page.locator("#python-trace-next").click();
+  assert((await page.locator("#python-trace-source").textContent()).trim() === "else:",
+    "Python trace should identify the selected else branch");
+  await page.locator("#python-trace-next").click();
+  assert((await page.locator("#python-trace-source").textContent()).trim() === "result = i + 10" &&
+    (await page.locator("#python-line-numbers span.is-traced").textContent()) === "5",
+    "Python trace should highlight the executed else assignment");
   await page.locator("#python-code").fill('print("Hello, world!")');
   assert(await page.locator(".python-highlight .python-builtin").count() > 0,
     "Python editor should highlight built-in functions");
