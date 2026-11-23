@@ -160,7 +160,7 @@ if (branchTrace.length !== 10 || branchTrace[0].line !== 2 || !branchTrace[0].ex
     branchTrace[4].line !== 2 || !branchTrace[4].explanation.includes("Условие истинно") ||
     branchTrace[5].line !== 3 || branchTrace[5].variables.result !== 4 ||
     branchRun.output !== "11\n4\n6") fail("Python if/else trace and safe execution failed");
-const whileProgram = "count = 1\\nwhile count < 4:\\n    print(count)\\n    count = count + 1";
+const whileProgram = "count = 1\nwhile count < 4:\n    print(count)\n    count = count + 1";
 const whileTrace = tracePythonRange(whileProgram);
 const whileRun = runSafePython(whileProgram, { exampleInput: "" });
 if (whileTrace.length !== 10 || whileTrace[0].line !== 2 ||
@@ -170,15 +170,15 @@ if (whileTrace.length !== 10 || whileTrace[0].line !== 2 ||
     whileTrace[2].line !== 4 || whileTrace[2].variables.count !== 2 ||
     whileTrace[9].label !== "Цикл завершён" || whileTrace[9].variables.count !== 4 ||
     !whileTrace[9].explanation.includes("Условие ложно") ||
-    whileRun.output !== "1\\n2\\n3") fail("Python while-loop trace and safe execution failed");
-const zeroWhile = tracePythonRange("count = 4\\nwhile count < 4:\\n    print(count)\\n    count = count + 1");
+    whileRun.output !== "1\n2\n3") fail("Python while-loop trace and safe execution failed");
+const zeroWhile = tracePythonRange("count = 4\nwhile count < 4:\n    print(count)\n    count = count + 1");
 if (zeroWhile.length !== 1 || zeroWhile[0].label !== "Цикл завершён" || zeroWhile[0].variables.count !== 4) {
   fail("Python while-loop trace must show immediate completion when the condition starts false");
 }
-const thirtyWhile = tracePythonRange("count = 1\\nwhile count <= 30:\\n    print(count)\\n    count = count + 1");
+const thirtyWhile = tracePythonRange("count = 1\nwhile count <= 30:\n    print(count)\n    count = count + 1");
 if (thirtyWhile.length !== 91 || thirtyWhile[90].label !== "Цикл завершён") fail("Python while-loop trace iteration limit failed");
-if (tracePythonRange("count = 0\\nwhile count < 31:\\n    print(count)\\n    count = count + 1").length !== 0 ||
-    tracePythonRange("count = 0\\nwhile count < 3:\\n    count = count + 1\\n    print(count)").length !== 0 ||
+if (tracePythonRange("count = 0\nwhile count < 31:\n    print(count)\n    count = count + 1").length !== 0 ||
+    tracePythonRange("count = 0\nwhile count < 3:\n    count = count + 1\n    print(count)").length !== 0 ||
     tracePythonRange("while True:").length !== 0) fail("Python while-loop trace must reject unsupported or overlong programs");
 if (tracePythonRange("for i in range(1, 3):\n    if i > 1:\n        print(i)\n    else:\n        print(i + 1)").length !== 0) fail("Python trace must reject unsupported branch expressions");
 const duplicateTrace = tracePythonRange("for i in range(1, 2):\n    value = i + 1\n    print(value)\n    print(value)");
