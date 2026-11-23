@@ -63,49 +63,128 @@ export function tracePythonRange(source) {
   const header = lines[0]?.match(/^for\s+([A-Za-z_]\w*)\s+in\s+range\((\d+),\s*(\d+)\):$/);
   if (!header) return [];
   const [, iterator, startText, endText] = header;
-  const body = [];
-  for (let index = 1; index < lines.length && /^\s{4}/.test(lines[index]); index++) {
-    const statement = lines[index].slice(4).trim();
-    if (!statement) continue;
-    if (!/^print\([A-Za-z_]\w*\)$/.test(statement) &&
-        !/^[A-Za-z_]\w*\s*=\s*[A-Za-z_]\w*\s*[+*\-]\s*(?:[A-Za-z_]\w*|\d+)$/.test(statement)) return [];
-    body.push({ statement, line: index + 1 });
+  const nodes = [];
+  const statementPattern = /^(?:print\([A-Za-z_]\w*\)|[A-Za-z_]\w*\s*=\s*[A-Za-z_]\w*\s*[+*\-]\s*(?:[A-Za-z_]\w*|\d+))$/;
+  const conditionPattern = /^if\s+([A-Za-z_]\w*)\s*(==|!=|<=|>=|<|>)\s*([A-Za-z_]\w*|\d+):$/;
+  const readStatement = (lineIndex, indent) => {
+    const raw = lines[lineIndex] || "";
+    if (!raw.trim()) return null;
+    if (!raw.startsWith(" ".repeat(indent)) || raw.startsWith(" ".repeat(indent + 1))) return false;
+    const statement = raw.slice(indent).trim();
+    if (!statementPattern.test(statement)) return false;
+    return { type: "statement", statement, line: lineIndex + 1 };
+  };
+  for (let index = 1; index < lines.length;) {
+    if (!lines[index].trim()) { index++; continue; }
+    if (!lines[index].startsWith("    ") || lines[index].startsWith("     ")) return [];
+    const raw = lines[index].slice(4).trim();
+    const condition = raw.match(conditionPattern);
+    if (!condition) {
+      const statement = readStatement(index, 4);
+      if (!statement) return [];
+      nodes.push(statement);
+      index++;
+      continue;
+    }
+    const ifLine = index + 1;
+    const thenNodes = [];
+    index++;
+    while (index < lines.length && (!lines[index].trim() || lines[index].startsWith("        "))) {
+      if (lines[index].trim()) {
+        const statement = readStatement(index, 8);
+        if (!statement) return [];
+        thenNodes.push(statement);
+      }
+      index++;
+    }
+    if (!thenNodes.length) return [];
+    let elseLine = null;
+    const elseNodes = [];
+    if (index < lines.length && lines[index].trim() === "else:") {
+      if (lines[index] !== "    else:") return [];
+      elseLine = index + 1;
+      index++;
+      while (index < lines.length && (!lines[index].trim() || lines[index].startsWith("        "))) {
+        if (lines[index].trim()) {
+          const statement = readStatement(index, 8);
+          if (!statement) return [];
+          elseNodes.push(statement);
+        }
+        index++;
+      }
+      if (!elseNodes.length) return [];
+    }
+    nodes.push({
+      type: "if",
+      line: ifLine,
+      source: lines[ifLine - 1].trim(),
+      condition: { left: condition[1], operator: condition[2], right: condition[3] },
+      thenNodes,
+      elseLine,
+      elseNodes
+    });
   }
-  if (!body.length) return [];
+  if (!nodes.length) return [];
   const end = Math.min(Number(endText), Number(startText) + 30);
   const variables = {};
   const steps = [];
+  const record = (line, iteration, sourceText, explanation, output = "") => {
+    steps.push({ line, iteration, source: sourceText, explanation, variables: { ...variables }, output });
+  };
+  const executeStatement = (node, iteration) => {
+    const { statement, line } = node;
+    const assignment = statement.match(/^([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)\s*([+*\-])\s*([A-Za-z_]\w*|\d+)$/);
+    let explanation = "Выполняется команда " + statement + ".";
+    if (assignment) {
+      const left = Number(variables[assignment[2]]);
+      const rightIsLiteral = /^\d+$/.test(assignment[4]);
+      const right = rightIsLiteral ? Number(assignment[4]) : Number(variables[assignment[4]]);
+      if (!Number.isFinite(left) || !Number.isFinite(right)) return false;
+      const result = assignment[3] === "+" ? left + right : assignment[3] === "-" ? left - right : left * right;
+      variables[assignment[1]] = result;
+      const rightLabel = rightIsLiteral ? String(right) : assignment[4] + " (" + right + ")";
+      explanation = "Переменной " + assignment[1] + " присваивается значение: " +
+        assignment[2] + " (" + left + ") " + assignment[3] + " " + rightLabel + " = " + result + ".";
+    }
+    const print = statement.match(/^print\(([A-Za-z_]\w*)\)$/);
+    let output = "";
+    if (print) {
+      const printed = variables[print[1]];
+      if (printed === undefined) return false;
+      explanation = "Команда " + statement + " выводит значение " + printed + ".";
+      output = String(printed);
+    }
+    record(line, iteration, lines[line - 1].trim(), explanation, output);
+    return true;
+  };
   for (let value = Number(startText); value < end; value++) {
     variables[iterator] = value;
-    for (const item of body) {
-      const { statement, line } = item;
-      const assignment = statement.match(/^([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)\s*([+*\-])\s*([A-Za-z_]\w*|\d+)$/);
-      let explanation = "Выполняется команда " + statement + ".";
-      if (assignment) {
-        const left = Number(variables[assignment[2]]);
-        const rightIsLiteral = /^\d+$/.test(assignment[4]);
-        const right = rightIsLiteral ? Number(assignment[4]) : Number(variables[assignment[4]]);
+    for (const node of nodes) {
+      if (node.type === "statement") {
+        if (!executeStatement(node, value)) return [];
+      } else {
+        const left = Number(variables[node.condition.left]);
+        const rightIsLiteral = /^\d+$/.test(node.condition.right);
+        const right = rightIsLiteral ? Number(node.condition.right) : Number(variables[node.condition.right]);
         if (!Number.isFinite(left) || !Number.isFinite(right)) return [];
-        const result = assignment[3] === "+" ? left + right : assignment[3] === "-" ? left - right : left * right;
-        variables[assignment[1]] = result;
-        const rightLabel = rightIsLiteral ? String(right) : assignment[4] + " (" + right + ")";
-        explanation = "Переменной " + assignment[1] + " присваивается значение: " +
-          assignment[2] + " (" + left + ") " + assignment[3] + " " + rightLabel + " = " + result + ".";
+        const { operator } = node.condition;
+        const passed = operator === "==" ? left === right :
+          operator === "!=" ? left !== right :
+          operator === "<" ? left < right :
+          operator === "<=" ? left <= right :
+          operator === ">" ? left > right : left >= right;
+        const rightLabel = rightIsLiteral ? String(right) : node.condition.right + " (" + right + ")";
+        record(node.line, value, node.source,
+          "Проверяем условие: " + node.condition.left + " (" + left + ") " + operator + " " +
+          rightLabel + ". Условие " + (passed ? "истинно" : "ложно") + ".");
+        if (passed) {
+          for (const child of node.thenNodes) if (!executeStatement(child, value)) return [];
+        } else if (node.elseNodes.length) {
+          record(node.elseLine, value, lines[node.elseLine - 1].trim(),
+            "Условие ложно, поэтому выполняется ветка else.");
+          for (const child of node.elseNodes) if (!executeStatement(child, value)) return [];
+        }
       }
-      const print = statement.match(/^print\(([A-Za-z_]\w*)\)$/);
-      if (print) {
-        const printed = variables[print[1]];
-        if (printed === undefined) return [];
-        explanation = "Команда " + statement + " выводит значение " + printed + ".";
-      }
-      steps.push({
-        line,
-        iteration: value,
-        source: lines[line - 1].trim(),
-        explanation,
-        variables: { ...variables },
-        output: print ? String(variables[print[1]]) : ""
-      });
       if (steps.length >= 120) return steps;
     }
   }
