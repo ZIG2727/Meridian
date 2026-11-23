@@ -300,7 +300,7 @@ function renderChessLesson(app,module,unit,lesson,completed) {
   if(!result){feedback.textContent="Этот ход недопустим в текущей позиции.";return;}
   state=result.state;const status=getChessPositionStatus(state),move=result.move;
   let notation=notationFor(move,status);
-  if(state.turn==="b")history.push({number:state.fullmove-1,white:notation,black:""});
+  if(state.turn==="b")history.push({number:state.fullmove,white:notation,black:""});
   else {
    const last=history[history.length-1];
    if(last&&last.number===state.fullmove)last.black=notation;
