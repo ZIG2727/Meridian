@@ -80,6 +80,7 @@ function pseudoMoves(state, from) {
       if (y === start && !at(x,y+2*direction)) add(x,y+2*direction);
     }
     for (const dx of [-1,1]) {
+      if (x+dx < 0 || x+dx > 7 || y+direction < 0 || y+direction > 7) continue;
       const target = at(x+dx,y+direction), index = (y+direction)*8+x+dx;
       if (target && isWhiteChessPiece(target) !== white) moves.push(index);
       else if (!target && index === state.epSquare) moves.push(index);
