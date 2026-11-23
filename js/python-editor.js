@@ -24,3 +24,35 @@ export function highlightPythonCode(source) {
   output += escapeHTML(code.slice(cursor));
   return output;
 }
+
+
+const pythonCompletions = [
+  ["print", "вывод в консоль"],
+  ["input", "ввод значения"],
+  ["len", "длина последовательности"],
+  ["range", "диапазон чисел"],
+  ["int", "целое число"],
+  ["float", "дробное число"],
+  ["str", "строка"],
+  ["if", "условие"],
+  ["elif", "дополнительное условие"],
+  ["else", "иначе"],
+  ["for", "цикл for"],
+  ["while", "цикл while"],
+  ["def", "объявление функции"],
+  ["return", "вернуть значение"],
+  ["True", "логическое значение"],
+  ["False", "логическое значение"],
+  ["None", "отсутствие значения"]
+];
+
+export function getPythonSuggestions(source, cursor = String(source ?? "").length) {
+  const before = String(source ?? "").slice(0, Math.max(0, cursor));
+  const match = before.match(/[A-Za-z_]\\w*$/);
+  if (!match) return [];
+  const prefix = match[0];
+  return pythonCompletions
+    .filter(([label]) => label.startsWith(prefix) && label !== prefix)
+    .slice(0, 6)
+    .map(([label, detail]) => ({ label, detail }));
+}
