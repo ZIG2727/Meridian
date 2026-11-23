@@ -80,20 +80,29 @@ export function tracePythonRange(source) {
     for (const item of body) {
       const { statement, line } = item;
       const assignment = statement.match(/^([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)\s*([+*\-])\s*([A-Za-z_]\w*|\d+)$/);
+      let explanation = "Выполняется команда " + statement + ".";
       if (assignment) {
         const left = Number(variables[assignment[2]]);
-        const right = /^\d+$/.test(assignment[4]) ? Number(assignment[4]) : Number(variables[assignment[4]]);
+        const rightIsLiteral = /^\d+$/.test(assignment[4]);
+        const right = rightIsLiteral ? Number(assignment[4]) : Number(variables[assignment[4]]);
         if (!Number.isFinite(left) || !Number.isFinite(right)) return [];
-        variables[assignment[1]] = assignment[3] === "+" ? left + right : assignment[3] === "-" ? left - right : left * right;
+        const result = assignment[3] === "+" ? left + right : assignment[3] === "-" ? left - right : left * right;
+        variables[assignment[1]] = result;
+        const rightLabel = rightIsLiteral ? String(right) : assignment[4] + " (" + right + ")";
+        explanation = "Переменной " + assignment[1] + " присваивается значение: " +
+          assignment[2] + " (" + left + ") " + assignment[3] + " " + rightLabel + " = " + result + ".";
       }
       const print = statement.match(/^print\(([A-Za-z_]\w*)\)$/);
       if (print) {
         const printed = variables[print[1]];
         if (printed === undefined) return [];
+        explanation = "Команда " + statement + " выводит значение " + printed + ".";
       }
       steps.push({
         line,
+        iteration: value,
         source: lines[line - 1].trim(),
+        explanation,
         variables: { ...variables },
         output: print ? String(variables[print[1]]) : ""
       });
