@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { runSafePython, normalizeEnglishAnswer, getLegalChessMoves, getChessPositionStatus } from "../js/modules/curriculum.js";
 import { MODULE_VISUALS } from "../js/visuals.js";
-import { highlightPythonCode } from "../js/python-editor.js";
+import { highlightPythonCode, getPythonSuggestions } from "../js/python-editor.js";
 import { parseChessPosition, applyChessMove, chessPositionToFen } from "../js/chess-engine.js";
 import { normalizeProfile, calculateProfileStats, mergeCompletedLessons } from "../js/profile.js";
 
@@ -148,6 +148,9 @@ if (/\bonclick\s*=/i.test(html)) fail("Inline onclick found");
 console.log("V3 curriculum validation passed:", JSON.stringify(totals));
 
 const highlightedPython = highlightPythonCode('def greet(name):\n    # comment\n    print("hello", 42)');
+const suggestions = getPythonSuggestions("pri", 3);
+if (!suggestions.some(item => item.label === "print") || getPythonSuggestions("print", 5).length !== 0 ||
+    getPythonSuggestions("x = pri", 6)[0]?.label !== "print") fail("Python autocomplete prefix matching failed");
 const repeatedHighlight = highlightPythonCode('print("again")');
 if (!repeatedHighlight.includes('class="python-builtin">print</span>') ||
     !highlightPythonCode('print("third")').includes('class="python-builtin">print</span>')) fail("Python syntax highlighting must reset between editor updates");
