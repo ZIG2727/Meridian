@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { runSafePython, normalizeEnglishAnswer, getLegalChessMoves, getChessPositionStatus } from "../js/modules/curriculum.js";
 import { MODULE_VISUALS } from "../js/visuals.js";
+import { parseChessPosition, applyChessMove, chessPositionToFen } from "../js/chess-engine.js";
 import { normalizeProfile, calculateProfileStats, mergeCompletedLessons } from "../js/profile.js";
 
 const root = process.cwd();
@@ -187,6 +188,24 @@ if (!mateStatus.valid || !mateStatus.check || !mateStatus.checkmate || mateStatu
 const stalemateStatus = getChessPositionStatus("7k/5Q2/6K1/8/8/8/8/8 b - - 0 1");
 if (!stalemateStatus.valid || stalemateStatus.check || stalemateStatus.checkmate || !stalemateStatus.stalemate) fail("Chess stalemate detection failed");
 
+const castleFen = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
+const castleMoves = getLegalChessMoves(castleFen, "e1");
+if (!castleMoves.includes("g1") || !castleMoves.includes("c1")) fail("Chess castling moves missing");
+const castleState = parseChessPosition(castleFen);
+const castleResult = applyChessMove(castleState, "e1", "g1");
+if (!castleResult || castleResult.state.board[60] || castleResult.state.board[62] !== "♔" ||
+    castleResult.state.board[61] !== "♖" || castleResult.state.castling.includes("K") || castleResult.state.castling.includes("Q")) {
+  fail("Chess kingside castling application failed");
+}
+const epFen = "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1";
+if (!getLegalChessMoves(epFen, "e5").includes("d6")) fail("Chess en passant move missing");
+const epResult = applyChessMove(epFen, "e5", "d6");
+if (!epResult || epResult.state.board[27] || epResult.state.board[19] !== "♙" || !epResult.move.enPassant) fail("Chess en passant capture failed");
+const promotionFen = "4k3/P7/8/8/8/8/8/4K3 w - - 0 1";
+if (!getLegalChessMoves(promotionFen, "a7").includes("a8")) fail("Chess promotion move missing");
+const promotionResult = applyChessMove(promotionFen, "a7", "a8", "n");
+if (!promotionResult || promotionResult.state.board[0] !== "♘" || promotionResult.move.promotion !== "n") fail("Chess underpromotion selection failed");
+if (!chessPositionToFen(castleResult.state).includes(" b ")) fail("Chess FEN serialization failed");
 const normalizedProfile = normalizeProfile({
   name: "  Meridian Learner  ",
   dailyGoal: 99,
