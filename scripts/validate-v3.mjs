@@ -152,6 +152,15 @@ const loopTrace = tracePythonRange(`for i in range(1, 4):
     doubled = i * 2
     print(doubled)`);
 if (loopTrace.length !== 6 || loopTrace[0].line !== 2 || loopTrace[0].source !== "doubled = i * 2" || loopTrace[0].iteration !== 1 || loopTrace[0].variables.i !== 1 || loopTrace[0].variables.doubled !== 2 || loopTrace[0].explanation !== "Переменной doubled присваивается значение: i (1) * 2 = 2." || loopTrace[1].line !== 3 || loopTrace[1].output !== "2" || loopTrace[1].explanation !== "Команда print(doubled) выводит значение 2." || loopTrace[5].output !== "6" || loopTrace[5].iteration !== 3 || tracePythonRange("while True:").length !== 0) fail("Python range-loop trace failed");
+const branchProgram = "for i in range(1, 4):\n    if i > 1:\n        result = i * 2\n    else:\n        result = i + 10\n    print(result)";
+const branchTrace = tracePythonRange(branchProgram);
+const branchRun = runSafePython(branchProgram, { exampleInput: "" });
+if (branchTrace.length !== 10 || branchTrace[0].line !== 2 || !branchTrace[0].explanation.includes("Условие ложно") ||
+    branchTrace[1].line !== 4 || branchTrace[2].line !== 5 || branchTrace[2].variables.result !== 11 ||
+    branchTrace[4].line !== 2 || !branchTrace[4].explanation.includes("Условие истинно") ||
+    branchTrace[5].line !== 3 || branchTrace[5].variables.result !== 4 ||
+    branchRun.output !== "11\n4\n6") fail("Python if/else trace and safe execution failed");
+if (tracePythonRange("for i in range(1, 3):\n    if i > 1:\n        print(i)\n    else:\n        print(i + 1)").length !== 0) fail("Python trace must reject unsupported branch expressions");
 const duplicateTrace = tracePythonRange("for i in range(1, 2):\n    value = i + 1\n    print(value)\n    print(value)");
 if (duplicateTrace.length !== 3 || duplicateTrace[1].line !== 3 || duplicateTrace[2].line !== 4 || duplicateTrace[2].source !== "print(value)") fail("Python trace must preserve exact source lines when statements repeat");
 const suggestions = getPythonSuggestions("pri", 3);
