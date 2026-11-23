@@ -59,18 +59,18 @@ export function getPythonSuggestions(source, cursor = String(source ?? "").lengt
 
 
 function tracePythonWhile(lines) {
-  const whileLines = lines.map((line, index) => /^while\\s/.test(line.trim()) ? index : -1).filter(index => index >= 0);
+  const whileLines = lines.map((line, index) => /^while\s/.test(line.trim()) ? index : -1).filter(index => index >= 0);
   if (!whileLines.length) return null;
   if (whileLines.length !== 1) return [];
   const whileIndex = whileLines[0];
-  const header = lines[whileIndex].match(/^while\\s+([A-Za-z_]\\w*)\\s*(<|<=|>|>=|==|!=)\\s*(\\d+):$/);
+  const header = lines[whileIndex].match(/^while\s+([A-Za-z_]\w*)\s*(<|<=|>|>=|==|!=)\s*(\d+):$/);
   if (!header) return [];
   const [, counter, operator, limitText] = header;
   const variables = {};
   for (let index = 0; index < whileIndex; index++) {
     const line = lines[index];
     if (!line.trim() || line.trim().startsWith("#")) continue;
-    const assignment = line.match(/^([A-Za-z_]\\w*)\\s*=\\s*(-?\\d+)$/);
+    const assignment = line.match(/^([A-Za-z_]\w*)\s*=\s*(-?\d+)$/);
     if (!assignment) return [];
     variables[assignment[1]] = Number(assignment[2]);
   }
