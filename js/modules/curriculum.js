@@ -3,6 +3,7 @@ import { animateProgress, celebrate } from "../motion.js";
 import { MODULE_VISUALS } from "../visuals.js";
 import { recordLessonCompletion } from "../profile.js";
 import { parseChessPosition, getLegalChessMoves, applyChessMove, getChessPositionStatus, isWhiteChessPiece, chessPositionToFen } from "../chess-engine.js";
+import { highlightPythonCode } from "../python-editor.js";
 export { getLegalChessMoves, getChessPositionStatus };
 
 const MODULES = {
@@ -481,13 +482,58 @@ function firstOutputDifference(expected,actual) {
  return "Количество или формат строк вывода отличается.";
 }
 function renderPythonLesson(app,module,unit,lesson,completed) {
- let draft=readSession(module);let code=draft?.lessonId===lesson.lessonId?draft.draftCode:lesson.starterCode;
+ const draft=readSession(module),initialCode=draft?.lessonId===lesson.lessonId?draft.draftCode:lesson.starterCode;
+ let code=initialCode,lastResult=null;
  const done=completed.includes(lesson.lessonId);
- const draw=()=>{app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+'<section class="curriculum-lesson-focus"><p class="eyebrow">Python · '+lesson.estimatedMinutes+' мин</p><h1>'+esc(lesson.title)+'</h1><article class="lesson-card"><p>'+esc(lesson.theory)+'</p></article><section class="panel"><label class="field-label" for="python-code">Ваш код</label><textarea class="code-editor" id="python-code" spellcheck="false">'+esc(code)+'</textarea><div class="button-row"><button class="button" id="run-python">Запустить</button><button class="button button-secondary" id="show-hint">Подсказка</button></div><p class="code-note" id="python-hint" hidden>'+esc(lesson.hint)+'</p><div class="python-output"><div><p class="eyebrow">Ожидаемый вывод</p><pre>'+esc(lesson.expectedOutput)+'</pre></div><div><p class="eyebrow">Ваш вывод</p><pre id="actual-output">—</pre></div></div><p class="lesson-feedback status-line" role="status">'+(done?'Урок уже завершён.':'')+'</p><div id="lesson-next">'+(done?nextLessonNavigation(module,unit,lesson):'')+'</div></section><div class="button-row lesson-navigation"><a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">← К юниту</a></div></section>'+footer(module);
- const editor=app.querySelector("#python-code");editor.addEventListener("input",()=>{code=editor.value;writeStored(keys(module).session,{unitId:unit.unitId,lessonId:lesson.lessonId,draftCode:code});});
- app.querySelector("#show-hint").addEventListener("click",()=>{app.querySelector("#python-hint").hidden=false;});
- app.querySelector("#run-python").addEventListener("click",()=>{const result=runSafePython(editor.value,lesson);const output=app.querySelector("#actual-output"),status=app.querySelector(".lesson-feedback");output.textContent=result.ok?result.output:result.error;if(!result.ok){status.textContent=result.error;return;}if(result.output===lesson.expectedOutput){status.textContent="Вывод совпадает. Урок завершён.";if(!completed.includes(lesson.lessonId)){const unitFinished=markComplete(module,unit,lesson.lessonId,completed);if(unitFinished)celebrate(status,"Юнит завершён",800);app.querySelector("#lesson-next").innerHTML=nextLessonNavigation(module,unit,lesson);}}else status.textContent=firstOutputDifference(lesson.expectedOutput,result.output);});
- };draw();
+ const lineCount=()=>Math.max(1,code.split("\n").length);
+ const draw=()=>{
+  app.innerHTML=header(module,[{label:unit.title,href:urlFor(module,unit.unitId)},{label:lesson.title}])+
+  '<section class="curriculum-lesson-focus python-lesson"><div class="python-lesson-heading"><div><p class="eyebrow">PYTHON LAB · '+lesson.estimatedMinutes+' МИН</p><h1>'+esc(lesson.title)+'</h1></div><span class="python-level-pill">Практика</span></div>'+
+  '<article class="lesson-card python-theory-card"><span class="python-theory-icon" aria-hidden="true">⌘</span><div><p class="eyebrow">КРАТКАЯ ТЕОРИЯ</p><p>'+esc(lesson.theory)+'</p></div></article>'+
+  '<section class="python-workbench panel"><div class="python-workbench-top"><div><p class="eyebrow">РЕДАКТОР КОДА</p><h2>Твоя программа</h2></div><div class="python-editor-tools"><span class="python-language-badge"><span></span> Python 3</span><button type="button" class="button button-quiet" id="reset-python">Сбросить</button></div></div>'+
+  '<div class="python-editor-shell"><div class="python-line-numbers" id="python-line-numbers" aria-hidden="true"></div><div class="python-editor-stack"><pre class="python-highlight" id="python-highlight" aria-hidden="true"></pre><textarea class="code-editor python-code-input" id="python-code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Редактор Python" aria-describedby="python-editor-help"></textarea></div></div>'+
+  '<div class="python-editor-footer"><span id="python-cursor-position">Строка 1 · Столбец 1</span><span id="python-editor-help">Tab — отступ · Ctrl + Enter — запуск</span></div>'+
+  '<div class="python-action-row"><button class="button python-run-button" id="run-python"><span aria-hidden="true">▶</span> Запустить код</button><button class="button button-secondary" id="show-hint">Показать подсказку</button><span class="python-run-shortcut">Быстрый запуск <kbd>Ctrl ↵</kbd></span></div>'+
+  '<div class="python-hint-card" id="python-hint" hidden><span aria-hidden="true">✦</span><p>'+esc(lesson.hint)+'</p></div>'+
+  '<section class="python-console" aria-label="Результат выполнения"><div class="python-console-heading"><div><span class="python-console-dot"></span><strong>Консоль</strong></div><span id="python-run-state">ОЖИДАЕТ ЗАПУСКА</span></div><div class="python-console-body"><div class="python-output-column"><p>ВЫВОД ПРОГРАММЫ</p><pre id="actual-output">Нажми «Запустить код», чтобы увидеть результат.</pre></div><div class="python-expected-column"><p>ОЖИДАЕМЫЙ РЕЗУЛЬТАТ</p><pre>'+esc(lesson.expectedOutput)+'</pre></div></div><div class="python-diagnostic" id="python-diagnostic" role="status">'+(done?'✓ Этот урок уже завершён.':'Здесь появятся подсказки и объяснения ошибок.')+'</div></section>'+
+  '<div class="python-completion" id="lesson-next">'+(done?nextLessonNavigation(module,unit,lesson):'')+'</div></section>'+
+  '<div class="button-row lesson-navigation"><a class="button button-secondary" href="'+urlFor(module,unit.unitId)+'">← К юниту</a></div></section>'+footer(module);
+  const editor=app.querySelector("#python-code"),highlight=app.querySelector("#python-highlight"),numbers=app.querySelector("#python-line-numbers"),cursor=app.querySelector("#python-cursor-position");
+  const save=()=>writeStored(keys(module).session,{unitId:unit.unitId,lessonId:lesson.lessonId,draftCode:code});
+  const paint=()=>{
+   code=editor.value;highlight.innerHTML=highlightPythonCode(code)+"\n";numbers.innerHTML=Array.from({length:lineCount()},(_,i)=>'<span>'+(i+1)+'</span>').join("");
+   highlight.scrollTop=editor.scrollTop;highlight.scrollLeft=editor.scrollLeft;numbers.scrollTop=editor.scrollTop;
+   const before=editor.value.slice(0,editor.selectionStart).split("\n"),line=before.length,column=before[before.length-1].length+1;
+   cursor.textContent="Строка "+line+" · Столбец "+column;save();
+  };
+  editor.value=code;paint();editor.addEventListener("input",paint);editor.addEventListener("click",paint);editor.addEventListener("keyup",paint);
+  editor.addEventListener("scroll",()=>{highlight.scrollTop=editor.scrollTop;highlight.scrollLeft=editor.scrollLeft;numbers.scrollTop=editor.scrollTop;});
+  editor.addEventListener("keydown",event=>{
+   if(event.key==="Tab"){event.preventDefault();const start=editor.selectionStart,end=editor.selectionEnd;editor.setRangeText("    ",start,end,"end");paint();return;}
+   if(event.key==="Enter"){
+    const start=editor.selectionStart,lineStart=editor.value.lastIndexOf("\n",start-1)+1;
+    const indent=(editor.value.slice(lineStart,start).match(/^\s*/)||[""])[0];
+    const before=editor.value.slice(lineStart,start);
+    const extra=/:s*$/.test(before)?"    ":"";
+    event.preventDefault();editor.setRangeText("\n"+indent+extra,start,editor.selectionEnd,"end");paint();return;
+   }
+   if((event.ctrlKey||event.metaKey)&&event.key==="Enter"){event.preventDefault();app.querySelector("#run-python").click();}
+  });
+  app.querySelector("#show-hint").addEventListener("click",()=>{const hint=app.querySelector("#python-hint");hint.hidden=!hint.hidden;});
+  app.querySelector("#reset-python").addEventListener("click",()=>{code=lesson.starterCode;editor.value=code;paint();app.querySelector("#python-diagnostic").textContent="Код восстановлен до исходного примера.";app.querySelector("#python-run-state").textContent="СБРОШЕНО";});
+  app.querySelector("#run-python").addEventListener("click",()=>{
+   const result=runSafePython(editor.value,lesson),output=app.querySelector("#actual-output"),status=app.querySelector("#python-diagnostic"),state=app.querySelector("#python-run-state");
+   lastResult=result;output.textContent=result.ok?(result.output||"(пустой вывод)"):result.error;
+   if(!result.ok){state.textContent="ОШИБКА";status.textContent="Проверь код: "+result.error;status.className="python-diagnostic is-error";return;}
+   if(result.output===lesson.expectedOutput){
+    state.textContent="ВЫПОЛНЕНО";status.textContent="✓ Отлично! Результат совпадает с ожидаемым. Задание выполнено.";status.className="python-diagnostic is-success";
+    if(!completed.includes(lesson.lessonId)){const unitFinished=markComplete(module,unit,lesson.lessonId,completed);if(unitFinished)celebrate(status,"Юнит завершён",800);app.querySelector("#lesson-next").innerHTML=nextLessonNavigation(module,unit,lesson);}
+   }else{
+    state.textContent="ВЫВОД ОТЛИЧАЕТСЯ";status.textContent=firstOutputDifference(lesson.expectedOutput,result.output);status.className="python-diagnostic is-warning";
+   }
+  });
+ };
+ draw();
 }
 export async function renderCurriculum(app,module) {
  const meta=MODULES[module];if(!meta)throw new Error("Неизвестный учебный модуль.");
