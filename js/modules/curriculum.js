@@ -320,6 +320,20 @@ function isKingInCheck(cells,white) {
  const king=cells.indexOf(white?"♔":"♚");
  return king<0||isSquareAttacked(cells,king,!white);
 }
+function hasLegalMove(cells,turn) {
+ for(let index=0;index<64;index++) {
+  const piece=cells[index];
+  if(piece&&isWhitePiece(piece)===(turn==="w")&&legalMoves(cells,index,turn).length)return true;
+ }
+ return false;
+}
+export function getChessPositionStatus(fen) {
+ const cells=fenBoard(fen);if(!cells)return {valid:false,check:false,checkmate:false,stalemate:false};
+ const fields=String(fen).trim().split(/\s+/),turn=fields[1];
+ if(turn!=="w"&&turn!=="b")return {valid:false,check:false,checkmate:false,stalemate:false};
+ const check=isKingInCheck(cells,turn==="w"),hasMoves=hasLegalMove(cells,turn);
+ return {valid:true,check,checkmate:check&&!hasMoves,stalemate:!check&&!hasMoves};
+}
 function legalMoves(cells,index,turn) {
  const piece=cells[index];if(!piece)return [];
  const white=isWhitePiece(piece);
