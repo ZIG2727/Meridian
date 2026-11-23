@@ -156,6 +156,11 @@ try {
   await page.locator(".python-suggestion").filter({ hasText: "print" }).click();
   assert((await page.locator("#python-code").inputValue()) === "print",
     "Python autocomplete should insert the selected completion");
+  await page.locator("#python-code").fill("for i in range(1, 4):\\n    doubled = i * 2\\n    print(doubled)");
+  await page.locator("#run-python").click();
+  assert(!(await page.locator("#python-trace").isHidden()), "Python loop visualizer should appear for supported range loops");
+  await page.locator("#python-trace-next").click();
+  assert((await page.locator("#python-trace-position").textContent()).trim() === "2 / 6", "Python trace should advance one deterministic step");
   await page.locator("#python-code").fill('print("Hello, world!")');
   assert(await page.locator(".python-highlight .python-builtin").count() > 0,
     "Python editor should highlight built-in functions");
