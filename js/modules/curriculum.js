@@ -434,9 +434,22 @@ export function runSafePython(source,lesson) {
       if(branch){
        const nested=body[k+1];
        if(!nested||! /^\s{4}/.test(nested))throw new Error("Добавь действие с отступом внутри if.");
+       const hasElse=body[k+2]?.trim()==="else:";
+       const elseAction=hasElse?body[k+3]:null;
+       if(hasElse&&(!elseAction||! /^\s{4}/.test(elseAction)))throw new Error("Добавь действие с отступом внутри else.");
        const a=Number(vars[branch[1]]),b=Number(branch[3]),test={"==":a===b,"!=":a!==b,"<":a<b,">":a>b,"<=":a<=b,">=":a>=b}[branch[2]];
-       if(test){const action=nested.trim();if(action==="break"){stop=true;}else if(action==="continue"){k++;break;}else if(action.startsWith("print(")){printLine(action);}else throw new Error("Внутри цикла поддерживаются print(), break и continue.");}
-       k++;if(stop)break;continue;
+       const action=(test?nested:hasElse?elseAction:null)?.trim();
+       if(action){
+        if(action==="break"){stop=true;}
+        else if(action==="continue"){k+=hasElse?3:1;break;}
+        else if(action.startsWith("print(")){printLine(action);}
+        else {
+         const assignment=action.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);
+         if(!assignment)throw new Error("Внутри if/else поддерживаются print() и простые присваивания.");
+         vars[assignment[1]]=value(assignment[2]);
+        }
+       }
+       k+=hasElse?3:1;if(stop)break;continue;
       }
       if(statement.startsWith("print(")){printLine(statement);continue;}
       const assignment=statement.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);
