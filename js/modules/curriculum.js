@@ -355,6 +355,7 @@ function renderChessLesson(app,module,unit,lesson,completed) {
 export function runSafePython(source,lesson) {
  const lines=String(source).replace(/\r/g,"").split("\n");
  if(lines.length>300||lines.some(line=>/\b(import|exec|eval|open|__|os\.|sys\.|subprocess)\b/.test(line)))return {ok:false,error:"Эта учебная среда поддерживает только безопасные базовые конструкции Python."};
+ let activeLine=1;
  const vars={},out=[],functions={};
  const repr=x=>x===true?"True":x===false?"False":x instanceof Set?"{"+[...x].map(String).join(", ")+"}":Array.isArray(x)?(x.__tuple?"("+x.map(String).join(", ")+")":"["+x.map(y=>typeof y==="string"?"'"+y+"'":String(y)).join(", ")+"]"):(x&&typeof x==="object"?"{"+Object.entries(x).map(([k,v])=>"'"+k+"': "+(typeof v==="string"?"'"+v+"'":String(v))).join(", ")+"}":String(x));
  const value=raw=>{
@@ -396,7 +397,7 @@ export function runSafePython(source,lesson) {
  }
  try{
   for(let i=0;i<lines.length;i++){
-   const line=lines[i];if(!line.trim()||line.trim().startsWith("#"))continue;
+   activeLine=i+1;const line=lines[i];if(!line.trim()||line.trim().startsWith("#"))continue;
    let m=line.match(/^def\s+([A-Za-z_]\w*)\((.*)\):$/);
    if(m){const body=[];let j=i+1;while(j<lines.length&&/^\s{4}/.test(lines[j])){body.push(lines[j].slice(4));j++;}if(!body.length)throw new Error("Добавь тело функции с отступом.");functions[m[1]]={params:m[2].trim()?m[2].split(",").map(x=>x.trim()):[],body};i=j-1;continue;}
    m=line.match(/^([A-Za-z_]\w*)\s*=\s*lambda\s+([A-Za-z_]\w*)\s*:\s*(.+)$/);
@@ -474,7 +475,7 @@ export function runSafePython(source,lesson) {
    throw new Error("Строка пока не входит в безопасный учебный Python: "+line.trim());
   }
   return {ok:true,output:out.join("\n")};
- }catch(error){return {ok:false,error:error.message};}
+ }catch(error){return {ok:false,error:"Строка "+activeLine+": "+error.message};}
 }
 function firstOutputDifference(expected,actual) {
  const a=String(expected).split("\n"),b=String(actual).split("\n"),length=Math.max(a.length,b.length);
@@ -509,6 +510,7 @@ function renderPythonLesson(app,module,unit,lesson,completed) {
   editor.value=code;paint();editor.addEventListener("input",paint);editor.addEventListener("click",paint);editor.addEventListener("keyup",paint);
   editor.addEventListener("scroll",()=>{highlight.scrollTop=editor.scrollTop;highlight.scrollLeft=editor.scrollLeft;numbers.scrollTop=editor.scrollTop;});
   editor.addEventListener("keydown",event=>{
+   if((event.ctrlKey||event.metaKey)&&event.key==="Enter"){event.preventDefault();app.querySelector("#run-python").click();return;}
    if(event.key==="Tab"){event.preventDefault();const start=editor.selectionStart,end=editor.selectionEnd;editor.setRangeText("    ",start,end,"end");paint();return;}
    if(event.key==="Enter"){
     const start=editor.selectionStart,lineStart=editor.value.lastIndexOf("\n",start-1)+1;
@@ -517,7 +519,6 @@ function renderPythonLesson(app,module,unit,lesson,completed) {
     const extra=/:s*$/.test(before)?"    ":"";
     event.preventDefault();editor.setRangeText("\n"+indent+extra,start,editor.selectionEnd,"end");paint();return;
    }
-   if((event.ctrlKey||event.metaKey)&&event.key==="Enter"){event.preventDefault();app.querySelector("#run-python").click();}
   });
   app.querySelector("#show-hint").addEventListener("click",()=>{const hint=app.querySelector("#python-hint");hint.hidden=!hint.hidden;});
   app.querySelector("#reset-python").addEventListener("click",()=>{code=lesson.starterCode;editor.value=code;paint();app.querySelector("#python-diagnostic").textContent="Код восстановлен до исходного примера.";app.querySelector("#python-run-state").textContent="СБРОШЕНО";});
