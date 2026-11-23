@@ -3,6 +3,7 @@ import { animateProgress, celebrate } from "../motion.js";
 import { MODULE_VISUALS } from "../visuals.js";
 import { recordLessonCompletion } from "../profile.js";
 import { parseChessPosition, getLegalChessMoves, applyChessMove, getChessPositionStatus, isWhiteChessPiece, chessPositionToFen } from "../chess-engine.js";
+export { getLegalChessMoves, getChessPositionStatus };
 
 const MODULES = {
   english: { title: "Английский", subtitle: "RU → EN · интервальное повторение", color: "english" },
