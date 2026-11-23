@@ -132,7 +132,10 @@ function writeLast(module, unitId, lessonId) {
   const previous = readSession(module);
   const session = { unitId, lessonId };
   if (module === "python" && previous?.lessonId === lessonId && typeof previous.draftCode === "string") session.draftCode = previous.draftCode;
-  if (module === "english" && previous?.lessonId === lessonId && Number.isInteger(previous.cardIndex)) session.cardIndex = previous.cardIndex;
+  if (module === "english" && previous?.lessonId === lessonId) {
+    if (Number.isInteger(previous.cardIndex)) session.cardIndex = previous.cardIndex;
+    if (typeof previous.cardId === "string") session.cardId = previous.cardId;
+  }
   writeStored(keys(module).session, session);
 }
 function validLesson(unit, lesson) {
