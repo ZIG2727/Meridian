@@ -56,3 +56,47 @@ export function getPythonSuggestions(source, cursor = String(source ?? "").lengt
     .slice(0, 6)
     .map(([label, detail]) => ({ label, detail }));
 }
+
+
+export function tracePythonRange(source) {
+  const lines = String(source ?? "").replace(/\\r/g, "").split("\\n");
+  const header = lines[0]?.match(/^for\\s+([A-Za-z_]\\w*)\\s+in\\s+range\\((\\d+),\\s*(\\d+)\\):$/);
+  if (!header) return [];
+  const [, iterator, startText, endText] = header;
+  const body = [];
+  for (let index = 1; index < lines.length && /^\\s{4}/.test(lines[index]); index++) {
+    const statement = lines[index].slice(4).trim();
+    if (!statement) continue;
+    if (!/^print\\([A-Za-z_]\\w*\\)$/.test(statement) &&
+        !/^[A-Za-z_]\\w*\\s*=\\s*[A-Za-z_]\\w*\\s*[+*\\-]\\s*(?:[A-Za-z_]\\w*|\\d+)$/.test(statement)) return [];
+    body.push(statement);
+  }
+  if (!body.length) return [];
+  const end = Math.min(Number(endText), Number(startText) + 30);
+  const variables = {};
+  const steps = [];
+  for (let value = Number(startText); value < end; value++) {
+    variables[iterator] = value;
+    for (const statement of body) {
+      const assignment = statement.match(/^([A-Za-z_]\\w*)\\s*=\\s*([A-Za-z_]\\w*)\\s*([+*\\-])\\s*([A-Za-z_]\\w*|\\d+)$/);
+      if (assignment) {
+        const left = Number(variables[assignment[2]]);
+        const right = /^\\d+$/.test(assignment[4]) ? Number(assignment[4]) : Number(variables[assignment[4]]);
+        if (!Number.isFinite(left) || !Number.isFinite(right)) return [];
+        variables[assignment[1]] = assignment[3] === "+" ? left + right : assignment[3] === "-" ? left - right : left * right;
+      }
+      const print = statement.match(/^print\\(([A-Za-z_]\\w*)\\)$/);
+      if (print) {
+        const printed = variables[print[1]];
+        if (printed === undefined) return [];
+      }
+      steps.push({
+        line: lines.findIndex(line => line.trim() === statement) + 1,
+        variables: { ...variables },
+        output: print ? String(variables[print[1]]) : ""
+      });
+      if (steps.length >= 120) return steps;
+    }
+  }
+  return steps;
+}
