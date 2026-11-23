@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { runSafePython, normalizeEnglishAnswer, getLegalChessMoves } from "../js/modules/curriculum.js";
+import { runSafePython, normalizeEnglishAnswer, getLegalChessMoves, getChessPositionStatus } from "../js/modules/curriculum.js";
 import { MODULE_VISUALS } from "../js/visuals.js";
 import { normalizeProfile, calculateProfileStats, mergeCompletedLessons } from "../js/profile.js";
 
@@ -182,6 +182,10 @@ if (getLegalChessMoves(startPosition, "e2").sort().join(",") !== "e3,e4") fail("
 const pinnedPosition = "k3r3/8/8/8/8/8/4R3/4K3 w - - 0 1";
 const pinnedMoves = getLegalChessMoves(pinnedPosition, "e2");
 if (!pinnedMoves.includes("e3") || pinnedMoves.includes("d2")) fail("Chess king-safety filter failed");
+const mateStatus = getChessPositionStatus("7k/6Q1/6K1/8/8/8/8/8 b - - 0 1");
+if (!mateStatus.valid || !mateStatus.check || !mateStatus.checkmate || mateStatus.stalemate) fail("Chess checkmate detection failed");
+const stalemateStatus = getChessPositionStatus("7k/5Q2/6K1/8/8/8/8/8 b - - 0 1");
+if (!stalemateStatus.valid || stalemateStatus.check || stalemateStatus.checkmate || !stalemateStatus.stalemate) fail("Chess stalemate detection failed");
 
 const normalizedProfile = normalizeProfile({
   name: "  Meridian Learner  ",
