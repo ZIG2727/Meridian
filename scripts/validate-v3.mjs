@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { runSafePython, normalizeEnglishAnswer, getLegalChessMoves, getChessPositionStatus } from "../js/modules/curriculum.js";
 import { MODULE_VISUALS } from "../js/visuals.js";
+import { highlightPythonCode } from "../js/python-editor.js";
 import { parseChessPosition, applyChessMove, chessPositionToFen } from "../js/chess-engine.js";
 import { normalizeProfile, calculateProfileStats, mergeCompletedLessons } from "../js/profile.js";
 
@@ -145,6 +146,17 @@ if (!curriculumSource.includes("firstOutputDifference")) fail("Python output dif
 const html = await readFile(resolve(root, "index.html"), "utf8");
 if (/\bonclick\s*=/i.test(html)) fail("Inline onclick found");
 console.log("V3 curriculum validation passed:", JSON.stringify(totals));
+
+const highlightedPython = highlightPythonCode('def greet(name):\\n    # comment\\n    print("hello", 42)');
+if (!highlightedPython.includes('class="python-keyword">def</span>') ||
+    !highlightedPython.includes('class="python-comment"># comment</span>') ||
+    !highlightedPython.includes('class="python-builtin">print</span>') ||
+    !highlightedPython.includes('class="python-string">"hello"</span>') ||
+    !highlightedPython.includes('class="python-number">42</span>')) fail("Python syntax highlighting tokens missing");
+const escapedPython = highlightPythonCode('<img src=x onerror=alert(1)>');
+if (escapedPython.includes("<img") || !escapedPython.includes("&lt;img")) fail("Python editor highlight must escape HTML");
+const lineDiagnostic = runSafePython('print("ok")\\nunknown_call()', {});
+if (lineDiagnostic.ok || !lineDiagnostic.error.startsWith("Строка 2:")) fail("Python error diagnostics must include source line number");
 
 const runnerCases = [
   { source: 'print("Hello")', expected: "Hello" },
