@@ -1,5 +1,5 @@
-const escapeHTML = value => String(value).replace(/[&<>"]/g, char => ({
-  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"
+const escapeHTML = value => String(value).replace(/[&<>]/g, char => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;"
 }[char]));
 
 const tokenPattern = /(#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:False|None|True|and|as|assert|async|await|break|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|nonlocal|not|or|pass|raise|return|try|while|with|yield)\b|\b(?:print|input|int|float|str|len|range|list|dict|set|tuple|bool|abs|round|min|max|sum|type)\b|\b\d+(?:\.\d+)?\b|\b[A-Za-z_]\w*(?=\s*\())/g;
