@@ -69,7 +69,7 @@ export function tracePythonRange(source) {
     if (!statement) continue;
     if (!/^print\([A-Za-z_]\w*\)$/.test(statement) &&
         !/^[A-Za-z_]\w*\s*=\s*[A-Za-z_]\w*\s*[+*\-]\s*(?:[A-Za-z_]\w*|\d+)$/.test(statement)) return [];
-    body.push(statement);
+    body.push({ statement, line: index + 1 });
   }
   if (!body.length) return [];
   const end = Math.min(Number(endText), Number(startText) + 30);
@@ -77,7 +77,8 @@ export function tracePythonRange(source) {
   const steps = [];
   for (let value = Number(startText); value < end; value++) {
     variables[iterator] = value;
-    for (const statement of body) {
+    for (const item of body) {
+      const { statement, line } = item;
       const assignment = statement.match(/^([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)\s*([+*\-])\s*([A-Za-z_]\w*|\d+)$/);
       if (assignment) {
         const left = Number(variables[assignment[2]]);
@@ -91,7 +92,8 @@ export function tracePythonRange(source) {
         if (printed === undefined) return [];
       }
       steps.push({
-        line: lines.findIndex(line => line.trim() === statement) + 1,
+        line,
+        source: lines[line - 1].trim(),
         variables: { ...variables },
         output: print ? String(variables[print[1]]) : ""
       });
