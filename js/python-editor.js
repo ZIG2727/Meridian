@@ -65,7 +65,7 @@ export function tracePythonRange(source) {
   const [, iterator, startText, endText] = header;
   const nodes = [];
   const statementPattern = /^(?:print\([A-Za-z_]\w*\)|[A-Za-z_]\w*\s*=\s*[A-Za-z_]\w*\s*[+*\-]\s*(?:[A-Za-z_]\w*|\d+))$/;
-  const conditionPattern = /^if\s+([A-Za-z_]\w*)\s*(==|!=|<=|>=|<|>)\s*([A-Za-z_]\w*|\d+):$/;
+  const conditionPattern = /^if\s+([A-Za-z_]\w*)\s*(==|!=|<=|>=|<|>)\s*(-?\d+(?:\.\d+)?):$/;
   const readStatement = (lineIndex, indent) => {
     const raw = lines[lineIndex] || "";
     if (!raw.trim()) return null;
@@ -164,7 +164,7 @@ export function tracePythonRange(source) {
         if (!executeStatement(node, value)) return [];
       } else {
         const left = Number(variables[node.condition.left]);
-        const rightIsLiteral = /^\d+$/.test(node.condition.right);
+        const rightIsLiteral = /^-?\d+(?:\.\d+)?$/.test(node.condition.right);
         const right = rightIsLiteral ? Number(node.condition.right) : Number(variables[node.condition.right]);
         if (!Number.isFinite(left) || !Number.isFinite(right)) return [];
         const { operator } = node.condition;
