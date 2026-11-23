@@ -58,8 +58,73 @@ export function getPythonSuggestions(source, cursor = String(source ?? "").lengt
 }
 
 
+function tracePythonWhile(lines) {
+  const whileLines = lines.map((line, index) => /^while\\s/.test(line.trim()) ? index : -1).filter(index => index >= 0);
+  if (!whileLines.length) return null;
+  if (whileLines.length !== 1) return [];
+  const whileIndex = whileLines[0];
+  const header = lines[whileIndex].match(/^while\\s+([A-Za-z_]\\w*)\\s*(<|<=|>|>=|==|!=)\\s*(\\d+):$/);
+  if (!header) return [];
+  const [, counter, operator, limitText] = header;
+  const variables = {};
+  for (let index = 0; index < whileIndex; index++) {
+    const line = lines[index];
+    if (!line.trim() || line.trim().startsWith("#")) continue;
+    const assignment = line.match(/^([A-Za-z_]\\w*)\\s*=\\s*(-?\\d+)$/);
+    if (!assignment) return [];
+    variables[assignment[1]] = Number(assignment[2]);
+  }
+  if (!Object.prototype.hasOwnProperty.call(variables, counter)) return [];
+  const printLine = whileIndex + 2;
+  const incrementLine = whileIndex + 3;
+  if (lines[whileIndex + 1] !== "    print(" + counter + ")" ||
+      lines[whileIndex + 2] !== "    " + counter + " = " + counter + " + 1") return [];
+  for (let index = whileIndex + 3; index < lines.length; index++) {
+    if (lines[index].trim() && !lines[index].trim().startsWith("#")) return [];
+  }
+  const limit = Number(limitText);
+  const test = value => operator === "<" ? value < limit :
+    operator === "<=" ? value <= limit :
+    operator === ">" ? value > limit :
+    operator === ">=" ? value >= limit :
+    operator === "==" ? value === limit : value !== limit;
+  const steps = [];
+  const record = (line, iteration, source, explanation, output = "", label = "") => {
+    steps.push({ line, iteration, source, explanation, output, label, variables: { ...variables } });
+  };
+  let iterations = 0;
+  while (true) {
+    const current = Number(variables[counter]);
+    const passed = test(current);
+    const right = String(limit);
+    if (!passed) {
+      record(whileIndex + 1, iterations + 1, lines[whileIndex].trim(),
+        "Проверяем условие: " + counter + " (" + current + ") " + operator + " " + right +
+        ". Условие ложно, поэтому цикл завершает работу.",
+        "", "Цикл завершён");
+      break;
+    }
+    if (iterations >= 30) return [];
+    record(whileIndex + 1, iterations + 1, lines[whileIndex].trim(),
+      "Проверяем условие: " + counter + " (" + current + ") " + operator + " " + right +
+      ". Условие истинно — выполняем тело цикла.",
+      "", "Проверка условия · итерация " + (iterations + 1));
+    record(printLine, iterations + 1, lines[printLine - 1].trim(),
+      "Команда print(" + counter + ") выводит значение " + current + ".",
+      String(current), "Вывод · итерация " + (iterations + 1));
+    variables[counter] = current + 1;
+    record(incrementLine, iterations + 1, lines[incrementLine - 1].trim(),
+      "Переменной " + counter + " присваивается значение: " + counter + " (" + current + ") + 1 = " + variables[counter] + ".",
+      "", "Обновление счётчика · итерация " + (iterations + 1));
+    iterations++;
+  }
+  return steps;
+}
+
 export function tracePythonRange(source) {
   const lines = String(source ?? "").replace(/\r/g, "").split("\n");
+  const whileTrace = tracePythonWhile(lines);
+  if (whileTrace !== null) return whileTrace;
   const header = lines[0]?.match(/^for\s+([A-Za-z_]\w*)\s+in\s+range\((\d+),\s*(\d+)\):$/);
   if (!header) return [];
   const [, iterator, startText, endText] = header;
