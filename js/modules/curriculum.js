@@ -484,7 +484,7 @@ function firstOutputDifference(expected,actual) {
 }
 function renderPythonLesson(app,module,unit,lesson,completed) {
  const draft=readSession(module),initialCode=draft?.lessonId===lesson.lessonId?draft.draftCode:lesson.starterCode;
- let code=initialCode,lastResult=null;
+ let code=initialCode;
  const done=completed.includes(lesson.lessonId);
  const lineCount=()=>Math.max(1,code.split("\n").length);
  const draw=()=>{
@@ -516,7 +516,7 @@ function renderPythonLesson(app,module,unit,lesson,completed) {
     const start=editor.selectionStart,lineStart=editor.value.lastIndexOf("\n",start-1)+1;
     const indent=(editor.value.slice(lineStart,start).match(/^\s*/)||[""])[0];
     const before=editor.value.slice(lineStart,start);
-    const extra=/:s*$/.test(before)?"    ":"";
+    const extra=/:\\s*$/.test(before)?"    ":"";
     event.preventDefault();editor.setRangeText("\n"+indent+extra,start,editor.selectionEnd,"end");paint();return;
    }
   });
@@ -524,7 +524,7 @@ function renderPythonLesson(app,module,unit,lesson,completed) {
   app.querySelector("#reset-python").addEventListener("click",()=>{code=lesson.starterCode;editor.value=code;paint();app.querySelector("#python-diagnostic").textContent="Код восстановлен до исходного примера.";app.querySelector("#python-run-state").textContent="СБРОШЕНО";});
   app.querySelector("#run-python").addEventListener("click",()=>{
    const result=runSafePython(editor.value,lesson),output=app.querySelector("#actual-output"),status=app.querySelector("#python-diagnostic"),state=app.querySelector("#python-run-state");
-   lastResult=result;output.textContent=result.ok?(result.output||"(пустой вывод)"):result.error;
+   output.textContent=result.ok?(result.output||"(пустой вывод)"):result.error;
    if(!result.ok){state.textContent="ОШИБКА";status.textContent="Проверь код: "+result.error;status.className="python-diagnostic is-error";return;}
    if(result.output===lesson.expectedOutput){
     state.textContent="ВЫПОЛНЕНО";status.textContent="✓ Отлично! Результат совпадает с ожидаемым. Задание выполнено.";status.className="python-diagnostic is-success";
