@@ -514,7 +514,7 @@ function renderPythonLesson(app,module,unit,lesson,completed) {
   const updateSuggestions=()=>{suggestions=getPythonSuggestions(editor.value,editor.selectionStart);selectedSuggestion=0;renderSuggestions();};
   const acceptSuggestion=index=>{
    const item=suggestions[index];if(!item)return;
-   const before=editor.value.slice(0,editor.selectionStart),match=before.match(/[A-Za-z_]\\w*$/);if(!match)return hideSuggestions();
+   const before=editor.value.slice(0,editor.selectionStart),match=before.match(/[A-Za-z_]\w*$/);if(!match)return hideSuggestions();
    const start=editor.selectionStart-match[0].length;editor.setRangeText(item.label,start,editor.selectionStart,"end");hideSuggestions();paint();editor.focus();
   };
   const save=()=>writeStored(keys(module).session,{unitId:unit.unitId,lessonId:lesson.lessonId,draftCode:code});
