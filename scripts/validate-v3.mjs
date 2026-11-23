@@ -151,7 +151,7 @@ const highlightedPython = highlightPythonCode('def greet(name):\n    # comment\n
 const loopTrace = tracePythonRange(`for i in range(1, 4):
     doubled = i * 2
     print(doubled)`);
-if (loopTrace.length !== 6 || loopTrace[0].variables.i !== 1 || loopTrace[0].variables.doubled !== 2 || loopTrace[1].output !== "2" || loopTrace[5].output !== "6" || tracePythonRange("while True:").length !== 0) fail("Python range-loop trace failed");
+if (loopTrace.length !== 6 || loopTrace[0].line !== 2 || loopTrace[0].source !== "doubled = i * 2" || loopTrace[0].variables.i !== 1 || loopTrace[0].variables.doubled !== 2 || loopTrace[1].line !== 3 || loopTrace[1].output !== "2" || loopTrace[5].output !== "6" || tracePythonRange("while True:").length !== 0) fail("Python range-loop trace failed");
 const duplicateTrace = tracePythonRange("for i in range(1, 2):\n    value = i + 1\n    print(value)\n    print(value)");
 if (duplicateTrace.length !== 3 || duplicateTrace[1].line !== 3 || duplicateTrace[2].line !== 4 || duplicateTrace[2].source !== "print(value)") fail("Python trace must preserve exact source lines when statements repeat");
 const suggestions = getPythonSuggestions("pri", 3);
