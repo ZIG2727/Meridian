@@ -2,7 +2,9 @@ import { loadJSON, readStored, writeStored, isStringArray } from "./storage.js";
 import { renderEnglish } from "./modules/english.js";
 import { renderChess } from "./modules/chess.js";
 import { renderPython } from "./modules/python.js";
-import { animateProgress } from "./motion.js";
+import { animateProgress, bindMicroInteractions } from "./motion.js";
+import { MODULE_VISUALS } from "./visuals.js";
+import { renderProfilePanel, bindProfilePanel, readProfile, syncCompletedLessons } from "./profile.js";
 
 const dataUrls = {
   english: new URL("../data/english/curriculum.json", import.meta.url),
@@ -21,12 +23,12 @@ async function loadDashboardData() {
 }
 function subjectCard(subject,title,description,count,total,percentage,continuation,error) {
   const paths={english:"../assets/icons/english.svg",chess:"../assets/icons/chess.svg",python:"../assets/icons/python.svg"};
-  const iconUrl=new URL(paths[subject],import.meta.url).href;
+  const visual=MODULE_VISUALS[subject],iconUrl=new URL(paths[subject],import.meta.url).href;
   const progressText=error?"Данные недоступны":count+" / "+total+" уроков";
   const status=error?'<p class="status-line">Не удалось загрузить материалы. Откройте раздел позже.</p>':
     '<div class="subject-meta"><span>Прогресс</span><strong>'+progressText+'</strong></div><div class="progress-track" data-progress="'+percentage+'" style="--progress-color:var(--color-'+subject+')"><div class="progress-fill"></div></div>';
   const continueButton=continuation?'<a class="button button-secondary button-full" href="'+continuation.href+'">'+escapeHTML(continuation.label)+'</a>':'<a class="button button-full" href="#/'+subject+'">Открыть раздел</a>';
-  return '<article class="subject-card" data-subject="'+subject+'"><div class="subject-topline"><img class="subject-icon" src="'+iconUrl+'" alt="" aria-hidden="true"><span class="eyebrow">'+(subject==="english"?"01 / Язык":subject==="chess"?"02 / Стратегия":"03 / Код")+'</span></div><h2>'+title+'</h2><p>'+description+'</p>'+status+'<div class="button-row dashboard-actions">'+continueButton+'</div></article>';
+  return '<article class="subject-card" data-subject="'+subject+'"><a class="subject-media" href="'+visual.url+'" target="_blank" rel="noopener noreferrer" aria-label="Открыть фотографию: '+escapeHTML(visual.alt)+'"><img src="'+visual.src+'" alt="'+escapeHTML(visual.alt)+'" loading="lazy" decoding="async"><span class="subject-media-label">'+(subject==="english"?"ЯЗЫК":"")+(subject==="chess"?"СТРАТЕГИЯ":"")+(subject==="python"?"ПРОГРАММИРОВАНИЕ":"")+'</span></a><div class="subject-card-body"><div class="subject-topline"><img class="subject-icon" src="'+iconUrl+'" alt="" aria-hidden="true"><span class="eyebrow">'+(subject==="english"?"01 / Язык":subject==="chess"?"02 / Стратегия":"03 / Код")+'</span></div><h2>'+title+'</h2><p>'+description+'</p>'+status+'<div class="button-row dashboard-actions">'+continueButton+'</div><a class="photo-credit" href="'+visual.url+'" target="_blank" rel="noopener noreferrer">Фото: '+visual.credit+' / Unsplash</a></div></article>';
 }
 function readCompleted(module) {
  const key="mrd:v3:"+module+":completed",versioned=readStored(key,null,isStringArray);
@@ -65,7 +67,7 @@ function findResume(module,units,session) {
   return {label:"Продолжить "+(module==="english"?"английский":module==="chess"?"шахматы":"Python"),detail:unit.title+" · урок "+(lessonIndex+1),href:"#/"+module+"/"+unit.unitId+"/"+session.lessonId};
 }
 async function renderDashboard(app) {
-  app.innerHTML='<header class="site-header"><div class="header-inner"><a class="brand" href="#/" aria-label="Meridian — главная"><img src="'+new URL("../assets/icons/meridian.svg",import.meta.url).href+'" alt="Meridian"><span>Meridian</span></a><nav class="header-nav" aria-label="Разделы"><a class="button button-quiet" href="#/english">Английский</a><a class="button button-quiet" href="#/chess">Шахматы</a><a class="button button-quiet" href="#/python">Python</a></nav></div></header><main class="page"><section class="dashboard-intro"><p class="eyebrow">Учебное пространство</p><h1>Три предмета. Один маршрут.</h1><p>Выберите занятие или продолжите с того места, где остановились.</p></section><section class="subject-grid" aria-label="Учебные разделы"><div class="empty-state">Загружаем учебные маршруты…</div></section></main><footer class="footer-inner">Meridian · Прогресс хранится в этом браузере</footer>';
+  app.innerHTML='<header class="site-header"><div class="header-inner"><a class="brand" href="#/" aria-label="Meridian — главная"><img src="'+new URL("../assets/icons/meridian.svg",import.meta.url).href+'" alt="Meridian"><span>Meridian</span></a><nav class="header-nav" aria-label="Разделы"><a class="button button-quiet" href="#/english">Английский</a><a class="button button-quiet" href="#/chess">Шахматы</a><a class="button button-quiet" href="#/python">Python</a></nav></div></header><main class="page"><section class="dashboard-intro"><p class="eyebrow">Учебное пространство</p><h1>Три предмета. Один маршрут.</h1><p>Выберите занятие или продолжите с того места, где остановились.</p></section><section id="profile-overview" aria-label="Профиль и статистика"></section><section class="subject-grid" aria-label="Учебные разделы"><div class="empty-state">Загружаем учебные маршруты…</div></section></main><footer class="footer-inner">Meridian · Прогресс хранится в этом браузере</footer>';
   const data=await loadDashboardData(),grid=app.querySelector(".subject-grid");if(!grid)return;
   const english=data.english||[],chess=data.chess||[],python=data.python||[];
   const englishCompleted=readCompleted("english");
@@ -86,12 +88,16 @@ async function renderDashboard(app) {
     subjectCard("python","Python","15 юнитов · основы языка и безопасная практика.",pDone,pTotal,pTotal?pDone/pTotal*100:0,findResume("python",python,pythonSession),!data.python)
   ].join("");
   grid.innerHTML=resumeBlock+grid.innerHTML;
+  const profileRoot=app.querySelector("#profile-overview");
+  const refreshProfile=()=>{profileRoot.innerHTML=renderProfilePanel(eDone+cDone+pDone,readProfile());bindProfilePanel(profileRoot,refreshProfile);};
+  refreshProfile();
   grid.querySelectorAll("[data-progress]").forEach(track=>animateProgress(track,Number(track.dataset.progress)));
 }
 function showRouteError(app,error) {
   app.innerHTML='<main class="page"><a class="brand" href="#/">Meridian</a><section class="error-state"><h1>Не удалось открыть раздел</h1><p>'+String(error?.message||"Обновите страницу и попробуйте ещё раз.").replace(/[&<>"']/g,"")+'</p><a class="button" href="#/">На главную</a></section></main>';
 }
 export function initRouter(app) {
+  bindMicroInteractions(app);
   async function renderRoute() {
     const route=(window.location.hash||"#/").replace(/^#/,"");
     try {

@@ -22,3 +22,36 @@ export function animateProgress(track, percentage) {
   track.style.setProperty("--progress", safeValue + "%");
   window.requestAnimationFrame(() => track.classList.add("is-loaded"));
 }
+const microBound = new WeakSet();
+export function bindMicroInteractions(root) {
+  if (!root || microBound.has(root)) return;
+  microBound.add(root);
+  root.addEventListener("error", event => {
+    const image = event.target;
+    if (!(image instanceof HTMLImageElement)) return;
+    const frame = image.closest(".subject-media, .module-hero-image, .visual-gallery-card");
+    if (!frame || frame.classList.contains("is-image-missing")) return;
+    frame.classList.add("is-image-missing");
+    const alt = image.alt;
+    image.remove();
+    const label = document.createElement("span");
+    label.className = "image-fallback-label";
+    label.textContent = alt || "Изображение временно недоступно";
+    frame.append(label);
+  }, true);
+  root.addEventListener("pointerdown", event => {
+    if (prefersReducedMotion()) return;
+    const control = event.target.closest(".button, .rating-button, .quiz-option");
+    if (!control || control.disabled || !root.contains(control)) return;
+    const bounds = control.getBoundingClientRect();
+    const diameter = Math.max(bounds.width, bounds.height) * 1.35;
+    const ripple = document.createElement("span");
+    ripple.className = "motion-ripple";
+    ripple.style.width = diameter + "px";
+    ripple.style.height = diameter + "px";
+    ripple.style.left = (event.clientX - bounds.left - diameter / 2) + "px";
+    ripple.style.top = (event.clientY - bounds.top - diameter / 2) + "px";
+    control.append(ripple);
+    window.setTimeout(() => ripple.remove(), 650);
+  }, true);
+}

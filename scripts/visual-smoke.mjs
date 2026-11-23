@@ -1,0 +1,307 @@
+import { createServer } from "node:http";
+import { readFile, mkdir } from "node:fs/promises";
+import { resolve, extname, sep } from "node:path";
+import { chromium } from "playwright";
+
+const root = process.cwd();
+const outputDir = resolve(root, "artifacts/visual-smoke");
+const mime = {
+  ".html": "text/html; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+  ".svg": "image/svg+xml",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".webp": "image/webp"
+};
+const server = createServer(async (request, response) => {
+  try {
+    const pathname = decodeURIComponent(new URL(request.url, "http://localhost").pathname);
+    const relative = pathname === "/" ? "index.html" : pathname.replace(/^\/+/, "");
+    const file = resolve(root, relative);
+    if (file !== root && !file.startsWith(root + sep)) {
+      response.writeHead(403).end("Forbidden");
+      return;
+    }
+    const content = await readFile(file);
+    response.writeHead(200, { "content-type": mime[extname(file)] || "application/octet-stream", "cache-control": "no-store" });
+    response.end(content);
+  } catch {
+    response.writeHead(404).end("Not found");
+  }
+});
+
+await mkdir(outputDir, { recursive: true });
+await new Promise(resolveListen => server.listen(0, "127.0.0.1", resolveListen));
+const address = server.address();
+const baseUrl = "http://127.0.0.1:" + address.port;
+const browser = await chromium.launch({ headless: true });
+const page = await browser.newPage();
+const pageErrors = [];
+const consoleErrors = [];
+const failedRequests = [];
+page.on("pageerror", error => pageErrors.push(error.message));
+page.on("console", message => { if (message.type() === "error") consoleErrors.push(message.text()); });
+page.on("requestfailed", request => failedRequests.push(request.url() + " :: " + (request.failure()?.errorText || "failed")));
+
+const assert = (condition, message) => {
+  if (!condition) throw new Error(message);
+};
+const waitForImages = async () => {
+  await page.locator(".subject-media img, .module-hero-image img, .visual-gallery-card img").evaluateAll(images => {
+    images.forEach(image => { image.loading = "eager"; });
+  });
+  await page.waitForFunction(() => Array.from(document.querySelectorAll(".subject-media img, .module-hero-image img, .visual-gallery-card img"))
+    .every(image => image.naturalWidth > 0 || image.closest(".subject-media, .module-hero-image, .visual-gallery-card")?.classList.contains("is-image-missing")),
+  null, { timeout: 8000 });
+  const unresolved = await page.locator(".subject-media img, .module-hero-image img, .visual-gallery-card img").evaluateAll(images =>
+    images.filter(image => image.naturalWidth === 0 &&
+      !image.closest(".subject-media, .module-hero-image, .visual-gallery-card")?.classList.contains("is-image-missing")).length
+  );
+  assert(unresolved === 0, "Image neither loaded nor reached its fallback state");
+};
+const checkNoOverflow = async label => {
+  const dimensions = await page.evaluate(() => ({
+    viewport: window.innerWidth,
+    document: document.documentElement.scrollWidth
+  }));
+  assert(dimensions.document <= dimensions.viewport + 1,
+    label + ": horizontal overflow (" + dimensions.document + "px > " + dimensions.viewport + "px)");
+};
+const sizes = [
+  { name: "mobile-360", width: 360, height: 800 },
+  { name: "tablet-768", width: 768, height: 900 },
+  { name: "desktop-1280", width: 1280, height: 900 }
+];
+
+try {
+  for (const size of sizes) {
+    await page.setViewportSize({ width: size.width, height: size.height });
+    await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
+    await page.locator(".subject-card").first().waitFor();
+    assert(await page.locator(".subject-card").count() === 3, "Dashboard must show all three subjects");
+    await page.locator(".subject-card").last().scrollIntoViewIfNeeded();
+    await waitForImages();
+    await page.waitForTimeout(250);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(450);
+    await checkNoOverflow("Dashboard " + size.name);
+    await page.screenshot({ path: resolve(outputDir, "dashboard-" + size.name + ".png"), fullPage: true });
+    console.log("Dashboard responsive check passed:", size.name);
+  }
+
+  for (const subject of ["english", "chess", "python"]) {
+    for (const size of sizes) {
+      await page.setViewportSize({ width: size.width, height: size.height });
+      await page.goto(baseUrl + "/#/" + subject, { waitUntil: "domcontentloaded" });
+      await page.waitForFunction(() => document.querySelector(".module-hero") || document.querySelector(".error-state"), null, { timeout: 10000 });
+      const routeError = await page.locator(".error-state").innerText().catch(() => "");
+      if (routeError) {
+        const details = await page.evaluate(() => ({
+          href: location.href,
+          appText: document.querySelector("#app")?.innerText,
+          appMarkup: document.querySelector("#app")?.innerHTML.slice(0, 2400)
+        }));
+        throw new Error(subject + " route rendered an error state: " + JSON.stringify({
+          routeError, details, pageErrors, consoleErrors, failedRequests: failedRequests.slice(-12)
+        }));
+      }
+      assert(await page.locator(".module-hero").count() === 1, subject + ": module hero was not rendered");
+      assert(await page.locator(".visual-gallery-card").count() === 2, subject + ": expected two gallery cards");
+      await page.locator(".visual-gallery-card").last().scrollIntoViewIfNeeded();
+      await waitForImages();
+      await page.waitForTimeout(350);
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.waitForTimeout(500);
+      await checkNoOverflow(subject + " " + size.name);
+
+      const toggle = page.locator(".unit-group-toggle").first();
+      if (await toggle.count()) {
+        const before = await toggle.getAttribute("aria-expanded");
+        await toggle.click();
+        const after = await toggle.getAttribute("aria-expanded");
+        assert(before !== after, subject + ": unit group toggle did not change state");
+        await toggle.click();
+        assert(await toggle.getAttribute("aria-expanded") === before, subject + ": unit group did not reopen");
+        await page.waitForTimeout(500);
+      }
+
+      await page.screenshot({ path: resolve(outputDir, subject + "-" + size.name + ".png"), fullPage: true });
+      console.log("Subject responsive check passed:", subject, size.name);
+    }
+  }
+
+  await page.goto(baseUrl + "/#/chess/ch-basics-board/ch-basics-board-01", { waitUntil: "domcontentloaded" });
+  await page.locator('[data-square="e2"]').waitFor();
+  await page.locator('[data-square="e2"]').click();
+  assert(await page.locator('[data-square="e4"]').evaluate(el => el.classList.contains("is-move-target")),
+    "Chess board should highlight the legal e2-e4 pawn move");
+  assert(!(await page.locator('[data-square="e5"]').evaluate(el => el.classList.contains("is-move-target"))),
+    "Chess board should not highlight an illegal pawn move");
+  await page.locator('[data-square="e4"]').click();
+  assert((await page.locator('[data-square="e4"]').innerText()).trim() === "♙" &&
+    (await page.locator('[data-square="e2"]').innerText()).trim() === "",
+    "Chess board should apply the selected legal move");
+  assert((await page.locator("#chess-turn-status").innerText()).includes("чёрных"),
+    "Chess board should switch the side to move");
+  await page.locator("#reset-chess-board").click();
+  assert((await page.locator('[data-square="e2"]').innerText()).trim() === "♙",
+    "Chess board reset should restore the original FEN position");
+
+  await page.goto(baseUrl + "/#/python/py-basics-print/py-basics-print-01", { waitUntil: "domcontentloaded" });
+  await page.locator("#python-code").waitFor();
+  await page.locator("#python-code").fill("pri");
+  await page.locator(".python-suggestion").filter({ hasText: "print" }).click();
+  assert((await page.locator("#python-code").inputValue()) === "print",
+    "Python autocomplete should insert the selected completion");
+  await page.locator("#python-code").fill("for i in range(1, 4):\n    doubled = i * 2\n    print(doubled)");
+  await page.locator("#run-python").click();
+  assert(!(await page.locator("#python-trace").isHidden()), "Python loop visualizer should appear for supported range loops");
+  await page.locator("#python-trace-next").click();
+  assert((await page.locator("#python-trace-position").textContent()).trim() === "2 / 6", "Python trace should advance one deterministic step");
+  assert((await page.locator("#python-trace-source").textContent()).trim() === "print(doubled)", "Python trace should show the exact active source statement");
+  assert((await page.locator("#python-trace-line").textContent()).includes("Итерация 1"), "Python trace should identify the current loop iteration");
+  assert((await page.locator("#python-trace-explanation").textContent()).trim() === "Команда print(doubled) выводит значение 2.", "Python trace should explain the effect of the active statement");
+  assert(await page.locator("#python-line-numbers span.is-traced").textContent() === "3", "Python trace should highlight the matching editor line number");
+  await page.locator("#python-code").fill("for i in range(1, 4):\n    if i > 1:\n        result = i * 2\n    else:\n        result = i + 10\n    print(result)");
+  await page.locator("#run-python").click();
+  assert((await page.locator("#actual-output").innerText()).trim() === "11\n4\n6",
+    "Safe Python execution should evaluate both if and else branches inside a loop");
+  assert((await page.locator("#python-trace-position").textContent()).trim() === "1 / 10",
+    "Python conditional trace should include each condition and executed branch");
+  await page.locator("#python-trace-next").click();
+  assert((await page.locator("#python-trace-source").textContent()).trim() === "else:",
+    "Python trace should identify the selected else branch");
+  await page.locator("#python-trace-next").click();
+  assert((await page.locator("#python-trace-source").textContent()).trim() === "result = i + 10" &&
+    (await page.locator("#python-line-numbers span.is-traced").textContent()) === "5",
+    "Python trace should highlight the executed else assignment");
+  await page.locator("#python-code").fill("count = 1\nwhile count < 4:\n    print(count)\n    count = count + 1");
+  await page.locator("#run-python").click();
+  assert((await page.locator("#actual-output").innerText()).trim() === "1\n2\n3",
+    "Safe Python runner should execute a bounded while loop");
+  assert((await page.locator("#python-trace-position").textContent()).trim() === "1 / 10",
+    "Python while trace should include condition checks, body steps and the final false condition");
+  assert((await page.locator("#python-trace-line").textContent()).includes("Проверка условия · итерация 1"),
+    "Python while trace should label the first condition check");
+  await page.locator("#python-trace-next").click();
+  assert((await page.locator("#python-trace-source").textContent()).trim() === "print(count)" &&
+    (await page.locator("#python-line-numbers span.is-traced").textContent()) === "3",
+    "Python while trace should highlight the print statement");
+  for (let step = 0; step < 8; step++) await page.locator("#python-trace-next").click();
+  assert((await page.locator("#python-trace-position").textContent()).trim() === "10 / 10" &&
+    (await page.locator("#python-trace-line").textContent()).includes("Цикл завершён") &&
+    (await page.locator("#python-trace-explanation").textContent()).includes("Условие ложно") &&
+    (await page.locator("#python-line-numbers span.is-traced").textContent()) === "2",
+    "Python while trace should show and highlight the final condition that ends the loop");
+  await page.locator("#python-code").fill('print("Hello, world!")');
+  assert(await page.locator(".python-highlight .python-builtin").count() > 0,
+    "Python editor should highlight built-in functions");
+  assert(await page.locator(".python-highlight .python-string").count() > 0,
+    "Python editor should highlight strings");
+  await page.locator("#python-code").fill("if True:");
+  await page.locator("#python-code").press("End");
+  await page.locator("#python-code").press("Enter");
+  assert((await page.locator("#python-code").inputValue()) === "if True:\n    ",
+    "Python editor should add an indented line after a colon");
+
+  await page.locator("#python-code").fill('print("Meridian")');
+  await page.locator("#python-code").press("Control+Enter");
+  assert((await page.locator("#actual-output").innerText()).trim() === "Meridian",
+    "Python editor keyboard shortcut should execute code");
+  assert((await page.locator("#python-run-state").innerText()).includes("ВЫВОД ОТЛИЧАЕТСЯ"),
+    "Python editor should explain output mismatch");
+
+  await page.locator("#python-code").fill('print("ok")\nunknown_call()');
+  await page.locator("#run-python").click();
+  assert((await page.locator("#python-diagnostic").innerText()).includes("Строка 2:"),
+    "Python editor should report the source line for a runtime error");
+  await page.locator("#reset-python").click();
+  await page.locator("#run-python").click();
+  assert((await page.locator("#actual-output").innerText()).trim() === "Hello, world!",
+    "Python editor should run the starter solution");
+  assert((await page.locator("#python-run-state").innerText()).includes("ВЫПОЛНЕНО"),
+    "Python exercise should show successful completion");
+  await page.locator("#python-code").fill('print("Draft survives reload")');
+  await page.reload({ waitUntil: "domcontentloaded" });
+  assert((await page.locator("#python-code").inputValue()) === 'print("Draft survives reload")',
+    "Python editor draft should persist after reload");
+  await page.screenshot({ path: resolve(outputDir, "python-lab-editor.png"), fullPage: true });
+
+  await page.goto(baseUrl + "/#/english/en-a1-greetings/en-a1-greetings-01", { waitUntil: "domcontentloaded" });
+  await page.evaluate(() => { localStorage.clear(); sessionStorage.clear(); });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.locator("#english-answer").waitFor();
+  await page.locator("#english-answer").fill("  HELLO  ");
+  await page.locator("#check-answer").click();
+  assert(await page.locator(".answer-feedback.is-correct").count() === 1,
+    "Typed English answer should ignore case and surrounding spaces");
+  await page.screenshot({ path: resolve(outputDir, "english-answer-correct.png"), fullPage: true });
+  await page.locator('[data-rating="good"]').click();
+  assert((await page.locator(".prompt-word").innerText()).trim() === "привет",
+    "English SRS should advance from the first card to the second card after rating");
+  const sessionBeforeReload = await page.evaluate(() => JSON.parse(localStorage.getItem("mrd:v3:english:session") || "null"));
+  assert(sessionBeforeReload?.cardId === "en-card-greetings-01-02",
+    "English session should save the second card ID in a clean browser state: " + JSON.stringify(sessionBeforeReload));
+  await page.reload({ waitUntil: "domcontentloaded" });
+  const resumedPrompt = (await page.locator(".prompt-word").innerText()).trim();
+  const resumedState = await page.evaluate(() => ({
+    hash: location.hash,
+    session: JSON.parse(localStorage.getItem("mrd:v3:english:session") || "null"),
+    srs: JSON.parse(localStorage.getItem("mrd:v3:english:srs") || "{}")
+  }));
+  assert(resumedPrompt === "привет" && resumedState.session?.cardId === sessionBeforeReload.cardId,
+    "English session should resume the exact saved card after reload; prompt=" + resumedPrompt + "; state=" + JSON.stringify(resumedState));
+  await page.locator("#english-answer").fill("incorrect");
+  await page.locator("#check-answer").click();
+  assert(await page.locator(".answer-feedback.is-incorrect").count() === 1,
+    "Incorrect English answer should show corrective feedback");
+  await page.screenshot({ path: resolve(outputDir, "english-answer-incorrect.png"), fullPage: true });
+  await page.locator('[data-rating="good"]').click();
+  await page.goto(baseUrl + "/#/english", { waitUntil: "domcontentloaded" });
+  await page.locator(".english-mistakes-panel").waitFor();
+  assert((await page.locator(".english-mistakes-count").innerText()).trim() === "1",
+    "Incorrect answers should be added to the English review list");
+  await page.locator(".english-mistakes-list a").first().click();
+  await page.locator("#english-answer").waitFor();
+  assert((await page.locator(".prompt-word").innerText()).trim() === "привет",
+    "Mistake review must include a card even while its SM-2 interval is in the future");
+  await page.locator("#english-answer").fill("hi");
+  await page.locator("#check-answer").click();
+  assert(await page.locator(".answer-feedback.is-correct").count() === 1,
+    "Corrected answer should be accepted during another pass");
+  await page.goto(baseUrl + "/#/english", { waitUntil: "domcontentloaded" });
+  assert(await page.locator(".english-mistakes-panel").count() === 0,
+    "Corrected cards should leave the English review list");
+
+  await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
+  await page.locator("[data-profile-open]").waitFor();
+  await page.locator("[data-profile-open]").click();
+  await page.locator("#profile-dialog").waitFor({ state: "visible" });
+  await page.locator("#profile-name").fill("Meridian Test");
+  await page.locator("#profile-goal").selectOption("2");
+  await page.locator("#profile-dialog button[type=submit]").click();
+  assert((await page.locator(".profile-greeting h2").innerText()).includes("Meridian Test"),
+    "Profile name was not saved");
+  await page.evaluate(async () => {
+    const profile = await import("/js/profile.js");
+    profile.recordLessonCompletion("english", "en-browser-smoke-test");
+    profile.recordLessonCompletion("english", "en-browser-smoke-test");
+  });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.locator("[data-profile-open]").waitFor();
+  assert(await page.locator(".profile-metric strong").first().innerText() === "20",
+    "XP reward must be idempotent");
+  assert((await page.locator(".profile-goal-head strong").innerText()).trim() === "1 / 2",
+    "Daily goal should reflect the completed lesson");
+  assert((await page.locator(".profile-greeting h2").innerText()).includes("Meridian Test"),
+    "Profile settings did not persist after reload");
+
+  assert(pageErrors.length === 0, "Browser runtime errors: " + pageErrors.join(" | "));
+  console.log("Responsive browser smoke tests and profile persistence checks passed.");
+} finally {
+  await browser.close();
+  await new Promise(resolveClose => server.close(resolveClose));
+}

@@ -1,6 +1,10 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { runSafePython } from "../js/modules/curriculum.js";
+import { runSafePython, normalizeEnglishAnswer, getLegalChessMoves, getChessPositionStatus } from "../js/modules/curriculum.js";
+import { MODULE_VISUALS } from "../js/visuals.js";
+import { highlightPythonCode, getPythonSuggestions, tracePythonRange } from "../js/python-editor.js";
+import { parseChessPosition, applyChessMove, chessPositionToFen } from "../js/chess-engine.js";
+import { normalizeProfile, calculateProfileStats, mergeCompletedLessons } from "../js/profile.js";
 
 const root = process.cwd();
 const modules = ["english", "chess", "python"];
@@ -136,11 +140,64 @@ if (totals.cards < 500) fail("English course needs at least 500 cards; got " + t
 const curriculumSource = await readFile(resolve(root, "js/modules/curriculum.js"), "utf8");
 if (!curriculumSource.includes("mrd:v3:")) fail("V3 storage namespace missing");
 if (/\beval\s*\(/.test(curriculumSource) || /new\s+Function\s*\(/.test(curriculumSource)) fail("Unsafe dynamic execution found");
-if (!curriculumSource.includes("pseudoLegalMoves") || !curriculumSource.includes("data-square")) fail("Interactive chess move hints missing");
+const chessEngineSource = await readFile(resolve(root, "js/chess-engine.js"), "utf8");
+if (!chessEngineSource.includes("pseudoMoves") || !chessEngineSource.includes("applyChessMove") || !curriculumSource.includes("data-square")) fail("Interactive chess move engine missing");
 if (!curriculumSource.includes("firstOutputDifference")) fail("Python output difference feedback missing");
 const html = await readFile(resolve(root, "index.html"), "utf8");
 if (/\bonclick\s*=/i.test(html)) fail("Inline onclick found");
 console.log("V3 curriculum validation passed:", JSON.stringify(totals));
+
+const highlightedPython = highlightPythonCode('def greet(name):\n    # comment\n    print("hello", 42)');
+const loopTrace = tracePythonRange(`for i in range(1, 4):
+    doubled = i * 2
+    print(doubled)`);
+if (loopTrace.length !== 6 || loopTrace[0].line !== 2 || loopTrace[0].source !== "doubled = i * 2" || loopTrace[0].iteration !== 1 || loopTrace[0].variables.i !== 1 || loopTrace[0].variables.doubled !== 2 || loopTrace[0].explanation !== "Переменной doubled присваивается значение: i (1) * 2 = 2." || loopTrace[1].line !== 3 || loopTrace[1].output !== "2" || loopTrace[1].explanation !== "Команда print(doubled) выводит значение 2." || loopTrace[5].output !== "6" || loopTrace[5].iteration !== 3 || tracePythonRange("while True:").length !== 0) fail("Python range-loop trace failed");
+const branchProgram = "for i in range(1, 4):\n    if i > 1:\n        result = i * 2\n    else:\n        result = i + 10\n    print(result)";
+const branchTrace = tracePythonRange(branchProgram);
+const branchRun = runSafePython(branchProgram, { exampleInput: "" });
+if (branchTrace.length !== 10 || branchTrace[0].line !== 2 || !branchTrace[0].explanation.includes("Условие ложно") ||
+    branchTrace[1].line !== 4 || branchTrace[2].line !== 5 || branchTrace[2].variables.result !== 11 ||
+    branchTrace[4].line !== 2 || !branchTrace[4].explanation.includes("Условие истинно") ||
+    branchTrace[5].line !== 3 || branchTrace[5].variables.result !== 4 ||
+    branchRun.output !== "11\n4\n6") fail("Python if/else trace and safe execution failed");
+const whileProgram = "count = 1\nwhile count < 4:\n    print(count)\n    count = count + 1";
+const whileTrace = tracePythonRange(whileProgram);
+const whileRun = runSafePython(whileProgram, { exampleInput: "" });
+if (whileTrace.length !== 10 || whileTrace[0].line !== 2 ||
+    whileTrace[0].label !== "Проверка условия · итерация 1" ||
+    !whileTrace[0].explanation.includes("Условие истинно") ||
+    whileTrace[1].line !== 3 || whileTrace[1].output !== "1" ||
+    whileTrace[2].line !== 4 || whileTrace[2].variables.count !== 2 ||
+    whileTrace[9].label !== "Цикл завершён" || whileTrace[9].variables.count !== 4 ||
+    !whileTrace[9].explanation.includes("Условие ложно") ||
+    whileRun.output !== "1\n2\n3") fail("Python while-loop trace and safe execution failed");
+const zeroWhile = tracePythonRange("count = 4\nwhile count < 4:\n    print(count)\n    count = count + 1");
+if (zeroWhile.length !== 1 || zeroWhile[0].label !== "Цикл завершён" || zeroWhile[0].variables.count !== 4) {
+  fail("Python while-loop trace must show immediate completion when the condition starts false");
+}
+const thirtyWhile = tracePythonRange("count = 1\nwhile count <= 30:\n    print(count)\n    count = count + 1");
+if (thirtyWhile.length !== 91 || thirtyWhile[90].label !== "Цикл завершён") fail("Python while-loop trace iteration limit failed");
+if (tracePythonRange("count = 0\nwhile count < 31:\n    print(count)\n    count = count + 1").length !== 0 ||
+    tracePythonRange("count = 0\nwhile count < 3:\n    count = count + 1\n    print(count)").length !== 0 ||
+    tracePythonRange("while True:").length !== 0) fail("Python while-loop trace must reject unsupported or overlong programs");
+if (tracePythonRange("for i in range(1, 3):\n    if i > 1:\n        print(i)\n    else:\n        print(i + 1)").length !== 0) fail("Python trace must reject unsupported branch expressions");
+const duplicateTrace = tracePythonRange("for i in range(1, 2):\n    value = i + 1\n    print(value)\n    print(value)");
+if (duplicateTrace.length !== 3 || duplicateTrace[1].line !== 3 || duplicateTrace[2].line !== 4 || duplicateTrace[2].source !== "print(value)") fail("Python trace must preserve exact source lines when statements repeat");
+const suggestions = getPythonSuggestions("pri", 3);
+if (!suggestions.some(item => item.label === "print") || getPythonSuggestions("print", 5).length !== 0 ||
+    getPythonSuggestions("x = pri", 7)[0]?.label !== "print") fail("Python autocomplete prefix matching failed");
+const repeatedHighlight = highlightPythonCode('print("again")');
+if (!repeatedHighlight.includes('class="python-builtin">print</span>') ||
+    !highlightPythonCode('print("third")').includes('class="python-builtin">print</span>')) fail("Python syntax highlighting must reset between editor updates");
+if (!highlightedPython.includes('class="python-keyword">def</span>') ||
+    !highlightedPython.includes('class="python-comment"># comment</span>') ||
+    !highlightedPython.includes('class="python-builtin">print</span>') ||
+    !highlightedPython.includes('class="python-string">"hello"</span>') ||
+    !highlightedPython.includes('class="python-number">42</span>')) fail("Python syntax highlighting tokens missing");
+const escapedPython = highlightPythonCode('<img src=x onerror=alert(1)>');
+if (escapedPython.includes("<img") || !escapedPython.includes("&lt;img")) fail("Python editor highlight must escape HTML");
+const lineDiagnostic = runSafePython('print("ok")\nunknown_call()', {});
+if (lineDiagnostic.ok || !lineDiagnostic.error.startsWith("Строка 2:")) fail("Python error diagnostics must include source line number");
 
 const runnerCases = [
   { source: 'print("Hello")', expected: "Hello" },
@@ -169,3 +226,82 @@ for (const [index, test] of runnerCases.entries()) {
   const result = runSafePython(test.source, { exampleInput: test.exampleInput });
   if (!result.ok || result.output !== test.expected) fail("Safe Python runner test " + (index + 1) + " failed: " + (result.error || result.output));
 }
+
+
+
+if (normalizeEnglishAnswer("  HELLO   WORLD! ") !== "hello world" ||
+    normalizeEnglishAnswer("I’m fine.") !== "i'm fine") fail("English answer normalization failed");
+
+const startPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+if (getLegalChessMoves(startPosition, "e2").sort().join(",") !== "e3,e4") fail("Chess legal pawn moves failed");
+const pinnedPosition = "k3r3/8/8/8/8/8/4R3/4K3 w - - 0 1";
+const pinnedMoves = getLegalChessMoves(pinnedPosition, "e2");
+if (!pinnedMoves.includes("e3") || pinnedMoves.includes("d2")) fail("Chess king-safety filter failed");
+const mateStatus = getChessPositionStatus("7k/6Q1/6K1/8/8/8/8/8 b - - 0 1");
+if (!mateStatus.valid || !mateStatus.check || !mateStatus.checkmate || mateStatus.stalemate) fail("Chess checkmate detection failed");
+const stalemateStatus = getChessPositionStatus("7k/5Q2/6K1/8/8/8/8/8 b - - 0 1");
+if (!stalemateStatus.valid || stalemateStatus.check || stalemateStatus.checkmate || !stalemateStatus.stalemate) fail("Chess stalemate detection failed");
+
+const castleFen = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
+const castleMoves = getLegalChessMoves(castleFen, "e1");
+if (!castleMoves.includes("g1") || !castleMoves.includes("c1")) fail("Chess castling moves missing");
+const castleState = parseChessPosition(castleFen);
+const castleResult = applyChessMove(castleState, "e1", "g1");
+if (!castleResult || castleResult.state.board[60] || castleResult.state.board[62] !== "♔" ||
+    castleResult.state.board[61] !== "♖" || castleResult.state.castling.includes("K") || castleResult.state.castling.includes("Q")) {
+  fail("Chess kingside castling application failed");
+}
+const epFen = "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1";
+if (!getLegalChessMoves(epFen, "e5").includes("d6")) fail("Chess en passant move missing");
+const epResult = applyChessMove(epFen, "e5", "d6");
+if (!epResult || epResult.state.board[27] || epResult.state.board[19] !== "♙" || !epResult.move.enPassant) fail("Chess en passant capture failed");
+const promotionFen = "4k3/P7/8/8/8/8/8/4K3 w - - 0 1";
+if (!getLegalChessMoves(promotionFen, "a7").includes("a8")) fail("Chess promotion move missing");
+const promotionResult = applyChessMove(promotionFen, "a7", "a8", "n");
+if (!promotionResult || promotionResult.state.board[0] !== "♘" || promotionResult.move.promotion !== "n") fail("Chess underpromotion selection failed");
+if (!chessPositionToFen(castleResult.state).includes(" b ")) fail("Chess FEN serialization failed");
+const normalizedProfile = normalizeProfile({
+  name: "  Meridian Learner  ",
+  dailyGoal: 99,
+  xp: -10,
+  completedLessonIds: ["en-1", "en-1", 3],
+  activity: { "2026-11-22": { lessons: 2, xp: 40 }, invalid: { lessons: 99 } }
+});
+if (normalizedProfile.name !== "Meridian Learner" || normalizedProfile.dailyGoal !== 10 ||
+    normalizedProfile.xp !== 0 || normalizedProfile.completedLessonIds.length !== 1 ||
+    Object.keys(normalizedProfile.activity).length !== 1) fail("Profile normalization failed");
+const profileStats = calculateProfileStats({
+  name: "Ученик", dailyGoal: 2, xp: 60, completedLessonIds: ["a", "b", "c"],
+  activity: { "2026-11-21": { lessons: 1, xp: 20 }, "2026-11-22": { lessons: 2, xp: 40 } }
+}, 3, new Date(2026, 10, 22, 12));
+if (profileStats.todayLessons !== 2 || profileStats.goalPercent !== 100 ||
+    profileStats.streak !== 2 || profileStats.weekLessons !== 3 || profileStats.xp !== 60) {
+  fail("Profile analytics calculation failed");
+}
+const migratedProfile = mergeCompletedLessons({ xp: 0, completedLessonIds: [] }, ["en-old-1", "ch-old-1", "en-old-1"]);
+if (migratedProfile.xp !== 40 || migratedProfile.completedLessonIds.length !== 2) fail("Legacy completion migration failed");
+console.log("Profile and analytics validated");
+
+const visualModules = Object.keys(MODULE_VISUALS).sort();
+if (visualModules.join(",") !== modules.slice().sort().join(",")) fail("Visual assets must exist for every learning module");
+for (const module of modules) {
+  const visual = MODULE_VISUALS[module];
+  if (!visual.src.startsWith("https://images.unsplash.com/") || !visual.alt || !visual.url.startsWith("https://unsplash.com/") ||
+      !Array.isArray(visual.gallery) || visual.gallery.length < 2) fail(module + ": missing hero image or supporting gallery");
+  for (const [index, item] of visual.gallery.entries()) {
+    if (!item.src.startsWith("https://images.unsplash.com/") || !item.alt || !item.label || !item.url.startsWith("https://unsplash.com/")) {
+      fail(module + ": invalid gallery image " + (index + 1));
+    }
+  }
+}
+console.log("Visual assets validated:", modules.length, "routes,", modules.reduce((sum, module) => sum + MODULE_VISUALS[module].gallery.length, 0), "gallery images");
+
+const motionSource = await readFile(resolve(root, "js/motion.js"), "utf8");
+const componentStyles = await readFile(resolve(root, "css/components.css"), "utf8");
+const curriculumStyles = await readFile(resolve(root, "css/curriculum.css"), "utf8");
+if (!motionSource.includes('image.closest(".subject-media, .module-hero-image, .visual-gallery-card")') ||
+    !motionSource.includes('label.className = "image-fallback-label"') ||
+    !componentStyles.includes(".is-image-missing") || !curriculumStyles.includes(".module-hero-image.is-image-missing")) {
+  fail("External image failure fallback is missing");
+}
+console.log("Image fallback behavior validated");
