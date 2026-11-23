@@ -258,6 +258,7 @@
 .python-editor-shell { display:grid; grid-template-columns:42px minmax(0,1fr); min-height:250px; max-height:470px; overflow:hidden; border:1px solid #343d3a; border-radius:12px; background:#202825; box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(20,28,24,.12); }
 .python-line-numbers { display:flex; flex-direction:column; gap:0; overflow:hidden; padding:15px 9px 18px 0; border-right:1px solid rgba(255,255,255,.08); background:#1b221f; color:#74817a; text-align:right; user-select:none; font:13px/1.7 var(--font-mono); }
 .python-line-numbers span { display:block; min-height:22.1px; }
+.python-line-numbers span.is-traced { color:#e9fff4; background:rgba(91,190,146,.2); box-shadow:inset -2px 0 #75d8aa; font-weight:750; }
 .python-editor-stack { position:relative; min-width:0; overflow:hidden; }
 .python-highlight,.python-code-input { position:absolute; inset:0; width:100%; height:100%; margin:0; padding:15px 16px 18px; border:0; border-radius:0; font:13px/1.7 var(--font-mono); letter-spacing:0; tab-size:4; white-space:pre; overflow:auto; }
 .python-highlight { z-index:1; color:#dce5df; pointer-events:none; background:transparent; }
@@ -329,6 +330,7 @@
 .python-trace-heading h2 { margin:3px 0 0; font-size:1.05rem; }
 .python-trace-heading>span,.python-trace-position { color:var(--color-ink-soft); font-size:.78rem; font-variant-numeric:tabular-nums; }
 .python-trace-line { margin:16px 0 10px; color:var(--color-python); font:600 .84rem var(--font-mono); }
+.python-trace-source { margin:0 0 13px; padding:12px 14px; overflow-x:auto; border:1px solid rgba(117,216,170,.25); border-left:3px solid #75d8aa; border-radius:8px; background:#18231f; color:#e4f2e9; font:600 .82rem/1.65 var(--font-mono); white-space:pre; }
 .python-trace-vars { display:flex; flex-wrap:wrap; gap:8px; min-height:34px; }
 .python-trace-variable { padding:7px 10px; border:1px solid var(--color-border); border-radius:8px; background:var(--color-surface-muted); font:600 .78rem var(--font-mono); }
 .python-trace-controls { margin-top:16px; }
