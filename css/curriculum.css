@@ -312,3 +312,12 @@
  .python-run-shortcut { width:100%; margin-left:0; }
 }
 @media(prefers-reduced-motion:reduce) { .python-hint-card { animation:none; } .python-run-button:hover { transform:none; } }
+
+
+.python-autocomplete { display:flex; flex-wrap:wrap; gap:7px; padding:9px; border:1px solid #d8d5cc; border-top:0; border-radius:0 0 10px 10px; background:#f6f7f3; }
+.python-autocomplete[hidden] { display:none; }
+.python-suggestion { display:flex; align-items:center; gap:8px; padding:7px 10px; border:1px solid #dce2db; border-radius:7px; background:#fff; color:#34443b; cursor:pointer; font:600 .76rem var(--font-mono); transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out); }
+.python-suggestion small { color:#78857c; font:500 .68rem var(--font-sans); }
+.python-suggestion:hover,.python-suggestion.is-active { border-color:#8eaf9c; background:#eaf2ec; }
+.python-suggestion:focus-visible { outline:2px solid var(--color-python); outline-offset:2px; }
+@media(prefers-reduced-motion:reduce) { .python-suggestion { transition:none; } }
