@@ -524,7 +524,7 @@ function renderPythonLesson(app,module,unit,lesson,completed) {
    const before=editor.value.slice(0,editor.selectionStart).split("\n"),line=before.length,column=before[before.length-1].length+1;
    cursor.textContent="Строка "+line+" · Столбец "+column;save();
   };
-  editor.value=code;paint();editor.addEventListener("input",()=>{paint();updateSuggestions();});editor.addEventListener("click",()=>{paint();updateSuggestions();});editor.addEventListener("keyup",()=>{paint();updateSuggestions();});
+  editor.value=code;paint();editor.addEventListener("input",()=>{paint();updateSuggestions();});editor.addEventListener("click",()=>{paint();updateSuggestions();});editor.addEventListener("keyup",event=>{paint();if(event.key!=="ArrowDown"&&event.key!=="ArrowUp")updateSuggestions();});
   editor.addEventListener("scroll",()=>{highlight.scrollTop=editor.scrollTop;highlight.scrollLeft=editor.scrollLeft;numbers.scrollTop=editor.scrollTop;});
   editor.addEventListener("keydown",event=>{
    if(suggestions.length&&event.key==="ArrowDown"){event.preventDefault();selectedSuggestion=(selectedSuggestion+1)%suggestions.length;renderSuggestions();return;}
