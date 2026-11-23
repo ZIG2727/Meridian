@@ -148,6 +148,9 @@ if (/\bonclick\s*=/i.test(html)) fail("Inline onclick found");
 console.log("V3 curriculum validation passed:", JSON.stringify(totals));
 
 const highlightedPython = highlightPythonCode('def greet(name):\n    # comment\n    print("hello", 42)');
+const repeatedHighlight = highlightPythonCode('print("again")');
+if (!repeatedHighlight.includes('class="python-builtin">print</span>') ||
+    !highlightPythonCode('print("third")').includes('class="python-builtin">print</span>')) fail("Python syntax highlighting must reset between editor updates");
 if (!highlightedPython.includes('class="python-keyword">def</span>') ||
     !highlightedPython.includes('class="python-comment"># comment</span>') ||
     !highlightedPython.includes('class="python-builtin">print</span>') ||
