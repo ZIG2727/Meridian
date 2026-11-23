@@ -6,8 +6,9 @@ const tokenPattern = /(#[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:False|No
 
 export function highlightPythonCode(source) {
   const code = String(source ?? "");
+  const matcher = new RegExp(tokenPattern.source, "g");
   let output = "", cursor = 0, match;
-  while ((match = tokenPattern.exec(code))) {
+  while ((match = matcher.exec(code))) {
     output += escapeHTML(code.slice(cursor, match.index));
     const token = match[0];
     let kind = "python-function";
