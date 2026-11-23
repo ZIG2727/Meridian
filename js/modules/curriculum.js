@@ -304,14 +304,14 @@ function renderChessLesson(app,module,unit,lesson,completed) {
   if(state.turn==="b")history.push({number:state.fullmove,white:notation,black:""});
   else {
    const last=history[history.length-1];
-   if(last&&last.number===state.fullmove)last.black=notation;
+   if(last&&last.number===state.fullmove-1)last.black=notation;
    else history.push({number:state.fullmove,white:"",black:notation});
   }
   gameOver=status.checkmate||status.stalemate;
   clearSelection();pendingPromotion=null;promotionPicker.hidden=true;refreshBoard();
   turnStatus.textContent="Ход "+sideName(state.turn);
   app.querySelector("#chess-fen-short").textContent=chessPositionToFen(state);
-  app.querySelector("#chess-move-count").textContent=history.length+" "+(history.length===1?"ход":"ходов");
+  app.querySelector("#chess-move-count").textContent=history.reduce((sum,item)=>sum+(item.white?1:0)+(item.black?1:0),0)+" ходов";
   app.querySelector("#chess-move-history").innerHTML=historyMarkup();
   feedback.textContent=status.checkmate?"Мат. Позиция завершена.":status.stalemate?"Пат. Позиция завершена.":(status.check?"Шах! ":"")+"Выполнен ход "+move.from+"–"+move.to+".";
  };
