@@ -236,3 +236,79 @@
  .chess-move-history li { gap:6px; }
 }
 @media(prefers-reduced-motion:reduce) { .chess-promotion-picker { animation:none; } }
+
+/* V3.5 — Python Lab editor */
+.python-lesson { max-width:900px; }
+.python-lesson-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px; }
+.python-lesson-heading h1 { margin:0 0 18px; font-size:clamp(1.7rem,4vw,2.35rem); letter-spacing:-.04em; }
+.python-level-pill { flex:0 0 auto; padding:7px 12px; border:1px solid #d9c8b6; border-radius:999px; background:var(--color-python-wash); color:var(--color-python); font-size:.75rem; font-weight:750; }
+.python-theory-card { display:flex; align-items:flex-start; gap:14px; margin-bottom:18px; padding:18px 20px; }
+.python-theory-card > div { min-width:0; }
+.python-theory-card .eyebrow { margin:0 0 5px; color:var(--color-python); }
+.python-theory-card p:last-child { margin:0; line-height:1.6; }
+.python-theory-icon { display:grid; flex:0 0 38px; width:38px; height:38px; place-items:center; border-radius:12px; background:var(--color-python-wash); color:var(--color-python); font-size:1.25rem; font-weight:800; }
+.python-workbench { display:grid; gap:14px; padding:clamp(14px,2.5vw,22px); border-color:#d8d5cc; box-shadow:0 12px 36px rgba(30,37,33,.08); }
+.python-workbench-top,.python-editor-tools,.python-editor-footer,.python-action-row,.python-console-heading,.python-console-heading > div { display:flex; align-items:center; }
+.python-workbench-top { justify-content:space-between; gap:12px; }
+.python-workbench-top .eyebrow { margin:0 0 4px; color:var(--color-python); }
+.python-workbench-top h2 { margin:0; font-size:1.1rem; letter-spacing:-.02em; }
+.python-editor-tools { flex-wrap:wrap; justify-content:flex-end; gap:8px; }
+.python-language-badge { display:inline-flex; align-items:center; gap:7px; padding:6px 9px; border:1px solid var(--color-border); border-radius:7px; background:var(--color-surface-muted); color:var(--color-ink-soft); font:600 .72rem var(--font-mono); }
+.python-language-badge span { width:7px; height:7px; border-radius:50%; background:#4b9b76; box-shadow:0 0 0 3px rgba(75,155,118,.13); }
+.python-editor-shell { display:grid; grid-template-columns:42px minmax(0,1fr); min-height:250px; max-height:470px; overflow:hidden; border:1px solid #343d3a; border-radius:12px; background:#202825; box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 24px rgba(20,28,24,.12); }
+.python-line-numbers { display:flex; flex-direction:column; gap:0; overflow:hidden; padding:15px 9px 18px 0; border-right:1px solid rgba(255,255,255,.08); background:#1b221f; color:#74817a; text-align:right; user-select:none; font:13px/1.7 var(--font-mono); }
+.python-line-numbers span { display:block; min-height:22.1px; }
+.python-editor-stack { position:relative; min-width:0; overflow:hidden; }
+.python-highlight,.python-code-input { position:absolute; inset:0; width:100%; height:100%; margin:0; padding:15px 16px 18px; border:0; border-radius:0; font:13px/1.7 var(--font-mono); letter-spacing:0; tab-size:4; white-space:pre; overflow:auto; }
+.python-highlight { z-index:1; color:#dce5df; pointer-events:none; background:transparent; }
+.python-code-input { z-index:2; resize:vertical; min-height:250px; max-height:470px; overflow:auto; background:transparent; color:transparent; -webkit-text-fill-color:transparent; caret-color:#eaf6ee; outline:none; }
+.python-code-input::selection { background:rgba(96,169,142,.35); -webkit-text-fill-color:transparent; }
+.python-code-input:focus-visible { box-shadow:inset 0 0 0 2px rgba(106,194,161,.62); }
+.python-highlight .python-keyword { color:#d49be8; font-weight:650; }
+.python-highlight .python-builtin { color:#80c9db; }
+.python-highlight .python-string { color:#b9d98c; }
+.python-highlight .python-number,.python-highlight .python-constant { color:#e9b878; }
+.python-highlight .python-comment { color:#84958a; font-style:italic; }
+.python-highlight .python-function { color:#e8cf83; }
+.python-editor-footer { justify-content:space-between; flex-wrap:wrap; gap:8px; color:var(--color-ink-soft); font-size:.7rem; font-family:var(--font-mono); }
+.python-action-row { flex-wrap:wrap; gap:9px; }
+.python-run-button { display:inline-flex; align-items:center; gap:9px; background:#315f4c; border-color:#315f4c; color:white; box-shadow:0 5px 14px rgba(49,95,76,.18); }
+.python-run-button:hover { background:#274d3d; border-color:#274d3d; transform:translateY(-1px); }
+.python-run-shortcut { margin-left:auto; color:var(--color-ink-soft); font-size:.72rem; }
+.python-run-shortcut kbd { padding:3px 6px; border:1px solid var(--color-border); border-radius:5px; background:var(--color-surface-muted); font:inherit; }
+.python-hint-card { display:flex; align-items:flex-start; gap:10px; padding:12px 14px; border:1px solid #e4d7b9; border-radius:10px; background:#fbf5e9; color:#685334; animation:page-enter var(--dur-fast) var(--ease-out) both; }
+.python-hint-card[hidden] { display:none; }
+.python-hint-card > span { color:#a47734; font-size:1.1rem; }
+.python-hint-card p { margin:0; line-height:1.5; font-size:.88rem; }
+.python-console { overflow:hidden; border:1px solid #d6d9d3; border-radius:11px; background:#f6f7f3; }
+.python-console-heading { justify-content:space-between; gap:12px; padding:11px 14px; border-bottom:1px solid #e0e3dd; background:#eef0eb; }
+.python-console-heading > div { gap:8px; }
+.python-console-heading strong { color:#39443e; font-size:.78rem; }
+.python-console-heading > span { color:#77827a; font:650 .62rem var(--font-mono); letter-spacing:.04em; }
+.python-console-dot { width:8px; height:8px; border-radius:50%; background:#70a47c; }
+.python-console-body { display:grid; grid-template-columns:1fr 1fr; }
+.python-output-column,.python-expected-column { min-width:0; padding:13px 15px; }
+.python-expected-column { border-left:1px solid #e0e3dd; background:rgba(233,235,228,.48); }
+.python-console-body p { margin:0 0 9px; color:#77827a; font:650 .62rem var(--font-mono); letter-spacing:.04em; }
+.python-console-body pre { min-height:38px; margin:0; color:#34443b; font:13px/1.65 var(--font-mono); white-space:pre-wrap; overflow-wrap:anywhere; }
+.python-expected-column pre { color:#637168; }
+.python-diagnostic { padding:10px 14px; border-top:1px solid #e0e3dd; color:#65716a; font-size:.78rem; line-height:1.5; }
+.python-diagnostic.is-success { background:#edf5ee; color:#2f704c; }
+.python-diagnostic.is-error { background:#fbefed; color:#9b4540; }
+.python-diagnostic.is-warning { background:#fbf5e9; color:#795d2e; }
+.python-completion:empty { display:none; }
+.python-lesson .lesson-navigation { margin-top:20px; }
+@media(max-width:600px) {
+ .python-lesson-heading { align-items:flex-start; }
+ .python-level-pill { margin-top:4px; }
+ .python-workbench-top { align-items:flex-start; flex-direction:column; }
+ .python-editor-tools { width:100%; justify-content:space-between; }
+ .python-editor-shell { grid-template-columns:34px minmax(0,1fr); min-height:230px; }
+ .python-line-numbers { font-size:12px; }
+ .python-highlight,.python-code-input { padding:13px 11px 16px; font-size:12px; }
+ .python-editor-footer { font-size:.64rem; }
+ .python-console-body { grid-template-columns:1fr; }
+ .python-expected-column { border-top:1px solid #e0e3dd; border-left:0; }
+ .python-run-shortcut { width:100%; margin-left:0; }
+}
+@media(prefers-reduced-motion:reduce) { .python-hint-card { animation:none; } .python-run-button:hover { transform:none; } }
