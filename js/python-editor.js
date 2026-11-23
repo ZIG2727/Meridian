@@ -48,7 +48,7 @@ const pythonCompletions = [
 
 export function getPythonSuggestions(source, cursor = String(source ?? "").length) {
   const before = String(source ?? "").slice(0, Math.max(0, cursor));
-  const match = before.match(/[A-Za-z_]\\w*$/);
+  const match = before.match(/[A-Za-z_]\w*$/);
   if (!match) return [];
   const prefix = match[0];
   return pythonCompletions
